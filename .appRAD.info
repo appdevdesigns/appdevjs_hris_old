@@ -1,0 +1,29 @@
+// basic appRAD info for this module
+
+
+module.exports = {
+	"module": "hris",
+	"name": "hris",
+	"pathInfo": "/Users/codingMonkey/Sites/develop/appDev/modules/hris/.appRAD.info",
+	"iconPath": "/appRAD/portal/icon.jpg",
+	"labels": {
+		"installed": {
+			"/hris/errors": "/hris/errors"
+		}
+	},
+	"sqlTables": {
+		"hris2_attributes": "hris2_attributes",
+		"hris2_type_trans": "hris2_type_trans",
+		"hris2_attributes_trans": "hris2_attributes_trans",
+		"hris2_attributeset": "hris2_attributeset",
+		"hris2_attributeset_trans": "hris2_attributeset_trans",
+		"hris2_object": "hris2_object",
+		"hris2_object_type": "hris2_object_type",
+		"hris2_person": "hris2_person",
+		"hris2_type": "hris2_type",
+		"hris_passport": "hris_passport",
+		"hris2_relationship": "hris2_relationship",
+		"hris2_lookup": "hris2_lookup",
+		"hris2_lookup_trans": "hris2_lookup_trans"
+	}
+};   

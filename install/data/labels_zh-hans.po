@@ -1,0 +1,31 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8"
+"Content-Transfer-Encoding: 8bit"
+
+#. #########################################
+#. Labels for module: hris
+#. Source language: en
+#. Target language: zh-hans
+#. #########################################
+
+
+
+#. path: /hris/errors
+#. code: zh-hans
+#. key: [hris.error.objNotFound]
+msgid "Requested Object not found."
+msgstr "[zh-hans]: Requested Object not found"
+
+#. path: /hris/errors
+#. code: zh-hans
+#. key: [hris.error.packagingObj]
+msgid "Error packaging object for export."
+msgstr "[zh-hans]: Error packaging object for export."
+
+#. path: /hris/errors
+#. code: zh-hans
+#. key: [hris.error.tableAccess]
+msgid "Error accessing expected table."
+msgstr "[zh-hans]: Error accessing expected table.\n"
+
