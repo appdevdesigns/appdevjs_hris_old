@@ -26,9 +26,10 @@ var hrisUserFamilySetup = function (topic, data) {
 
     //// Setup Your Page Data/ Operation Here
     $('#personList').person_list();
-    
+    $('#personSummary').person_summary();
 
-$('#attributeSetList').attribute_set_list();
+
+    $('#attributeSetList').attribute_set_list();
 /*
  		//// NOTE: all your business logic should be contained in separate 
  		////       Controllers (userFamily/scripts/*.js ).  This file is 
