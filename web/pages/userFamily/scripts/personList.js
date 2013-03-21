@@ -67,6 +67,26 @@
                 // replaced with our Label.  Careful to not put this on places that have other content!
                 this.xlateLabels();
             },
+		onSelection: function(el) {
+
+            	// remove existing selected item marker
+            	if (this.selected != null) {
+                    this.selected.removeClass('active');
+            		var div = this.selected.find('.module-active');
+            		div.remove();
+            	}
+            	
+            	// show new existing selected item marker
+            	this.selected = $(el.currentTarget);
+                this.selected.addClass('active');
+            	var selectedDiv = $('<div class="module-active"></div>');
+            	selectedDiv.css('width', this.selected.css('width'));
+            	this.selected.prepend(selectedDiv);
+            	
+            	// send event: module.selected
+            	var model = this.selected.data('adModel');
+            	AD.Comm.Notification.publish('userFamily.person.selected', model);
+            },
             
 
             
