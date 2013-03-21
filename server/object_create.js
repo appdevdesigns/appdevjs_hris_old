@@ -148,7 +148,7 @@ hrisObjectCreate.setup = function( app ) {
 	    
 	    // on a successful create operation: we need to send back the new
 	    // primary key of the created object.
-	    // the HRiS.Express.createObject should have recoreded it in req.aRAD.id
+	    // the HRiS.Express.createObject should have recorded it in req.aRAD.id
 	    
 	   
 	    
