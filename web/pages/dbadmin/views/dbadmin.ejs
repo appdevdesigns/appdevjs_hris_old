@@ -1,0 +1,19 @@
+<!-- Beginning Dbadmin view definition -->
+<%
+var $ = AD.jQuery;
+
+// This is SERVER side, so let's make displaying labels easier:
+// use:  < %- L('[labelKey]') % >
+var L = function(key) { return data.labels.getLabel(key); };
+var pL = function(prependText, key) {
+    // prepend the given text to the result of the label
+    var label = $(L(key)).prepend(prependText);
+    return $('<div>').append(label).html();
+};
+%>
+Hey This is Dbadmin!
+The template data object is:
+<hr>
+<%
+var convertedData = JSON.stringify(data, null, '\t');
+%><pre><%- convertedData %></pre>
