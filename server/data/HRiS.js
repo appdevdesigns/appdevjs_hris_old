@@ -2019,6 +2019,17 @@ HRiS.Lookups = {};
 
 
 
+// these link definitions define the urls for an instance of an object.
+// these definitions are used to respond to the client side: AD.Comm.API.link() requests
+HRiS.publicLinks = {
+      findAll: { method:'GET',    uri:'/hris/[object_key]', params:{}, type:'resource' }, 
+      findOne: { method:'GET',    uri:'/hris/[object_key]/[id]', params:{}, type:'resource' },
+      create:  { method:'POST',   uri:'/hris/[object_key]', params:{}, type:'action' },
+      update:  { method:'PUT',    uri:'/hris/[object_key]/[id]', params:{}, type:'action' },
+      destroy: { method:'DELETE', uri:'/hris/[object_key]/[id]', params:{}, type:'action' },
+}
+
+
 
 /**
  * @class hris.server.subscriptions
@@ -2040,3 +2051,4 @@ var __doc;
 ///// TODO: on hris.Attribute.*: clear HRiS.Objects.List[objKey]
 ///// TODO: on hris.Relationship.*: clear HRiS.Objects.List[objKey_objA], HRiS.Objects.List[objKey_objB]
 ///// TODO: on hris.Object.destroyed: clear HRiS.Objects.List[objKey]
+///// TODO: on node bootup, need to repost the site/api publicLinks for all defined Objects
