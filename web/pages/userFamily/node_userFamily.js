@@ -45,6 +45,7 @@ var userFamilyPage = new AD.App.Interface({
     themePageStyle: 'empty',
 */
     listWidgets: [ 
+'appdev_list_carousel'
 // AppRAD: WIDGET DEPENDENCY //    
                  ]
     });

@@ -41,10 +41,25 @@
                 
                 // insert our DOM elements
                 this.insertDOM();
-                
-                
+                 var _self = this;
+                this.listPersons =  hris.Person.listIterator({});
                 // attach other widgets & functionality here:
-                
+                this.$carousel = this.element.find('#myCarousel').appdev_list_carousel({
+                	dataManager:this.listPersons,
+                	onSelection:function (el){ 
+                		_self.onSelection(el);
+                		},
+                		
+                	// onElement: is a provided callback to generate the individual contents of the carousel
+                	onElement:function(rowMgr){
+                		return '<img src="'+(rowMgr.iconPath || '/appRAD/portal/images/icon_application.png')+'" width="75" height="75" alt="">'+
+        				'<div class="module-name"><h5>'+rowMgr.getLabel()+ '</h5></div>';
+                	},
+                	
+                	// template: is an ejs template (using '[' tags) where 'this' refers to the individual Model obj 
+ //               	template:'<img src="[%== this.iconPath || "/theme/default/images/icon.jpg" %]" width="75" height="75" alt="">'+
+ //   				'<div class="module-name"><h5>[%= this.getLabel() %]</h5></div>'
+                });
                 
                 
                 // translate Labels
