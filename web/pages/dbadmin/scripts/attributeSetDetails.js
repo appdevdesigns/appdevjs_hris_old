@@ -61,6 +61,11 @@
             },
 
             'dbadmin.attributeset.item.selected subscribe': function(msg, model){
+              this.element.find('#attributeset_table').val(model.attributeset_table);
+              this.element.find('#attributeset_relation').val(model.attributeset_relation);
+              this.element.find('#attributeset_uniqueKey').val(model.attributeset_uniqueKey);
+              this.element.find('#attributeset_key').val(model.attributeset_key);
+              this.element.find('#attributeset_pkey').val(model.attributeset_pkey);
               this.element.show();
             },
 
@@ -72,4 +77,8 @@
               this.element.hide();
             },
 
+
+        });
+
+    }) ();
 

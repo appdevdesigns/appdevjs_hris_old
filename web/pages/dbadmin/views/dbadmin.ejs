@@ -13,12 +13,6 @@ var pL = function(prependText, key) {
 %>
 
 <style type="text/css">
-    #dbAdmin-container td {
-        vertical-align: top;
-    }
-    #dbAdmin-container td > div {
-        display: none;
-    }
     .item-list-container {
         /*max-width: 15em;*/
         padding-top: 0; /* compensate for the large H3 margins */
@@ -38,9 +32,9 @@ var pL = function(prependText, key) {
             <div id="attribute-list"></div>
         </div>
         <div class="span9 well">
-            <div id="object-details"></div>
-            <div id="attribute-set-details"></div>
-            <div id="attribute-details"></div>
+            <div id="object-details" style="display:none;"></div>
+            <div id="attribute-set-details" style="display:none;"></div>
+            <div id="attribute-details" style="display:none;"></div>
         </div>
     </div>
 </div>

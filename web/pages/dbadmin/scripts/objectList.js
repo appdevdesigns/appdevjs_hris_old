@@ -116,7 +116,7 @@
                 // Publish event
                 var model = el.data('item-model');
                 AD.Comm.Notification.publish(
-                    "dbadmin.object.item selected",
+                    "dbadmin.object.item.selected",
                     model
                 );
                 
