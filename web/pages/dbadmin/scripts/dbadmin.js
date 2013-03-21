@@ -28,8 +28,8 @@ var hrisDbadminSetup = function (topic, data) {
 
     $('#object-list').object_list();
     $('#object-details').object_details();
-    $('#attributeSet-list').attribute_set_list();
-    $('#attributeSet-details').attribute_set_details();
+    $('#attribute-set-list').attribute_set_list();
+    $('#attribute-set-details').attribute_set_details();
     $('#attribute-list').attribute_list();
     $('#attribute-details').attribute_details();
 
