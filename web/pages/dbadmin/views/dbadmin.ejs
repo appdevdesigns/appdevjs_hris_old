@@ -13,8 +13,20 @@ var pL = function(prependText, key) {
 %>
 
 <style type="text/css">
+    #dbAdmin-container td {
+        vertical-align: top;
+    }
     #dbAdmin-container td > div {
         display: none;
+    }
+    .item-list-container {
+        /*max-width: 15em;*/
+        padding-top: 0; /* compensate for the large H3 margins */
+    }
+    .item-list {
+        /* scrollable list */
+        max-height: 15em;
+        overflow: auto;
     }
 </style>
 

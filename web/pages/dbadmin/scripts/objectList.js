@@ -20,6 +20,7 @@
             init: function (el, options) {
 
                 //// Setup your controller here:
+                var self = this;
                 
                 // make sure defaults are taken care of
                 var defaults = {
@@ -45,6 +46,10 @@
                 
                 // attach other widgets & functionality here:
                 
+                hris.Object.bind('updated', function() {
+                    // Refresh the list when data is updated
+                    self.populate();
+                });
                 
                 
                 // translate Labels
@@ -59,6 +64,65 @@
                 
                 this.element.html(this.view('/hris/dbadmin/view/objectList.ejs', {}));
                 
+                //this.element.find('input.typeahead').typeahead();
+                
+                this.populate();
+                
+                this.element.show();
+                
+            },
+            
+            /**
+             * Add a single item to the list
+             */
+            addItem: function(model) {
+                var itemHTML = this.view('/hris/dbadmin/view/objectList_item.ejs', {
+                    "label": model.attr('object_key')
+                });
+                var $item = $(itemHTML);
+                $item.data('item-model', model);
+                this.element.find('.item-list').append($item);
+            },
+            
+            /**
+             * Add all items to the list
+             */
+            populate: function() {
+                var self = this;
+                
+                // Clear any previous items
+                this.element.find('.item-list').empty();
+                
+                // Add new items to the list
+                hris.Object.findAll({})
+                .then(function(list) {
+                    console.log(list);
+                    for (var i=0; i<list.length; i++) {
+                        self.addItem(list[i]);
+                    }
+                })
+                .fail(function(err) {
+                    AD.alert("Error");
+                    console.log(err);
+                });
+            },
+            
+            ".list-item click": function(el, ev) {
+                
+                // Highlight the clicked item only
+                this.element.find('ul li.active').removeClass('active');
+                el.addClass('active');
+                
+                // Publish event
+                var model = el.data('item-model');
+                AD.Comm.Notification.publish(
+                    "dbadmin.object.item selected",
+                    model
+                );
+                
+                // suppress the #
+                return false;
+
             }
             
             
