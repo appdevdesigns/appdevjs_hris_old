@@ -26,6 +26,13 @@ var hrisDbadminSetup = function (topic, data) {
 
     //// Setup Your Page Data/ Operation Here
 
+    $('#object-list').object_list();
+    $('#object-details').object_details();
+    $('#attributeSet-list').attribute_set_list();
+    $('#attributeSet-details').attribute_set_details();
+    $('#attribute-list').attribute_list();
+    $('#attribute-details').attribute_details();
+
 /*
  		//// NOTE: all your business logic should be contained in separate 
  		////       Controllers (dbadmin/scripts/*.js ).  This file is 

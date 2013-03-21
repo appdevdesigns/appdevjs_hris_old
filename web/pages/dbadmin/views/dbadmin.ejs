@@ -11,9 +11,24 @@ var pL = function(prependText, key) {
     return $('<div>').append(label).html();
 };
 %>
-Hey This is Dbadmin!
-The template data object is:
-<hr>
-<%
-var convertedData = JSON.stringify(data, null, '\t');
-%><pre><%- convertedData %></pre>
+
+<style type="text/css">
+    #dbAdmin-container td > div {
+        display: none;
+    }
+</style>
+
+<table id="dbAdmin-container" width="100%">
+    <tr>
+        <td class="well">
+            <div id="object-list"></div>
+            <div id="attribute-set-list"></div>
+            <div id="attribute-list"></div>
+        </td>
+        <td class="well">
+            <div id="object-details"></div>
+            <div id="attribute-set-details"></div>
+            <div id="attribute-details"></div>
+        </td>
+    </tr>
+</table>
