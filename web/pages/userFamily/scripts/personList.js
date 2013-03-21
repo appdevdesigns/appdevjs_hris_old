@@ -52,7 +52,7 @@
                 		
                 	// onElement: is a provided callback to generate the individual contents of the carousel
                 	onElement:function(rowMgr){
-                		return '<img src="'+(rowMgr.iconPath || '/appRAD/portal/images/icon_application.png')+'" width="75" height="75" alt="">'+
+                		return '<img src="'+(rowMgr.iconPath || '/hris/images/person.png')+'" width="75" height="75" alt="">'+
         				'<div class="module-name"><h5>'+rowMgr.getLabel()+ '</h5></div>';
                 	},
                 	
