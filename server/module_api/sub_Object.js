@@ -20,6 +20,7 @@ module.exports = hrisObject;
 
 
 var hrisHub = null;   // Module's Notification Center (note: be sure not to use this until setup() is called)
+var HRiS= null;       // the shared HRiS code.
 
 var sqlCommands = {
         newTable : 'CREATE TABLE '+AD.Defaults.dbName+'.`[object_table]` ( `[object_pkey]` int(11) unsigned NOT NULL AUTO_INCREMENT, PRIMARY KEY (`[object_pkey]`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8;',
@@ -35,7 +36,7 @@ hrisObject.setup = function() {
     //
 
     hrisHub = this.module.hub;  // <-- should have a reference to our Module
-
+    HRiS = this.module.HRiS;
 //console.log('started hrisObject hub');
 
 
@@ -60,18 +61,20 @@ hrisObject.setup = function() {
 
         Object.findOne({id:data.id}, function(object) {
 
+            var attrs = object.attrs();
+
             //// OK, make sure this object is cached for us:
             cachedObjects[object[Object.id]] = object.attrs();
-
-
+            
+            
             // sql:
             // CREATE TABLE `hris2_attributes` (
             //   `attribute_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
             //   PRIMARY KEY (`attribute_id`)
             // ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+        	
             var sql = AD.Util.String.render(sqlCommands.newTable, object.attrs());
-
+        	
 // console.log('sql:'+sql);
 
 
@@ -83,6 +86,19 @@ hrisObject.setup = function() {
 // console.log('hey! check it out!');
              });
 
+
+
+             //// Now get the object_key and
+             var newLinks = AD.Util.Object.clone(HRiS.publicLinks);
+             for (var l in newLinks) {
+                 newLinks[l].uri = AD.Util.String.render(newLinks[l].uri, attrs);
+             }
+//console.log('');
+//console.log('newLinks:');
+//console.log(newLinks);
+
+             ////Register the public site/api
+             hrisObject.setupSiteAPI(attrs['object_key'], newLinks);
         });
 
     }
@@ -175,6 +191,29 @@ console.log('sql:'+sql);
 //console.log(cachedObjects);
 //console.log('--------------');
 //console.log();
+
+           //// now announce all the public API for those defined objects:
+           // for each object
+           for (var i=0; i<list.length; i++) {
+               var attrs = list[i].attrs();
+
+               // clone the link with object substitutions:
+               var newLinks = AD.Util.Object.clone(HRiS.publicLinks);
+               for (var l in newLinks) {
+                   newLinks[l].uri = AD.Util.String.render(newLinks[l].uri, attrs);
+               }
+
+               ////Register the public site/api
+               hrisObject.setupSiteAPI(attrs['object_key'], newLinks);
+               console.log(' ... HRiS : registering defined object :'+attrs['object_key']);
+           }
+
+//console.log('');
+//console.log('newLinks:');
+//console.log(newLinks);
+
+
+
         });
     }
     hrisHub.subscribe(AD.Const.Notifications.MODULE_READY, initializeCachedObjects);

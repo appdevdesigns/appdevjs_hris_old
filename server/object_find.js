@@ -44,6 +44,7 @@ var actionFind = function(req, res, next) {
 }
 
 
+
 ////---------------------------------------------------------------------
 var whichObject = function (req, res, next) {
     // Prepare the rest of the method to use the given object
@@ -52,65 +53,7 @@ var whichObject = function (req, res, next) {
     log(req, '   - whichObject(): object_find checking for object');
 
     HRiS.Express.whichObject(req, res, next);
-/*    
-    var objKey = req.param('objKey');
 
-//console.log('object['+objKey+']');
-
-    // if we can get a definition from this object, then it is
-    // valid.
-
-    var loaded = HRiS.Objects.definition(objKey);
-    $.when(loaded)
-        .then(function(tableInfo){
-//console.log();
-//console.log( tableInfo);
-            
-            if( tableInfo) {
-                
-                // we got a definition, so objKey must be good.
-                // just continue on:
-                req.aRAD.objectKey = objKey; 
-                req.aRAD.tableInfo = tableInfo;
-                
-                // check for findOne :id
-                var id = req.param('id');
-                if (undefined !== id) {
-                    // we've been given an object id
-                    // stuff this value in req.query so it filters our results:
-                    req.query[tableInfo.pKey] = parseInt(id);
-                }
-//console.log('*** ID: ');
-//console.log(id);
-//console.log(req.query);
-                next();
-            
-            } else {
-                
-                // no tableInfo found for this object ... :(
-                errorDump(req, 'no object ['+objKey+'] found ...');
-                
-                // service response
-                errorMSG(req, res, 'OBJ_NOT_FOUND', {}, AD.Const.HTTP.ERROR_NOTFOUND);
-                
-            }
-        })
-        .fail(function(err){
-            
-            //// DB Error here:
-            
-            // server console message
-            error(req, 'error finding table info ...');
-            errorDump(req, err);
-            
-            // service response
-            //var errorData = { errorID:55, errorMSG:'error finding table info for object ['+objKey+']', data:err };
-            //AD.Comm.Service.sendError(req, res, errorData, AD.Const.HTTP.ERROR_SERVER ); // 500 : our fault
-            errorMSG(req, res, 'ERR_TABLE_ACCESS', err, AD.Const.HTTP.ERROR_NOTFOUND);
-            
-        });
-    
-*/
 }
 
 
@@ -593,9 +536,6 @@ var publicLinks = {
         findOne: { method:'GET',    uri:'/hris/[object_key]/[id]', params:{}, type:'resource' },
 }
 
-var urlFindAll = publicLinks.findAll.uri.replace('[id]',':id').replace('[object_key]', ':hrisObjKey');
-var urlfindOne = publicLinks.findOne.uri.replace('[id]',':id').replace('[object_key]', ':hrisObjKey');
-
 
 
 
@@ -606,6 +546,9 @@ hrisObjectFindAll.setup = function( app ) {
     HRiS = this.module.HRiS;
     errorMSG = this.module.Error;
     
+    var urlFindAll = HRiS.publicLinks.findAll.uri.replace('[id]',':id').replace('[object_key]', ':hrisObjKey');
+    var urlfindOne = HRiS.publicLinks.findOne.uri.replace('[id]',':id').replace('[object_key]', ':hrisObjKey');
+
 
 
     var findAllStack = [
