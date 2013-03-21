@@ -44,9 +44,8 @@
                 
                 
                 // attach other widgets & functionality here:
-                
-                
-                
+
+
                 // translate Labels
                 // any DOM element that has an attrib "appdLabelKey='xxxx'" will get it's contents
                 // replaced with our Label.  Careful to not put this on places that have other content!
@@ -59,9 +58,96 @@
                 
                 this.element.html(this.view('/hris/dbadmin/view/attributeSetDetails.ejs', {}));
                 
-            }
+            },
+
+            'dbadmin.attributeset.item.selected subscribe': function(msg, model){
+              this.element.show();
+            },
+
+            'dbadmin.object.item.selected subscribe': function(msg, model){
+              this.element.hide();
+            },
+
+            'dbadmin.attribute.item.selected subscribe': function(msg, model){
+              this.element.hide();
+            },
+
+
+//// To setup default functionality
+/*
+            '.col1 li dblclick' : function (e) {
             
+                this.element.find('#someDiv').append(e);
+            },
+*/
+
+//// To Add Subscriptions:
+/*
+            'apprad.module.selected subscribe': function(message, data) {
+                // data should be { name:'[moduleName]' }
+                this.module = data.name;
+                this.setLookupParams({module: data.name});
+            },
+*/
+        });
+        
+    }) ();
+
+// });  // end steal
+            'dbadmin.attributeset.item.selected subscribe': function(msg, model){
+              this.element.show();
+            },
+
+
+//// To setup default functionality
+/*
+            '.col1 li dblclick' : function (e) {
             
+                this.element.find('#someDiv').append(e);
+            },
+*/
+
+//// To Add Subscriptions:
+/*
+            'apprad.module.selected subscribe': function(message, data) {
+                // data should be { name:'[moduleName]' }
+                this.module = data.name;
+                this.setLookupParams({module: data.name});
+            },
+*/
+        });
+        
+    }) ();
+
+// });  // end steal
+
+            'dbadmin.attributeset.item.selected subscribe': function(msg, model){
+              this.element.show();
+            },
+
+
+//// To setup default functionality
+/*
+            '.col1 li dblclick' : function (e) {
+            
+                this.element.find('#someDiv').append(e);
+            },
+*/
+
+//// To Add Subscriptions:
+/*
+            'apprad.module.selected subscribe': function(message, data) {
+                // data should be { name:'[moduleName]' }
+                this.module = data.name;
+                this.setLookupParams({module: data.name});
+            },
+*/
+        });
+        
+    }) ();
+
+// });  // end steal
+
 //// To setup default functionality
 /*
             '.col1 li dblclick' : function (e) {
