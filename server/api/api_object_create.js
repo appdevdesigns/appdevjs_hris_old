@@ -159,7 +159,7 @@ hrisObjectCreate.setup = function( app ) {
     
 	////---------------------------------------------------------------------
 	app.post(urlCreate, createStack, function(req, res, next) {
-//app.get('/hris/apii/create/:objKey', createStack, function(req, res, next) {
+//app.get('/hris/api/create/:objKey', createStack, function(req, res, next) {
 	    // test using: http://localhost:8088/hris/api/attributeset
 	
 	
