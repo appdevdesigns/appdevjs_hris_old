@@ -26,6 +26,7 @@ var hrisUserFamilySetup = function (topic, data) {
 
     //// Setup Your Page Data/ Operation Here
     $('#personList').person_list();
+    $('#personSummary').person_summary();
 
 /*
  		//// NOTE: all your business logic should be contained in separate 
