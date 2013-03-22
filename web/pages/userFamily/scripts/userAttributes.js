@@ -75,7 +75,7 @@
                             self.addItem(list[i]);   
                             
                         }
-                        
+                        self.attrModelList= list;
                     })
                     .fail(function(err){
                           console.log(err);
@@ -90,17 +90,33 @@
 		this.element.find('.userAttributeRow').remove();
  $('#attributeDetailContainer').hide();
 	    },
-	addItem: function(model){
+	        addItem: function(model){
                 
                 var view = this.view('/hris/userFamily/view/userAttributeItem.ejs', {model: model, person: this.person});
              var $div = $(view);
                           
-                          
-            this.element.append($div);
+            this.element.find('#attributeSetDetail').append($div);
                 
                 
             },
-            
+            '#user_attr_save click': function(el, ev){
+                
+                for (var i=0; i< this.attrModelList.length; i++){
+                 var model= this.attrModelList[i];
+                    var value = $('#tb_' + model.attribute_label).val();
+                   var oldValue= this.person.attr(model.attribute_column)
+                    if(value != oldValue){
+                        this.person.attr(model.attribute_column, value) ;
+                        this.person.save();
+                    }
+                
+                
+                }
+                
+                
+                
+                
+            },
 
             
             insertDOM: function() {
