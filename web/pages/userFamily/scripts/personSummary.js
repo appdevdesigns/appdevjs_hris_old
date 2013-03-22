@@ -42,8 +42,7 @@
                 // insert our DOM elements
                 this.insertDOM();
                 var _self = this;
-                this.listPersonInfo =  hris.Person.listIterator({});
-                
+                              
                 // attach other widgets & functionality here:
                 
                 
@@ -59,6 +58,7 @@
             insertDOM: function() {
                 
                 this.element.html(this.view('/hris/userFamily/view/personSummary.ejs', {}));
+                this.element.hide();
                 
             },
             
@@ -80,8 +80,15 @@
             },           
             
 */
-            'apprad.hris.selected subscribe' : function(message, data) {
-            	
+            'userFamily.person.selected subscribe' : function(message, model) {
+            	this.element.show();
+               $('#person-name').text(model.person_surname + ' ' + model.person_givenname);
+               $('#person-gender').text(model.gender_id);
+               $('#person-workstatus').text("[WorkStatus]");
+               $('#person-chinesename').text("[Chinesename]");
+               $('#person-dob').text('[dateofbirth]');
+ 
+             
             }
         });
         
