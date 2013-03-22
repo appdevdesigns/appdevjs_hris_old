@@ -45,7 +45,7 @@
                 // insert our DOM elements
                 this.insertDOM();
 
-                this.model = new hris.Object();
+                this.model = new hris.Attributeset();
                 this.addForm.ad_form({
                     dataManager: this.model,
                     dataValid: this.isValid,
@@ -54,7 +54,8 @@
                     cancel: 'button.cancel',
                     onSubmit: this.onSubmit,
                     onCancel: function() {
-                        console.log( 'Canceled' );
+                        self.ADForm.clear();
+                        self.element.hide();
                         return false;
                     }
                 });
@@ -69,8 +70,6 @@
                 this.xlateLabels();
             },
             
-
-            
             insertDOM: function() {
                 
                 this.element.html(this.view('/hris/dbadmin/view/attributeSetDetails.ejs', {}));
@@ -83,10 +82,10 @@
             },
 
             onSubmit: function( model ) {
-                console.log( model );
                 model.save( function( data ) {
                     console.log( data );
                 } );
+                return false; //prevent defaults
             },
 
             refreshData: function( model ) {
@@ -108,6 +107,12 @@
             'dbadmin.attributeset.item.selected subscribe': function(msg, model){
               this.refreshData( model );
               this.element.show();
+            },
+
+            'dbadmin.attributeset.item.add-new subscribe': function( msg, model ) {
+                //Refresh the form data with a new Object model and show it
+                this.refreshData( new hris.Attributeset() );
+                this.element.show();
             },
 
             'dbadmin.object.item.selected subscribe': function(msg, model){

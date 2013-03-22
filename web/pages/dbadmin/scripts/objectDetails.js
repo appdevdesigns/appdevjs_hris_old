@@ -45,7 +45,7 @@
                 this.insertDOM();
 
                 this.model = new hris.Object();
-                this.addForm.ad_form({
+                this.addForm.ad_form( {
                     dataManager: this.model,
                     dataValid: this.isValid,
                     error: '.text-error',
@@ -53,10 +53,11 @@
                     cancel: 'button.cancel',
                     onSubmit: this.onSubmit,
                     onCancel: function() {
-                        console.log( 'Canceled' );
+                        self.ADForm.clear();
+                        self.element.hide();
                         return false;
                     }
-                });
+                } );
 
                 this.ADForm = this.addForm.data( 'ADForm' );
 
@@ -73,10 +74,10 @@
             },
 
             onSubmit: function( model ) {
-                console.log( model );
                 model.save( function( data ) {
                     console.log( data );
                 } );
+                return false;
             },
 
             refreshData: function( model ) {
@@ -90,7 +91,14 @@
             },
 
             'dbadmin.object.item.selected subscribe': function( msg, model ) {
+                //Refresh the form data with the given model and show it
                 this.refreshData( model );
+                this.element.show();
+            },
+
+            'dbadmin.object.item.add-new subscribe': function( msg, model ) {
+                //Refresh the form data with a new Object model and show it
+                this.refreshData( new hris.Object() );
                 this.element.show();
             },
 

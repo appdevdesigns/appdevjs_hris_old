@@ -101,7 +101,10 @@
                         );
                     },
                     onAdd: function(ev) {
-                        alert('add');
+                        AD.Comm.Notification.publish(
+                            "dbadmin."+ self.options.modelName.toLowerCase() +".item.add-new",
+                            {}
+                        );
                     },
                     onDelete: function(model) {
                         //alert('delete');
