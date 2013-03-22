@@ -89,20 +89,18 @@
             if (this.api_person_object_id === undefined) {
                 return;
             }
-			var found =  hris.Attributeset.findAll({object_id: this.api_person_object_id});
+            var found =  hris.Attributeset.findAll({object_id: this.api_person_object_id});
 			$.when(found)
-                    		.then(function(list){
-                        		
-					self.element.find('.userAttributeRow').remove();
-self.element.find('.attribute_Set_List').remove();
-                        		for (var i=0; i< list.length; i++){
-
-						
-                            			self.addItem(list[i]);   
-                            		}
+                   .then(function(list){
+                        self.element.find('.userAttributeRow').remove();
+                        self.element.find('.attribute_Set_List').remove();
                         
-                    		})
-                    		.fail(function(err){ })
+                       
+                        for (var i=0; i< list.length; i++){
+                            self.addItem(list[i]);  
+                            } 
+                        })
+                        .fail(function(err){ })
                       
                 //    })
                 //    .fail(function(err){
@@ -111,7 +109,7 @@ self.element.find('.attribute_Set_List').remove();
 
             },
 	    '.attribute_Set_List click': function(el, ev){
-
+$('#attributeDetailContainer').hide();
                 var model = el.data('ad-model');
 		
                 AD.Comm.Notification.publish('userFamily.attributeSetItem.selected', model);
