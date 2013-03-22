@@ -31,9 +31,9 @@ msgstr "[zh-hans]: Error accessing expected table.\n"
 
 #. path: /page/hris/dbadmin
 #. code: zh-hans
-#. key: [list.title.Object]
-msgid "Objects"
-msgstr "Objects"
+#. key: [list.delete.confirmation]
+msgid "There will be Consequences™ for deleting this. Do you really want to do this?"
+msgstr "There will be Consequences™ for deleting this. Do you really want to do this?"
 
 #. path: /page/hris/dbadmin
 #. code: zh-hans
@@ -46,6 +46,12 @@ msgstr "Attributes"
 #. key: [list.title.Attributeset]
 msgid "Attribute Sets"
 msgstr "Attribute Sets"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [list.title.Object]
+msgid "Objects"
+msgstr "[zh-hans]:Objects"
 
 #. path: /page/hris/dbadmin
 #. code: zh-hans
