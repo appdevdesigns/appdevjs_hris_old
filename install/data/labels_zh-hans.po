@@ -65,3 +65,39 @@ msgstr "[zh-hans]:Attributes"
 msgid "[zh-hans]:Attribute Sets"
 msgstr "[zh-hans]:Attribute Sets"
 
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.Object.label.object_key]
+msgid "Key"
+msgstr "[zh-hans]:Key"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.Object.label.object_table]
+msgid "Table"
+msgstr "[zh-hans]:Table"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.Object.label.object_pkey]
+msgid "Primary Key"
+msgstr "[zh-hans]:Primary Key"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.label.save]
+msgid "Save"
+msgstr "[zh-hans]:Save"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.label.cancel]
+msgid "Cancel"
+msgstr "[zh-hans]:Cancel"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.Object.title]
+msgid "Object details"
+msgstr "[zh-hans]:Object details"
+

@@ -13,26 +13,29 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 //                               should be the multilingual info
 %>
 <form class="form-horizontal">
+	<fieldset>
+	<legend><%== L( '[details.Object.title]' ) %></legend>
 	<div class="control-group">
-		<label class="control-label" for="key">Key</label>
+		<label class="control-label" for="key"><%== L( '[details.Object.label.object_key]' ) %></label>
 		<div class="controls">
 			<input type="text" placeholder="name" data-bind="object_key" />
 		</div>
 	</div>
 	<div class="control-group">
-		<label class="control-label" for="table">DB Table</label>
+		<label class="control-label" for="table"><%== L( '[details.Object.label.object_table]' ) %></label>
 		<div class="controls">
 			<input type="text" placeholder="hris_name" data-bind="object_table" />
 		</div>
 	</div>
 	<div class="control-group">
-		<label class="control-label" for="pkey">Primary Key</label>
+		<label class="control-label" for="pkey"><%== L( '[details.Object.label.object_pkey]' ) %></label>
 		<div class="controls">
 			<input type="text" placeholder="name_id" data-bind="object_pkey" />
 		</div>
 	</div>
 	<div class="form-actions">
-		<button type="button" class="btn btn-primary submit">Save</button>
-		<button type="button" class="btn cancel">Cancel</button>
+		<button type="button" class="btn btn-primary submit"><%== L( '[details.label.save]' ) %></button>
+		<button type="button" class="btn cancel"><%== L( '[details.label.cancel]' ) %></button>
 	</div>
+	</fieldset>
 </form>

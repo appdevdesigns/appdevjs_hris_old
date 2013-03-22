@@ -47,3 +47,57 @@ msgstr "Attributes"
 msgid "Attribute Sets"
 msgstr "Attribute Sets"
 
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: list.title.Object
+msgid ""
+msgstr ""
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: list.title.Attribute
+msgid ""
+msgstr ""
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: list.title.Attributeset
+msgid ""
+msgstr ""
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.Object.label.object_key]
+msgid "Key"
+msgstr "Key"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.Object.label.object_table]
+msgid "Table"
+msgstr "Table"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.Object.label.object_pkey]
+msgid "Primary Key"
+msgstr "Primary Key"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.label.save]
+msgid "Save"
+msgstr "Save"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.label.cancel]
+msgid "Cancel"
+msgstr "Cancel"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.Object.title]
+msgid "Object details"
+msgstr "Object details"
+
