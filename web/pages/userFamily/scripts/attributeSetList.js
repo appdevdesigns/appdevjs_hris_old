@@ -49,8 +49,15 @@
                 
                 
                 // attach other widgets & functionality here:
-                
-                
+
+                // Find the object_id for the object_key = person.
+                var self = this;
+                hris.Object.findAll({object_key: 'person'})
+                .done(function(list) {
+                    if (list[0]) {
+                        self.api_person_object_id = list[0].object_id;
+                    }
+                });
  		
                 
 
@@ -79,8 +86,10 @@
 		//$.when(foundPerson)
                  //   .then(function(person){
 			
-			console.log(model);
-			var found =  hris.Attributeset.findAll({object_id: model.object_id});
+            if (this.api_person_object_id === undefined) {
+                return;
+            }
+            var found =  hris.Attributeset.findAll({object_id: this.api_person_object_id});
 			$.when(found)
                    .then(function(list){
                         self.element.find('.userAttributeRow').remove();
