@@ -19,7 +19,8 @@ var errorDump = AD.Util.ErrorDump;
 Object.acceptableKeys = {
         object:'Object',
         attributeset:'Attributeset',
-        attribute:'Attribute'
+        attribute:'Attribute',
+        relationship:'Relationship'
 }
 
 
@@ -27,29 +28,29 @@ Object.acceptableKeys = {
 ////---------------------------------------------------------------------
 Object.findObject = function (req, res, next) {
     // Find out which object we are asking to work with:
-    
+
     log(req, '   - findObject(): checking valid url ');
 
-    
+
     var objKey = req.param('objKey');
-    
+
     if ((typeof objKey == 'undefined')
             || (typeof Object.acceptableKeys[objKey] == 'undefined')) {
-        
+
         errorDump(req, '     invalid object key ['+objKey+']');
-        Object.ErrorMSG(req, res, 'OBJ_NOT_FOUND', AD.Const.HTTP.ERROR_CLIENT);  
-    
-        
+        Object.ErrorMSG(req, res, 'OBJ_NOT_FOUND', AD.Const.HTTP.ERROR_CLIENT);
+
+
     } else {
-        
+
         log(req, '     objectKey:'+objKey);
         log(req, '     modelName:'+Object.acceptableKeys[objKey]);
-        
+
         req.aRAD.objKey = objKey;
         req.aRAD.modelName = Object.acceptableKeys[objKey];
         req.aRAD.Object = AD.Model.List['hris.'+req.aRAD.modelName];
-        
-        // check for findOne/update/destroy :id 
+
+        // check for findOne/update/destroy :id
         var id = req.param('id');
         if (typeof id != 'undefined') {
             // we've been given an object id
@@ -61,7 +62,7 @@ Object.findObject = function (req, res, next) {
 //console.log(req.aRAD);
         next();
     }
-    
+
 }
 
 
