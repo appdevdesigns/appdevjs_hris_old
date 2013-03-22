@@ -22,8 +22,7 @@
     //connectionType:'server', // optional field
     cache:false,
     existing: function(params) {
-      console.log(this)
-      console.log(params)
+
       var dfd = $.Deferred();
 
       var found = this.findAll({objA_id: params.objA_id,

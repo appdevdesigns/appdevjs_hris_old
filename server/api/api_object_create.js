@@ -30,27 +30,31 @@ var ObjConst = require('./api_object_constants.js');
 
 ////---------------------------------------------------------------------
 var hasPermission = function (req, res, next) {
-  // Verify the current viewer has permission to perform this action.
+    // Verify the current viewer has permission to perform this action.
 
-  var objKey = req.aRAD.objKey;
+if (!AD.Defaults.authRequired) next();
+else {
 
-  var permission = 'hris.'+objKey+'.create';
-  var viewer = AD.Viewer.currentViewer(req);
+    var objKey = req.aRAD.objKey;
 
-  log(req, '   - hasPermission(): checking for : '+permission);
+    var permission = 'hris.'+objKey+'.create';
+    var viewer = AD.Viewer.currentViewer(req);
 
-  // if viewer has 'hris.person.findAll' action/permission
-  if (viewer.hasTask(permission)) {
+    log(req, '   - hasPermission(): checking for : '+permission);
 
-    log(req, '     viewer has permission: '+permission);
-    next();
+    // if viewer has 'hris.person.findAll' action/permission
+    if (viewer.hasTask(permission)) {
 
-  } else {
+        log(req, '     viewer has permission: '+permission);
+        next();
 
-    errorDump(req, '     viewer failed permission check!');
-    ErrorMSG(req, res, 'ERR_NO_PERMISSION', AD.Const.HTTP.ERROR_FORBIDDEN);  // 403 : you don't have permission
+    } else {
 
-  } // end if
+        errorDump(req, '     viewer failed permission check!');
+        ErrorMSG(req, res, 'ERR_NO_PERMISSION', AD.Const.HTTP.ERROR_FORBIDDEN);  // 403 : you don't have permission
+
+    } // end if
+}
 
 }
 
