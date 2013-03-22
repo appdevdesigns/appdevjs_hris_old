@@ -10,19 +10,18 @@ var pL = function(prependText, key) {
     return $('<div>').append(label).html();
 };
 %>
+<div id="ui-container" class="container">
 Family information
 
 <div id="personList"></div>
 
 <div id="personSummary"></div>
 
-<table>
-	<tr>
-		<td class='well'><div id="attributeSetList"></div> </td>
-		<td class='well'><div id="attributeSetDetail" class="form-horizontal"></div> </td>
-	</tr>
-</table>
-
+<div class="row-fluid">
+    <div id="attributeSetList" class="span4 well"></div>
+    <div id="attributeSetDetail" class="span8 well form-horizontal"></div>
+</div>
+</div>
 
 
 

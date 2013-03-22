@@ -43,6 +43,7 @@
                 this.insertDOM();
                  var _self = this;
                 this.listPersons =  hris.Person.listIterator({});
+              
                 // attach other widgets & functionality here:
                 this.$carousel = this.element.find('#myCarousel').appdev_list_carousel({
                 	dataManager:this.listPersons,

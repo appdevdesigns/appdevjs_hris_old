@@ -1,10 +1,10 @@
 .person-name {
     width:75px;
-	text-align:center;
+    text-align:center;
     height:34px;
-	z-index:30;
-	position:absolute;
-	background: rgb(25, 25, 25); /* Fall-back for browsers that don't support rgba */
+    z-index:30;
+    position:absolute;
+    background: rgb(25, 25, 25); /* Fall-back for browsers that don't support rgba */
     background: rgba(25, 25, 25, .5);
     top:42px;
 
@@ -12,10 +12,40 @@
 
 
 .person-name h5 {
-	font-size:12px;
+    font-size:12px;
     line-height:2px !important;
-	color:#FFFFFF;
-	font-weight:normal;
-	margin:4px 0;
+    color:#FFFFFF;
+    font-weight:normal;
+    margin:4px 0;
     text-shadow: 0px 0px 0px;
+}
+
+.person-active {
+	background-image:url(../images/selected.png);
+	background-position: top right;
+	background-repeat:no-repeat;
+	width:60px;
+	height:50px;
+	z-index:30;
+	position:absolute;
+
+}
+
+
+
+#ui-container {
+    width:800px;
+    margin: 0 auto; /*center on the page */
+}
+
+.person-summary, .person-summary tbody, .person-summary td {
+    border: none;
+}
+
+.person-summary h3 {
+    margin: 0;
+}
+
+.person-summary-info{
+    vertical-align: top;
 }
