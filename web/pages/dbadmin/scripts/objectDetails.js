@@ -90,7 +90,6 @@
             },
 
             'dbadmin.object.item.selected subscribe': function( msg, model ) {
-            	console.log('object selected');
                 this.refreshData( model );
                 this.element.show();
             },

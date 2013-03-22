@@ -92,6 +92,17 @@
             refreshData: function( model ) {
                 this.selectedModel = model;
                 this.ADForm.setModel( model );
+                
+                var self = this;
+                
+                hris.Object.findOne({object_id: model.object_id})
+                .then(function(parent) {
+                    self.element.find('#parent-key').html(parent.object_key);
+                })
+                .fail(function(err){
+                    AD.alert("Error");
+                    console.log('error: ' + err);
+                });
             },
 
             'dbadmin.attributeset.item.selected subscribe': function(msg, model){

@@ -32,7 +32,14 @@
                 
                 this.options = options;
                 this.model = hris[options.modelName];
-                this.dataManager = this.model.listIterator({});
+                
+                if (this.model == hris.Object) {
+                    // Initialize with all
+                    this.dataManager = this.model.listIterator({});
+                } else {
+                    // Initialize as empty
+                    this.dataManager = this.model.listIterator(null);
+                }
                 
                 this.initDeleteConfirmation();
                 this.initAdminList();
@@ -86,6 +93,8 @@
                     dataManager: this.dataManager,
                     onSelect: function(ev) {
                         var model = $(ev.currentTarget).data('ad-model');
+                        
+                        // Show the Detail page (and hide others)
                         AD.Comm.Notification.publish(
                             "dbadmin."+ self.options.modelName.toLowerCase() +".item.selected",
                             model
@@ -105,15 +114,16 @@
             },
             
             refresh: function(filter) {
-                if (filter) {
-                    // do stuff here to update the ListIterator's filter
-                }
                 this.listController.clearList();
-                this.dataManager.refresh();
+                
+                if (filter) {
+                    // TODO: Enable filter
+                    this.dataManager.findAll({});
+                    //this.dataManager.findAll(filter);
+                }
             }
-            
 
-            
+
 //// To setup default functionality
 /*
             '.col1 li dblclick' : function (e) {

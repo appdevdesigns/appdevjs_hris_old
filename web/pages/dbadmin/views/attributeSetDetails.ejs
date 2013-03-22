@@ -16,39 +16,32 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 <h2>Attribute Set Details</h2>
 
 <form class='form-horizontal'>
-  <div class='control-group'>
-    <label class='control-label' for='attributeset_table'>Table</label>
-    <div class='controls'>
-      <input type="text" placeholder="hris_person" data-bind="attributeset_table" />
+    <div class='control-group'>
+        <label class='control-label' for='attributeset_relation'>Relation</label>
+        <div class='controls'>
+            <input type="text" placeholder="one" data-bind="attributeset_relation" />
+        </div>
     </div>
-  </div>
-  <div class='control-group'>
-    <label class='control-label' for='attributeset_relation'>Relation</label>
-    <div class='controls'>
-      <input type="text" placeholder="one" data-bind="attributeset_relation" />
+    <div class='control-group'>
+        <label class='control-label' for='attributeset_uniqueKey'>Unique Key</label>
+        <div class='controls'>
+            <input type="checkbox" data-bind="attributeset_uniqueKey" />
+        </div>
     </div>
-  </div>
-  <div class='control-group'>
-    <label class='control-label' for='attributeset_uniqueKey'>Unique Key</label>
-    <div class='controls'>
-      <input type="text" placeholder="false" data-bind="attributeset_uniqueKey" />
-      TODO: bool select
+    <div class='control-group'>
+        <label class='control-label' for='attributeset_key'>Key</label>
+        <div class='controls'>
+            <input type="text" placeholder="name" data-bind="attributeset_key" />
+        </div>
     </div>
-  </div>
-  <div class='control-group'>
-    <label class='control-label' for='attributeset_key'>Key</label>
-    <div class='controls'>
-      <input type="text" placeholder="name" data-bind="attributeset_key" />
+    <div class='control-group'>
+        <label class='control-label' for='attributeset_pkey'>Primary Key</label>
+        <div class='controls'>
+            <input type="text" placeholder="person_id" data-bind="attributeset_pkey" />
+        </div>
     </div>
-  </div>
-  <div class='control-group'>
-    <label class='control-label' for='attributeset_pkey'>Primary Key</label>
-    <div class='controls'>
-      <input type="text" placeholder="person_id" data-bind="attributeset_pkey" />
+    <div class='control-group'>
+        <button class='btn btn-primary submit'>Save</button>
+        <button class='btn cancel'>Cancel</button>
     </div>
-  </div>
-  <div class='control-group'>
-    <button class='btn btn-primary submit'>Save</button>
-    <button class='btn cancel'>Cancel</button>
-  </div>
 </form>

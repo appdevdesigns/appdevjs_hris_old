@@ -26,18 +26,7 @@ var hrisDbadminSetup = function (topic, data) {
 
     //// Setup Your Page Data/ Operation Here
 
-    $('#object-list').dbadmin_list_widget({
-        modelName: 'Object'
-    });
-
-    $('#attribute-set-list').dbadmin_list_widget({
-        modelName: 'Attributeset'
-    });
-
-    $('#attribute-list').dbadmin_list_widget({
-        modelName: 'Attribute'
-    });
-
+    $('#list-sidebar').list_sidebar();
     $('#object-details').object_details();
     $('#attribute-set-details').attribute_set_details();
     $('#attribute-details').attribute_details();

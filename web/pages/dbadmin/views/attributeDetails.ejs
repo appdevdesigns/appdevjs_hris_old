@@ -13,46 +13,42 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 //                               should be the multilingual info
 %>
 
+<h2>Attribute Details</h2>
+
 <form class="form-horizontal">
-  <div class="control-group">
-    <label class="control-label" for="attributeset_id">Attribute Set</label>
-    <div class="controls">
-      TODO: Display parent attribute set
+    <div class="control-group">
+        <label class="control-label" for="attribute_column">Column</label>
+        <div class="controls">
+            <input type="text" placeholder="person_surname" data-bind="attribute_column" />
+        </div>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="attribute_column">Column</label>
-    <div class="controls">
-      <input type="text" placeholder="person_surname" data-bind="attribute_column" />
+    <div class="control-group">
+        <label class="control-label" for="attribute_datatype">DataType</label>
+        <div class="controls">
+            <input type="text" placeholder="name_id" data-bind="attribute_datatype" />
+            TODO: select box?
+        </div>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="attribute_datatype">DataType</label>
-    <div class="controls">
-      <input type="text" placeholder="name_id" data-bind="attribute_datatype" />
-      TODO: select box?
+    <div class="control-group">
+        <label class="control-label" for="meta">Meta</label>
+        <div class="controls">
+            <input type="text" placeholder="???" data-bind="Meta" />
+        </div>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="meta">Meta</label>
-    <div class="controls">
-      <input type="text" placeholder="???" data-bind="Meta" />
+    <div class="control-group">
+        <label class="control-label" for="attribute_permission">Permission</label>
+        <div class="controls">
+            <input type="text" placeholder="???" data-bind="attribute_permission" />
+        </div>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="attribute_permission">Permission</label>
-    <div class="controls">
-      <input type="text" placeholder="???" data-bind="attribute_permission" />
+    <div class="control-group">
+        <label class="control-label" for="attribute_uniqueKey">Unique Key</label>
+        <div class="controls">
+            <input type="checkbox" data-bind="attribute_uniqueKey" />
+        </div>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="attribute_uniqueKey">Column</label>
-    <div class="controls">
-      TODO: bool selector
+    <div class="form-actions">
+        <button type="button" class="btn btn-primary submit">Save</button>
+        <button type="button" class="btn cancel">Cancel</button>
     </div>
-  </div>
-  <div class="form-actions">
-    <button type="button" class="btn btn-primary submit">Save</button>
-    <button type="button" class="btn cancel">Cancel</button>
-  </div>
 </form>
