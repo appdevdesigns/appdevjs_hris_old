@@ -52,17 +52,17 @@
                 // replaced with our Label.  Careful to not put this on places that have other content!
                 this.xlateLabels();
             },
-	    'userFamily.person.selected subscribe': function(msg, data)
+	    'userFamily.person.selected subscribe': function(msg, model)
             {
                 console.log("Got a person");
                  var self= this;
                 
-                var found =  hris.Attributeset.findAll({});
+                var found =  hris.Attributeset.findAll({object_id: model.object_id});
 
 
                 $.when(found)
                     .then(function(list){
-                        self.element.find('attribute_Set_List').remove();
+                        self.element.find('.attribute_Set_List').remove();
                         for (var i=0; i< list.length; i++){
                             console.log(list[i]);
                             
