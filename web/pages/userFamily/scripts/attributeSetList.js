@@ -55,6 +55,34 @@
 	    'userFamily.person.selected subscribe': function(msg, data)
             {
                 console.log("Got a person");
+                 var self= this;
+                
+                var found =  hris.Attributeset.findAll({});
+
+
+                $.when(found)
+                    .then(function(list){
+                        self.element.find('attribute_Set_List').remove();
+                        for (var i=0; i< list.length; i++){
+                            console.log(list[i]);
+                            
+                            self.addItem(list[i]);   
+                            
+                        }
+                        
+                    })
+                    .fail(function(err){
+                          
+                          })
+            },
+ 	    addItem: function(model){
+                
+                var view = this.view('/hris/userFamily/view/attributeSetListItem.ejs', {model: model});
+             var $div = $(view);
+                          
+                          
+            this.element.append($div);
+                
                 
             },
             

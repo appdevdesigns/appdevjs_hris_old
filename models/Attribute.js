@@ -30,7 +30,7 @@
         // Extended model attributes
         AD.jQuery.extend(attr, {
             type:'multilingual',  // 'single' | 'multilingual'
-            dbName:'live_db',
+        //    dbName:'live_db',
             tables:{
                 data:'hris2_attributes',
                 trans:'hris2_attributes_trans'
