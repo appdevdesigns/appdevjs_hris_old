@@ -12,9 +12,11 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 //   appLabelKey="[label.key]"   for elements whose contents (el.html()) 
 //                               should be the multilingual info
 %>
-<style>
-.userAttribute{
-    width: 200px;
-}
-</style>
-<div class='userAttributeRow'><span class='userAttribute'><%= model.attribute_label %></span>:&nbsp;<span class='userAttributeValue'><%= person.attr( model.attribute_column) %> </span></div>
+
+<div class='userAttributeRow control-group'>
+<label class="userAttribute control-label" for="inputEmail"><%= model.attribute_label %></label>
+<div class="controls">
+      <input type="text" id="inputEmail" class="userAttributeValue" placeholder='<%= model.attribute_question %>' value='<%= person.attr( model.attribute_column) %>'>
+</div>
+
+

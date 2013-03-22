@@ -83,7 +83,7 @@
             },
 	    'userFamily.person.selected subscribe': function(msg, model){
 		this.person= model;	
-		
+		this.element.find('.userAttributeRow').remove();
 
 	    },
 	addItem: function(model){
