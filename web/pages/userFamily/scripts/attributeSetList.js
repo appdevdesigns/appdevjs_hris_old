@@ -85,7 +85,7 @@
                     		.then(function(list){
                         		
 					self.element.find('.userAttributeRow').remove();
-
+self.element.find('.attribute_Set_List').remove();
                         		for (var i=0; i< list.length; i++){
 
 						
