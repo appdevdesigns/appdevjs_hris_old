@@ -12,3 +12,47 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 //   appLabelKey="[label.key]"   for elements whose contents (el.html()) 
 //                               should be the multilingual info
 %>
+
+<form class="form-horizontal">
+  <div class="control-group">
+    <label class="control-label" for="attributeset_id">Attribute Set</label>
+    <div class="controls">
+      TODO: Display parent attribute set
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="attribute_column">Column</label>
+    <div class="controls">
+      <input type="text" placeholder="person_surname" data-bind="attribute_column" />
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="attribute_datatype">DataType</label>
+    <div class="controls">
+      <input type="text" placeholder="name_id" data-bind="attribute_datatype" />
+      TODO: select box?
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="meta">Meta</label>
+    <div class="controls">
+      <input type="text" placeholder="???" data-bind="Meta" />
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="attribute_permission">Permission</label>
+    <div class="controls">
+      <input type="text" placeholder="???" data-bind="attribute_permission" />
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="attribute_uniqueKey">Column</label>
+    <div class="controls">
+      TODO: bool selector
+    </div>
+  </div>
+  <div class="form-actions">
+    <button type="button" class="btn btn-primary submit">Save</button>
+    <button type="button" class="btn cancel">Cancel</button>
+  </div>
+</form>

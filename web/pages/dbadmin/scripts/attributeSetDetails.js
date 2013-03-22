@@ -37,15 +37,32 @@
                 
                 
                 this.options = options;
-                
+                var self = this;
+
+                this.selectedModel = null;
+                this.addForm = null;
                 
                 // insert our DOM elements
                 this.insertDOM();
-                
-                
-                // attach other widgets & functionality here:
 
+                this.model = new hris.Object();
+                this.addForm.ad_form({
+                    dataManager: this.model,
+                    dataValid: this.isValid,
+                    error: '.text-error',
+                    submit: 'button.submit',
+                    cancel: 'button.cancel',
+                    onSubmit: this.onSubmit,
+                    onCancel: function() {
+                        console.log( 'Canceled' );
+                        return false;
+                    }
+                });
 
+                this.ADForm = this.addForm.data( 'ADForm' );
+
+                this.element.hide();
+                
                 // translate Labels
                 // any DOM element that has an attrib "appdLabelKey='xxxx'" will get it's contents
                 // replaced with our Label.  Careful to not put this on places that have other content!
@@ -57,15 +74,28 @@
             insertDOM: function() {
                 
                 this.element.html(this.view('/hris/dbadmin/view/attributeSetDetails.ejs', {}));
+                this.addForm = $( 'form', this.element );
                 
             },
 
+            isValid: function( data ) {
+                return true;
+            },
+
+            onSubmit: function( model ) {
+                console.log( model );
+                model.save( function( data ) {
+                    console.log( data );
+                } );
+            },
+
+            refreshData: function( model ) {
+                this.selectedModel = model;
+                this.ADForm.setModel( model );
+            },
+
             'dbadmin.attributeset.item.selected subscribe': function(msg, model){
-              this.element.find('#attributeset_table').val(model.attributeset_table);
-              this.element.find('#attributeset_relation').val(model.attributeset_relation);
-              this.element.find('#attributeset_uniqueKey').val(model.attributeset_uniqueKey);
-              this.element.find('#attributeset_key').val(model.attributeset_key);
-              this.element.find('#attributeset_pkey').val(model.attributeset_pkey);
+              this.refreshData( model );
               this.element.show();
             },
 
@@ -76,7 +106,6 @@
             'dbadmin.attribute.item.selected subscribe': function(msg, model){
               this.element.hide();
             },
-
 
         });
 

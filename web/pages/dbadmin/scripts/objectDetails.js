@@ -82,7 +82,6 @@
             refreshData: function( model ) {
                 this.selectedModel = model;
                 this.ADForm.setModel( model );
-                this.element.show();
             },
             
             insertDOM: function() {
@@ -91,8 +90,18 @@
             },
 
             'dbadmin.object.item.selected subscribe': function( msg, model ) {
+            	console.log('object selected');
                 this.refreshData( model );
-            }
+                this.element.show();
+            },
+
+            'dbadmin.attributeset.item.selected subscribe': function(msg, model){
+              this.element.hide();
+            },
+
+            'dbadmin.attribute.item.selected subscribe': function(msg, model){
+              this.element.hide();
+            },
             
             
 //// To setup default functionality
