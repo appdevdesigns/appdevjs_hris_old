@@ -65,16 +65,16 @@ hrisObject.setup = function() {
 
             //// OK, make sure this object is cached for us:
             cachedObjects[object[Object.id]] = object.attrs();
-            
-            
+
+
             // sql:
             // CREATE TABLE `hris2_attributes` (
             //   `attribute_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
             //   PRIMARY KEY (`attribute_id`)
             // ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-        	
+
             var sql = AD.Util.String.render(sqlCommands.newTable, object.attrs());
-        	
+
 // console.log('sql:'+sql);
 
 
@@ -146,8 +146,6 @@ console.log('sql:'+sql);
 
 
 
-
-        //// 2: Remove any relationships referenced by/to this object
 
         } else {
 
