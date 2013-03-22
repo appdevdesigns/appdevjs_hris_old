@@ -82,12 +82,16 @@
 */
             'userFamily.person.selected subscribe' : function(message, model) {
             	this.element.show();
-               $('#person-name').text(model.person_surname + ' ' + model.person_givenname);
-               $('#person-gender').text(model.gender_id);
-               $('#person-workstatus').text("[WorkStatus]");
-               $('#person-chinesename').text("[Chinesename]");
-               $('#person-dob').text('[dateofbirth]');
- 
+		    		    	
+			   $('#person-name').text(model.person_givenname+ ' ' + model.person_surname );
+			   $('#person-gender').text(model.gender_id);
+			   $('#person-workstatus').text("[WorkStatus]");
+			   $('#person-chinesename').text("[Chinesename]");
+			   if(model.person_birthdate == null) {
+				   $('#person-dob').text('');
+			   } else {
+				   $('#person-dob').text(model.person_birthdate);
+			   }			    
              
             }
         });
