@@ -1,9 +1,9 @@
 
 /**
- * @class hris.server.models.[modelName]
+ * @class hris.server.models.Person
  * @parent hris.server.models
  * 
- *  This is an object to manage the interaction with the hris.[modelName]s service.
+ *  This is an object to manage the interaction with the hris.Persons service.
  */
 
 
@@ -22,7 +22,7 @@
 				_adModule:'hris',
 				_adResource:'person',	// singular
 //				_adModel: [ModelName]   // <-- if the data returned is associated with a diff Model obj, provide it's name here:  _adModel:site.Label,
-				labelKey:'person_surname',
+				labelKey:'person_label',
 				id:'person_id'  // the field that is the id of the data
 		  };
 		  

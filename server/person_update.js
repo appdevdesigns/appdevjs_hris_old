@@ -2,7 +2,7 @@
 //   hris     : the name of this interface's module: (lowercase)
 //   person       : the name of this service :  (lowercase)
 //   Person   : the name of this service :  (Uppercase)
-//   FindAll	  : the action for this service : (lowercase) (optional).
+//   Update	  : the action for this service : (lowercase) (optional).
 //    : a list of required parameters for this service ('param1', 'param2', 'param3')
 
 /**
@@ -11,7 +11,7 @@
  * 
  * Performs the actions for [resource].
  * @apprad resource:[resource] // @appradend (please leave)
- * @apprad action:findAll // @appradend (please leave)
+ * @apprad action:update // @appradend (please leave)
  * @apprad url:[url] // @appradend
  */
 
@@ -36,8 +36,8 @@ var $ = AD.jQuery;
 //var validation = new Validation();
 
 
-var hrisPersonFindAll = new AD.App.Service({});
-module.exports = hrisPersonFindAll;
+var hrisPersonUpdate = new AD.App.Service({});
+module.exports = hrisPersonUpdate;
 
 
 
@@ -49,7 +49,7 @@ var hasPermission = function (req, res, next) {
     // Verify the current viewer has permission to perform this action.
 
 
-    // if viewer has 'hris.person.findAll' action/permission
+    // if viewer has 'hris.person.update' action/permission
         next();
     // else
         // var errorData = { errorID:55, errorMSG:'No Permission' }
@@ -79,10 +79,10 @@ var publicLinks = {
 //        create:  { method:'POST',   uri:'/hris/person', params:{}, type:'action' },
 //        update:  { method:'PUT',    uri:'/hris/person/[id]', params:{module:'hris', page: '[page]'}, type:'action' },
 //        destroy: { method:'DELETE', uri:'/hris/person/[id]', params:{}, type:'action' },
-        findAll: { method:'GET',    uri:'/hris/persons', params:{}, type:'resource' }, 
+        update:  { method:'PUT',    uri:'/hris/person/[id]', params:{}, type:'action' }, 
 }
 
-var serviceURL = publicLinks.findAll.uri.replace('[id]',':id');
+var serviceURL = publicLinks.update.uri.replace('[id]',':id');
 
 var personStack = [
         AD.App.Page.serviceStack,  // authenticates viewer, and prepares req.aRAD obj.
@@ -93,16 +93,16 @@ var personStack = [
     ];
         
 
-hrisPersonFindAll.setup = function( app ) {
+hrisPersonUpdate.setup = function( app ) {
 
 	
 	////---------------------------------------------------------------------
-	app.get(serviceURL, personStack, function(req, res, next) {
+	app.put(serviceURL, personStack, function(req, res, next) {
 	    // test using: http://localhost:8088/hris/person
 	
 	
 	    // By the time we get here, all the processing has taken place.
-	    logDump(req, 'finished /hris/person (findAll)');
+	    logDump(req, 'finished /hris/person (update)');
 	    
 	    
 	    // send a success message
