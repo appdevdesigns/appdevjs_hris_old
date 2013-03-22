@@ -29,3 +29,39 @@ msgstr "[zh-hans]: Error packaging object for export."
 msgid "Error accessing expected table."
 msgstr "[zh-hans]: Error accessing expected table.\n"
 
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [list.title.Object]
+msgid "Objects"
+msgstr "Objects"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [list.title.Attribute]
+msgid "Attributes"
+msgstr "Attributes"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [list.title.Attributeset]
+msgid "Attribute Sets"
+msgstr "Attribute Sets"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: list.title.Object
+msgid "[zh-hans]:Objects"
+msgstr "[zh-hans]:Objects"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: list.title.Attribute
+msgid "[zh-hans]:Attributes"
+msgstr "[zh-hans]:Attributes"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: list.title.Attributeset
+msgid "[zh-hans]:Attribute Sets"
+msgstr "[zh-hans]:Attribute Sets"
+

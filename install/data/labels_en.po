@@ -29,3 +29,21 @@ msgstr "Error packaging object for export."
 msgid "Error accessing expected table."
 msgstr "Error accessing expected table."
 
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [list.title.Object]
+msgid "Objects"
+msgstr "Objects"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [list.title.Attribute]
+msgid "Attributes"
+msgstr "Attributes"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [list.title.Attributeset]
+msgid "Attribute Sets"
+msgstr "Attribute Sets"
+

@@ -26,11 +26,20 @@ var hrisDbadminSetup = function (topic, data) {
 
     //// Setup Your Page Data/ Operation Here
 
-    $('#object-list').object_list();
+    $('#object-list').dbadmin_list_widget({
+        modelName: 'Object'
+    });
+
+    $('#attribute-set-list').dbadmin_list_widget({
+        modelName: 'Attributeset'
+    });
+
+    $('#attribute-list').dbadmin_list_widget({
+        modelName: 'Attribute'
+    });
+
     $('#object-details').object_details();
-    $('#attribute-set-list').attribute_set_list();
     $('#attribute-set-details').attribute_set_details();
-    $('#attribute-list').attribute_list();
     $('#attribute-details').attribute_details();
 
 /*
