@@ -81,6 +81,14 @@ var verifyParams = function (req, res, next) {
       object_table:['notEmpty']
     }
     break;
+    case 'attribute':
+      listRequiredParams = {
+      attributeset_id: ['exists'],
+      attribute_column: ['exists'],
+      attribute_datatype: ['exists'],
+      attribute_label: ['exists']
+    }
+    break;
 
   }
 
@@ -99,7 +107,7 @@ var verifyParams = function (req, res, next) {
 
 ////---------------------------------------------------------------------
 var create = function (req, res, next) {
-  // actually run the Model.findAll() method.
+  // actually run the Model.create() method.
 
 
   var ModelName = req.aRAD.modelName;
