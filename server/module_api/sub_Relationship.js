@@ -119,47 +119,6 @@ hrisRelationship.setup = function() {
     }
     hrisHub.subscribe('hris.Relationship.created', newRelationship);
 
-/*
-    var deleteRelationship = function(event, data) {
-      console.log('======')
-      console.log(data)
-
-      var Relationship = AD.Model.List['hris.Relationship'];
-
-      var Object = AD.Model.List['hris.Object'];
-
-      Object.findOne({id:data.objA_id}, function(objA) {
-        Object.findOne({id:data.objB_id}, function(objB) {
-          // Delete reciprocal relationship
-          switch(data.relationship_type) {
-            case 'belongs_to':
-              var params = {objA_id: objB.object_id,
-                            objB_id: objA.object_id,
-                            relationship_type: 'has_many'};
-
-              Relationship.findAll(params, function(relationships) {
-                if (typeof relationships[0] != 'undefined') {
-                  Relationship.destroy(relationships[0].relationship_id)
-                }
-              });
-              break;
-
-            case 'has_many':
-              var params = {objA_id: objB.object_id,
-                            objB_id: objA.object_id,
-                            relationship_type: 'belongs_to'};
-
-              Relationship.findAll(params, function(relationships) {
-                if (typeof relationships[0] != 'undefined') {
-                  Relationship.destroy(relationships[0].relationship_id)
-                }
-              });
-              break;
-           }
-        });
-      });
-    }
-*/
     var deleteRelationship = function(event, data) {
 
         var Relationship = AD.Model.List['hris.Relationship'];
