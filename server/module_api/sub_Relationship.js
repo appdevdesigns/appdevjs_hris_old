@@ -81,10 +81,9 @@ hrisRelationship.setup = function() {
 
                 // Add the foreign key column
                 var sql = 'ALTER TABLE '+AD.Defaults.dbName+'.'+ objA.object_table + ' ADD ';
-                sql += objB.object_pkey + ' int(10) UNSIGNED';
-                sql += ';'
+                sql += objB.object_pkey + ' int(10) UNSIGNED;';
                 // Add an index
-                sql + 'ALTER TABLE '+AD.Defaults.dbName+'.'+ objA.object_table + ' ADD INDEX (' + objB.object_pkey + ')' ;
+                sql += 'ALTER TABLE '+AD.Defaults.dbName+'.'+ objA.object_table + ' ADD INDEX (' + objB.object_pkey + ');' ;
                 console.log(sql)
                 db.runSQL(sql,[], function(err, results, fields){
                   if (err) {
