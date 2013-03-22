@@ -30,6 +30,9 @@ var hrisUserFamilySetup = function (topic, data) {
 
 
     $('#attributeSetList').attribute_set_list();
+$('#attributeSetDetail').user_attributes();
+
+
 /*
  		//// NOTE: all your business logic should be contained in separate 
  		////       Controllers (userFamily/scripts/*.js ).  This file is 

@@ -54,7 +54,7 @@
                 	// onElement: is a provided callback to generate the individual contents of the carousel
                 	onElement:function(rowMgr){
                 		return '<img src="'+(rowMgr.iconPath || '/hris/images/person.png')+'" width="75" height="75" alt="">'+
-        				'<div class="module-name"><h5>'+rowMgr.getLabel()+ '</h5></div>';
+                        '<div class="person-name"><h5>'+rowMgr.getLabel()+ '</h5></div>';
                 	},
                 	
                 	// template: is an ejs template (using '[' tags) where 'this' refers to the individual Model obj 
@@ -73,14 +73,14 @@
             	// remove existing selected item marker
             	if (this.selected != null) {
                     this.selected.removeClass('active');
-            		var div = this.selected.find('.module-active');
+                    var div = this.selected.find('.person-active');
             		div.remove();
             	}
             	
             	// show new existing selected item marker
             	this.selected = $(el.currentTarget);
                 this.selected.addClass('active');
-            	var selectedDiv = $('<div class="module-active"></div>');
+                var selectedDiv = $('<div class="person-active"></div>');
             	selectedDiv.css('width', this.selected.css('width'));
             	this.selected.prepend(selectedDiv);
             	
