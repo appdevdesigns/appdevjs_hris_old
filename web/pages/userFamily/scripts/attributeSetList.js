@@ -41,6 +41,7 @@
 
 
 
+                this.element.hide();
 
 
                 
@@ -58,40 +59,26 @@
                         self.api_person_object_id = list[0].object_id;
                     }
                 });
- 		
-                
-
-
-
-
-
-
-
-
-
-                
                 // translate Labels
                 // any DOM element that has an attrib "appdLabelKey='xxxx'" will get it's contents
                 // replaced with our Label.  Careful to not put this on places that have other content!
                 this.xlateLabels();
             },
-	    'userFamily.person.selected subscribe': function(msg, model)
+            'userFamily.person.selected subscribe': function(msg, model)
             {
-                console.log("Got a person");
+                this.element.show();
 
 
-		 var self= this;
+                var self= this;
+
+                if (this.api_person_object_id === undefined) {
+                    return;
+                }
                 
-		//var foundPerson = hris.Person.findOne({person_id: model.person_id});
-		//$.when(foundPerson)
-                 //   .then(function(person){
-			
-            if (this.api_person_object_id === undefined) {
-                return;
-            }
-            var found =  hris.Attributeset.findAll({object_id: this.api_person_object_id});
-			$.when(found)
-                   .then(function(list){
+                // Find out which attribute sets apply to the person object
+                var found =  hris.Attributeset.findAll({object_id: this.api_person_object_id});
+                $.when(found)
+                    .then(function(list){
                         self.element.find('.userAttributeRow').remove();
                         self.element.find('.attribute_Set_List').remove();
                         
@@ -100,37 +87,37 @@
                             self.addItem(list[i]);  
                             } 
                         })
-                        .fail(function(err){ })
-                      
-                //    })
-                //    .fail(function(err){
-                //          console.log(err);
-             	//	})
+                    .fail(function(err){ })
 
             },
-	    '.attribute_Set_List click': function(el, ev){
-$('#attributeDetailContainer').hide();
+            '.attribute_Set_List click': function(el, ev){
+                $('#attributeDetailContainer').hide();
+                // Add the active class so navigation shows a highlight
+                $('.attribute_Set_List').removeClass('active');
+                var $el = $(el);
+                $el.addClass('active');
+
                 var model = el.data('ad-model');
-		
+
                 AD.Comm.Notification.publish('userFamily.attributeSetItem.selected', model);
-                
+                return false;
             },
- 	    addItem: function(model){
+            addItem: function(model){
                 
                 var view = this.view('/hris/userFamily/view/attributeSetListItem.ejs', {model: model});
-             	var $div = $(view);
-		
-		$div.data("ad-model", model);
-		
-            	this.element.append($div);
-                
-                
+                var $div = $(view);
+
+                $div.data("ad-model", model);
+
+                this.ul.append($div);
+
             },
             
             
             insertDOM: function() {
                 
                 this.element.html(this.view('/hris/userFamily/view/attributeSetList.ejs', {}));
+                this.ul = this.element.find('ul');
                 
             }
             

@@ -38,7 +38,8 @@
                 
                 this.options = options;
                 
-                
+                this.element.hide();
+
                 // insert our DOM elements
                 this.insertDOM();
                 
@@ -55,7 +56,7 @@
 	'userFamily.attributeSetItem.selected subscribe': function(msg, model)
             {
                 
-
+            this.element.show();
 		
 		 var self= this;
                 self.element.find('.userAttributeRow').remove();
