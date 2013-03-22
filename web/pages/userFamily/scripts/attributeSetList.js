@@ -75,42 +75,47 @@
 
 		 var self= this;
                 
-                var found =  hris.Attributeset.findAll({object_id: model.object_id});
-		
-		$.when(found)
-                    .then(function(list){
-                        self.element.find('.attribute_Set_List').remove();
-			self.element.find('.attributeSetDetail').remove();
+		//var foundPerson = hris.Person.findOne({person_id: model.person_id});
+		//$.when(foundPerson)
+                 //   .then(function(person){
+			
+			
+			var found =  hris.Attributeset.findAll({object_id: model.object_id});
+			$.when(found)
+                    		.then(function(list){
+                        		
+					self.element.find('.userAttributeRow').remove();
 
-                        for (var i=0; i< list.length; i++){
-                            
-                            
-                            self.addItem(list[i]);   
-                            
-                        }
+                        		for (var i=0; i< list.length; i++){
+
+						
+                            			self.addItem(list[i]);   
+                            		}
                         
-                    })
-                    .fail(function(err){
-                          
-                          })
-
-
-
+                    		})
+                    		.fail(function(err){ })
+                      
+                //    })
+                //    .fail(function(err){
+                //          console.log(err);
+             	//	})
 
             },
 	    '.attribute_Set_List click': function(el, ev){
 
                 var model = el.data('ad-model');
+		
                 AD.Comm.Notification.publish('userFamily.attributeSetItem.selected', model);
                 
             },
  	    addItem: function(model){
                 
                 var view = this.view('/hris/userFamily/view/attributeSetListItem.ejs', {model: model});
-             var $div = $(view);
-                          $div.data("ad-model", model);
-                          
-            this.element.append($div);
+             	var $div = $(view);
+		
+		$div.data("ad-model", model);
+		
+            	this.element.append($div);
                 
                 
             },
