@@ -59,6 +59,9 @@
 		
 		 var self= this;
                 self.element.find('.userAttributeRow').remove();
+                
+                 $('#attributeDetailContainer').show();
+                 
                 var found =  hris.Attribute.findAll({attributeset_id: model.attributeset_id});
 		
 		$.when(found)
@@ -84,7 +87,7 @@
 	    'userFamily.person.selected subscribe': function(msg, model){
 		this.person= model;	
 		this.element.find('.userAttributeRow').remove();
-
+ $('#attributeDetailContainer').hide();
 	    },
 	addItem: function(model){
                 
