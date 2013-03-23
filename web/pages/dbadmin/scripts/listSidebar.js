@@ -85,6 +85,36 @@
                 // No action
             },
 
+            'dbadmin.object.item.add-new subscribe': function( msg, model ) {
+                $('#object-list').controller().listController.deSelect();
+                $('#attribute-set-list').controller().clear();
+                $('#attribute-list').controller().clear();
+            },
+
+            'dbadmin.attributeset.item.add-new subscribe': function( msg, model ) {
+                $('#attribute-set-list').controller().listController.deSelect();
+                $('#attribute-list').controller().clear();
+            },
+
+            'dbadmin.attribute.item.add-new subscribe': function( msg, model ) {
+                $('#attribute-list').controller().listController.deSelect();
+            },
+
+            'dbadmin.object.details.cancelled subscribe': function( msg, model) {
+                $('#object-list').controller().listController.deSelect();
+                $('#attribute-set-list').controller().clear();
+                $('#attribute-list').controller().clear();
+            },
+
+            'dbadmin.attributeset.details.cancelled subscribe': function( msg, model) {
+                $('#attribute-set-list').controller().listController.deSelect();
+                $('#attribute-list').controller().clear();
+            },
+
+            'dbadmin.attribute.details.cancelled subscribe': function( msg, model) {
+                $('#attribute-list').controller().listController.deSelect();
+            },
+
 
 //// To setup default functionality
 /*

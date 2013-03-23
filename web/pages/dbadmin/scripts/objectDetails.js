@@ -55,6 +55,10 @@
                     onCancel: function() {
                         self.ADForm.clear();
                         self.element.hide();
+
+                        // Clear the list selection
+                        AD.Comm.Notification.publish('dbadmin.object.details.cancelled');
+
                         return false;
                     }
                 } );
@@ -73,6 +77,7 @@
                 return true;
             },
 
+            // Called when the 'Submit' button is clicked
             onSubmit: function( model ) {
                 model.save( function( data ) {
                     console.log( data );
@@ -109,8 +114,16 @@
             'dbadmin.attribute.item.selected subscribe': function(msg, model){
               this.element.hide();
             },
-            
-            
+
+            'dbadmin.attributeset.item.add-new subscribe': function( msg, model ) {
+                this.element.hide();
+            },
+
+            'dbadmin.attribute.item.add-new subscribe': function( msg, model ) {
+                this.element.hide();
+            },
+
+
 //// To setup default functionality
 /*
             '.col1 li dblclick' : function (e) {

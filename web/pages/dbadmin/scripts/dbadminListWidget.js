@@ -91,9 +91,7 @@
                     title: '[list.title.'+ self.options.modelName +']',
                     buttons: { add: true, del: true },
                     dataManager: this.dataManager,
-                    onSelect: function(ev) {
-                        var model = $(ev.currentTarget).data('ad-model');
-                        
+                    onSelect: function(event, model) {
                         // Show the Detail page (and hide others)
                         AD.Comm.Notification.publish(
                             "dbadmin."+ self.options.modelName.toLowerCase() +".item.selected",
@@ -117,11 +115,13 @@
             },
             
             refresh: function(filter) {
+                if (!filter) filter = {};
+
+                this.dataManager.findAll(filter);
+            },
+            
+            clear: function() {
                 this.listController.clearList();
-                
-                if (filter) {
-                    this.dataManager.findAll(filter);
-                }
             }
 
 
