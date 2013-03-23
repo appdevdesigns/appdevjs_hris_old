@@ -59,33 +59,39 @@
 
                 this.element.html(this.view('/hris/dbadmin/view/listSidebar.ejs', {}));
 
-                this.object_list = $('#object-list').dbadmin_list_widget({
+                this.objectList = $('#object-list').dbadmin_list_widget({
                     modelName: 'Object',
                     showButtons: true
-                });
+                })
+                .controller();
 
-                this.attributeset_list = $('#attribute-set-list').dbadmin_list_widget({
+                // Load all
+                this.objectList.refresh({});
+
+                this.attributesetList = $('#attribute-set-list').dbadmin_list_widget({
                     modelName: 'Attributeset',
                     showButtons: false
-                });
+                })
+                .controller();
 
-                this.attribute_list = $('#attribute-list').dbadmin_list_widget({
+                this.attributeList = $('#attribute-list').dbadmin_list_widget({
                     modelName: 'Attribute',
                     showButtons: false
-                });
+                })
+                .controller();
             },
 
             'dbadmin.object.item.selected subscribe': function(msg, model) {
-                $('#attribute-set-list').controller().refresh({object_id: model.object_id});
-                $('#attribute-list').controller().clear();
+                this.attributesetList.refresh({object_id: model.object_id});
+                this.attributeList.clear();
 
-                $('#attribute-set-list').controller().showButtons();
-                $('#attribute-list').controller().hideButtons();
+                this.attributesetList.showButtons();
+                this.attributeList.hideButtons();
             },
 
             'dbadmin.attributeset.item.selected subscribe': function(msg, model) {
-                $('#attribute-list').controller().refresh({attributeset_id: model.attributeset_id});
-                $('#attribute-list').controller().showButtons();
+                this.attributeList.refresh({attributeset_id: model.attributeset_id});
+                this.attributeList.showButtons();
             },
 
             'dbadmin.attribute.item.selected subscribe': function(msg, model) {
@@ -93,43 +99,64 @@
             },
 
             'dbadmin.object.item.add-new subscribe': function( msg, model ) {
-                $('#object-list').controller().listController.deSelect();
-                $('#attribute-set-list').controller().clear();
-                $('#attribute-list').controller().clear();
+                this.objectList.listController.deSelect();
+                this.attributesetList.clear();
+                this.attributeList.clear();
 
-                $('#attribute-set-list').controller().hideButtons();
-                $('#attribute-list').controller().hideButtons();
+                this.attributesetList.hideButtons();
+                this.attributeList.hideButtons();
             },
 
             'dbadmin.attributeset.item.add-new subscribe': function( msg, model ) {
-                $('#attribute-set-list').controller().listController.deSelect();
-                $('#attribute-list').controller().clear();
+                this.attributesetList.listController.deSelect();
+                this.attributeList.clear();
 
-                $('#attribute-list').controller().hideButtons();
+                this.attributeList.hideButtons();
             },
 
             'dbadmin.attribute.item.add-new subscribe': function( msg, model ) {
-                $('#attribute-list').controller().listController.deSelect();
+                this.attributeList.listController.deSelect();
             },
 
             'dbadmin.object.details.cancelled subscribe': function( msg, model) {
-                $('#object-list').controller().listController.deSelect();
-                $('#attribute-set-list').controller().clear();
-                $('#attribute-list').controller().clear();
+                this.objectList.listController.deSelect();
+                this.attributesetList.clear();
+                this.attributeList.clear();
 
-                $('#attribute-set-list').controller().hideButtons();
-                $('#attribute-list').controller().hideButtons();
+                this.attributesetList.hideButtons();
+                this.attributeList.hideButtons();
             },
 
             'dbadmin.attributeset.details.cancelled subscribe': function( msg, model) {
-                $('#attribute-set-list').controller().listController.deSelect();
-                $('#attribute-list').controller().clear();
+                this.attributesetList.listController.deSelect();
+                this.attributeList.clear();
 
-                $('#attribute-list').controller().hideButtons();
+                this.attributeList.hideButtons();
             },
 
             'dbadmin.attribute.details.cancelled subscribe': function( msg, model) {
-                $('#attribute-list').controller().listController.deSelect();
+                this.attributeList.listController.deSelect();
+            },
+
+            'dbadmin.object.changed subscribe': function(msg, model) {
+                var self = this;
+                this.objectList.refresh().then( function() {
+                    self.objectList.listController.select(model);
+                });
+            },
+
+            'dbadmin.attributeset.changed subscribe': function(msg, model) {
+                var self = this;
+                this.attributesetList.refresh().then( function() {
+                    self.attributesetList.listController.select(model);
+                });
+            },
+
+            'dbadmin.attribute.changed subscribe': function(msg, model) {
+                var self = this;
+                this.attributeList.refresh().then( function() {
+                    self.attributeList.listController.select(model);
+                });
             },
 
 

@@ -26,20 +26,12 @@
                 this.options = options;
                 this.model = hris[options.modelName];
                 this.selectedModel = null;
-
-                if (this.model == hris.Object) {
-                    // Initialize with all
-                    this.dataManager = this.model.listIterator({});
-                } else {
-                    // Initialize as empty
-                    this.dataManager = this.model.listIterator(null);
-                }
+                this.currentFilter = null;
+                
+                this.dataManager = this.model.listIterator(null);   // Initialize as empty
                 
                 this.initDeleteConfirmation();
                 this.initAdminList();
-                
-                
-                // attach other widgets & functionality here:
                 
                 // translate Labels
                 // any DOM element that has an attrib "appdLabelKey='xxxx'" will get it's contents
@@ -111,20 +103,27 @@
                     this.hideButtons();
                 }
             },
-            
-            refresh: function(filter) {
-                if (!filter) filter = {};
 
+            refresh: function(filter) {
+                var dfd = $.Deferred();
+                if (filter) this.currentFilter = filter;
                 this.selectedModel = null;
 
-                this.dataManager.findAll(filter);
+                if (!this.currentFilter) {
+                    this.clear();
+                } else {
+                    this.dataManager.findAll(this.currentFilter).then(function() {
+                        dfd.resolve();
+                    });
+                    return dfd;
+                }
             },
-            
+
             clear: function() {
                 this.listController.clearList();
                 this.selectedModel = null;
             },
-            
+
             hideButtons: function() {
                 this.element.find('.add-delete').hide();
                 this.listController.onDone();
@@ -133,7 +132,6 @@
             showButtons: function() {
                 this.element.find('.add-delete').show();
             }
-
 
         });
         

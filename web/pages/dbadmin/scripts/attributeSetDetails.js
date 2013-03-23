@@ -87,10 +87,12 @@
 
             // Called when the 'Submit' button is clicked
             onSubmit: function( model ) {
-                model.save( function( data ) {
-                    console.log( data );
-                } );
-                return false; //prevent defaults
+                model.save( function(instance, data) {
+                    AD.Comm.Notification.publish('dbadmin.attributeset.changed', instance);
+                }, function() {
+                    AD.alert('Failed to Save');
+                });
+                return false;
             },
 
             refreshData: function( model ) {

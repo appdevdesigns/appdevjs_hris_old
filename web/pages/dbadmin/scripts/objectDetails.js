@@ -79,9 +79,11 @@
 
             // Called when the 'Submit' button is clicked
             onSubmit: function( model ) {
-                model.save( function( data ) {
-                    console.log( data );
-                } );
+                model.save( function(instance, data) {
+                    AD.Comm.Notification.publish('dbadmin.object.changed', instance);
+                }, function() {
+                    AD.alert('Failed to Save');
+                });
                 return false;
             },
 
