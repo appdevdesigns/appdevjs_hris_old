@@ -18,27 +18,28 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
     <div class='control-group'>
         <label class='control-label' for='attributeset_table'><%== L('[details.attributeset.label.attributeset_table]') %></label>
         <div class='controls'>
-            <input type="text" placeholder="person_id" data-bind="attributeset_table" disabled/>
+            <input type="text" data-bind="attributeset_table" disabled/>
             <i>Would we ever want to edit this?</i>
         </div>
     </div>
     <div class='control-group'>
         <label class='control-label' for='attributeset_pkey'><%== L('[details.attributeset.label.attributeset_pkey]') %></label>
         <div class='controls'>
-            <input type="text" placeholder="person_id" data-bind="attributeset_pkey" disabled/>
+            <input type="text" data-bind="attributeset_pkey" disabled/>
             <i>Would we ever want to edit this?</i>
         </div>
     </div>
     <div class='control-group'>
         <label class='control-label' for='attributeset_key'><%== L('[details.attributeset.label.attributeset_key]') %></label>
         <div class='controls'>
-            <input type="text" placeholder="name" data-bind="attributeset_key" />
+            <input type="text" data-bind="attributeset_key" />
         </div>
     </div>
     <div class='control-group'>
         <label class='control-label' for='attributeset_relation'><%== L('[details.attributeset.label.attributeset_relation]') %></label>
         <div class='controls'>
-            <input type="text" placeholder="one" data-bind="attributeset_relation" />
+            <input type="text" data-bind="attributeset_relation" />
+            <i>Select box?</i>
         </div>
     </div>
     <div class='control-group'>

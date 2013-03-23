@@ -114,7 +114,7 @@
 
                 // Display it
                 this.refreshData( newModel );
-                this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.attribute.title.edit]') );
+                this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.attribute.title.new]') );
                 this.element.show();
             },
 

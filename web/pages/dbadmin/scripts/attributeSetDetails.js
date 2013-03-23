@@ -117,7 +117,7 @@
                 newModel.attributeset_pkey = parent.object_pkey;
 
                 // Display it
-                this.refreshData( new hris.Attributeset() );
+                this.refreshData( newModel );
                 this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.attributeset.title.new]') );
                 this.element.show();
             },
