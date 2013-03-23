@@ -53,10 +53,11 @@
                 // This is what happens when the user confirms a delete op
                 this.$confirmBox.find('button.confirm').on('click', function() {
                     if (self.modelToDelete) {
-                        self.modelToDelete.destroy();
-                        self.$confirmBox.modal('hide');
-                        
-                        self.refresh();
+                        self.modelToDelete.destroy()
+                        .then(function() {
+                            self.$confirmBox.modal('hide');
+                            self.refresh();
+                        });
                     }
                 });
                 this.$confirmBox.find('button.cancel').on('click', function() {
