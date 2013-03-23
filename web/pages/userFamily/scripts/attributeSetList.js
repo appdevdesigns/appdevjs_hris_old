@@ -136,6 +136,7 @@
                         })
                     .fail(function(err){ });
 
+                $('.relationship-item').remove();
                 for (var i = 0; i < this.listRelationships.length; i++) {
                     this.addRelationshipItem(this.listRelationships[i]);
                 }
@@ -194,7 +195,9 @@
             },
             
             addRelationshipItem: function(name){
-                this.ul.append("<li><a href='#'>"+name+"</a></li>");
+                var view = this.view('/hris/userFamily/view/relationshipListItem.ejs', {name: name});
+                var $div = $(view);
+                this.ul.append($div);
             },
             
             insertDOM: function() {
