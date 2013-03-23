@@ -43,7 +43,7 @@
 
                 this.element.hide();
 
-
+                 
                 
                 // insert our DOM elements
                 this.insertDOM();
@@ -91,6 +91,7 @@
 
             'userFamily.person.selected subscribe': function(msg, model)
             {
+                $(".showEdit").hide();
                 this.element.show();
 
 
@@ -176,6 +177,18 @@
                 $div2.data("ad-person", this.person);
                 $div2.user_attributes();
                 
+                
+
+            },
+
+
+            '#user_attr_save click': function(el, ev){
+                
+               
+            },
+            '#user_attr_edit click': function(el, ev){
+                $('.hideEdit').hide();
+                $('.showEdit').show();
                 
 
             },

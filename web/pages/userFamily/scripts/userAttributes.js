@@ -62,6 +62,7 @@
                             
                         }
                         self.attrModelList= list;
+                        $(".showEdit").hide();
                     })
                     .fail(function(err){
                           console.log(err);
@@ -92,22 +93,6 @@
                 var $div = $(view);
 
                 this.element.find('#attributeSetDetail').append($div);
-
-            },
-
-
-            '#user_attr_save click': function(el, ev){
-                
-                for (var i=0; i< this.attrModelList.length; i++){
-                    var model= this.attrModelList[i];
-                    var value = $('#tb_' + model.attribute_label).val();
-                    var oldValue= this.person.attr(model.attribute_column)
-                    if(value != oldValue){
-                        this.person.attr(model.attribute_column, value) ;
-                        this.person.save();
-                    }
-
-                }
 
             },
 
