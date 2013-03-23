@@ -100,12 +100,14 @@
             
             'dbadmin.attribute.item.selected subscribe': function(msg, model){
                 this.refreshData( model );
+                this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.attribute.title.edit]') );
                 this.element.show();
             },
 
             'dbadmin.attribute.item.add-new subscribe': function( msg, model ) {
                 //Refresh the form data with a new Object model and show it
                 this.refreshData( new hris.Attribute() );
+                this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.attribute.title.edit]') );
                 this.element.show();
             },
 

@@ -74,7 +74,7 @@
 
             'dbadmin.object.item.selected subscribe': function(msg, model) {
                 $('#attribute-set-list').controller().refresh({object_id: model.object_id});
-                $('#attribute-list').controller().refresh(null);
+                $('#attribute-list').controller().clear();
             },
 
             'dbadmin.attributeset.item.selected subscribe': function(msg, model) {

@@ -31,61 +31,55 @@ msgstr "Error accessing expected table."
 
 #. path: /page/hris/dbadmin
 #. code: en
+#. key: [details.attribute.label.meta]
+msgid "Meta"
+msgstr "Meta"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attribute.label.attribute_datatype]
+msgid "Data Type"
+msgstr "Data Type"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [list.title.attributeset]
+msgid "Attribute Sets"
+msgstr "Attribute Sets"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [list.title.attribute]
+msgid "Attributes"
+msgstr "Attributes"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attribute.label.attribute_column]
+msgid "Column"
+msgstr "Column"
+
+#. path: /page/hris/dbadmin
+#. code: en
 #. key: [list.delete.confirmation]
 msgid "There will be Consequences™ for deleting this. Do you really want to do this?"
 msgstr "There will be Consequences™ for deleting this. Do you really want to do this?"
 
 #. path: /page/hris/dbadmin
 #. code: en
-#. key: [list.title.Attribute]
-msgid "Attributes"
-msgstr "Attributes"
-
-#. path: /page/hris/dbadmin
-#. code: en
-#. key: [list.title.Attributeset]
-msgid "Attribute Sets"
-msgstr "Attribute Sets"
-
-#. path: /page/hris/dbadmin
-#. code: en
-#. key: [list.title.Object]
-msgid "Objects"
-msgstr "Objects"
-
-#. path: /page/hris/dbadmin
-#. code: en
-#. key: list.title.Object
-msgid ""
-msgstr ""
-
-#. path: /page/hris/dbadmin
-#. code: en
-#. key: list.title.Attribute
-msgid ""
-msgstr ""
-
-#. path: /page/hris/dbadmin
-#. code: en
-#. key: list.title.Attributeset
-msgid ""
-msgstr ""
-
-#. path: /page/hris/dbadmin
-#. code: en
-#. key: [details.Object.label.object_key]
+#. key: [details.object.label.object_key]
 msgid "Key"
 msgstr "Key"
 
 #. path: /page/hris/dbadmin
 #. code: en
-#. key: [details.Object.label.object_table]
+#. key: [details.object.label.object_table]
 msgid "Table"
 msgstr "Table"
 
 #. path: /page/hris/dbadmin
 #. code: en
-#. key: [details.Object.label.object_pkey]
+#. key: [details.object.label.object_pkey]
 msgid "Primary Key"
 msgstr "Primary Key"
 
@@ -103,7 +97,79 @@ msgstr "Cancel"
 
 #. path: /page/hris/dbadmin
 #. code: en
-#. key: [details.Object.title]
-msgid "Object details"
-msgstr "Object details"
+#. key: [list.title.object]
+msgid "Objects"
+msgstr "Objects"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.object.title.edit]
+msgid "Object Details"
+msgstr "Object Details"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attributeset.title.edit]
+msgid "Attribute Set Details"
+msgstr "Attribute Set Details"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attribute.title.edit]
+msgid "Attribute Details"
+msgstr "Attribute Details"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.object.title.new]
+msgid "New Object"
+msgstr "New Object"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attributeset.title.new]
+msgid "New Attribute Set"
+msgstr "New Attribute Set"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attribute.title.new]
+msgid "New Attribute"
+msgstr "New Attribute"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attribute.label.attribute_permission]
+msgid "Permission"
+msgstr "Permission"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attribute.label.attribute_uniqueKey]
+msgid "Unique Key"
+msgstr "Unique Key"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attributeset.label.attributeset_relation]
+msgid "Relation"
+msgstr "Relation"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attributeset.label.attributeset_uniqueKey]
+msgid "(translators ignore this tag:[24]) Unique Key"
+msgstr "Unique Key"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attributeset.label.attributeset_key]
+msgid "(translators ignore this tag:[25]) Key"
+msgstr "Key"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attributeset.label.attributeset_pkey]
+msgid "(translators ignore this tag:[26]) Primary Key"
+msgstr "Primary Key"
 

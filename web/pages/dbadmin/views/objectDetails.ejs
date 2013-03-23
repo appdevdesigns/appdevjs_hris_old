@@ -14,21 +14,21 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 %>
 <form class="form-horizontal">
 	<fieldset>
-	<legend><%== L( '[details.Object.title]' ) %></legend>
+	<legend></legend>
 	<div class="control-group">
-		<label class="control-label" for="key"><%== L( '[details.Object.label.object_key]' ) %></label>
+		<label class="control-label" for="key"><%== L( '[details.object.label.object_key]' ) %></label>
 		<div class="controls">
 			<input type="text" placeholder="name" data-bind="object_key" />
 		</div>
 	</div>
 	<div class="control-group">
-		<label class="control-label" for="table"><%== L( '[details.Object.label.object_table]' ) %></label>
+		<label class="control-label" for="table"><%== L( '[details.object.label.object_table]' ) %></label>
 		<div class="controls">
 			<input type="text" placeholder="hris_name" data-bind="object_table" />
 		</div>
 	</div>
 	<div class="control-group">
-		<label class="control-label" for="pkey"><%== L( '[details.Object.label.object_pkey]' ) %></label>
+		<label class="control-label" for="pkey"><%== L( '[details.object.label.object_pkey]' ) %></label>
 		<div class="controls">
 			<input type="text" placeholder="name_id" data-bind="object_pkey" />
 		</div>

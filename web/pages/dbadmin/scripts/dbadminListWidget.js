@@ -88,7 +88,7 @@
                 this.element.append('<div class="admin-list">');
                 this.element.find('div.admin-list').appdev_list_admin({
                     uid: this.options.uid,
-                    title: '[list.title.'+ self.options.modelName +']',
+                    title: '[list.title.'+ self.options.modelName.toLowerCase() +']',
                     buttons: { add: true, del: true },
                     dataManager: this.dataManager,
                     onSelect: function(event, model) {

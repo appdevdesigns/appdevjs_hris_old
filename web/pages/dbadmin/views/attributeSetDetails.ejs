@@ -12,36 +12,36 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 //   appLabelKey="[label.key]"   for elements whose contents (el.html()) 
 //                               should be the multilingual info
 %>
-
-<h2>Attribute Set Details</h2>
-
 <form class='form-horizontal'>
+    <fieldset>
+    <legend></legend>
     <div class='control-group'>
-        <label class='control-label' for='attributeset_relation'>Relation</label>
+        <label class='control-label' for='attributeset_relation'><%== L('[details.attributeset.label.attributeset_relation]') %></label>
         <div class='controls'>
             <input type="text" placeholder="one" data-bind="attributeset_relation" />
         </div>
     </div>
     <div class='control-group'>
-        <label class='control-label' for='attributeset_uniqueKey'>Unique Key</label>
+        <label class='control-label' for='attributeset_uniqueKey'><%== L('[details.attributeset.label.attributeset_uniqueKey]') %></label>
         <div class='controls'>
             <input type="checkbox" data-bind="attributeset_uniqueKey" />
         </div>
     </div>
     <div class='control-group'>
-        <label class='control-label' for='attributeset_key'>Key</label>
+        <label class='control-label' for='attributeset_key'><%== L('[details.attributeset.label.attributeset_key]') %></label>
         <div class='controls'>
             <input type="text" placeholder="name" data-bind="attributeset_key" />
         </div>
     </div>
     <div class='control-group'>
-        <label class='control-label' for='attributeset_pkey'>Primary Key</label>
+        <label class='control-label' for='attributeset_pkey'><%== L('[details.attributeset.label.attributeset_pkey]') %></label>
         <div class='controls'>
             <input type="text" placeholder="person_id" data-bind="attributeset_pkey" />
         </div>
     </div>
-  <div class='form-action'>
-    <button type="button" class='btn btn-primary submit'>Save</button>
-    <button type="button" class='btn cancel'>Cancel</button>
-  </div>
+    <div class='form-actions'>
+        <button type="button" class='btn btn-primary submit'><%== L( '[details.label.save]' ) %></button>
+        <button type="button" class='btn cancel'><%== L( '[details.label.cancel]' ) %></button>
+    </div>
+    </fieldset>
 </form>

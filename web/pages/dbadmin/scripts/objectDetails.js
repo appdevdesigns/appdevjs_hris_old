@@ -98,12 +98,14 @@
             'dbadmin.object.item.selected subscribe': function( msg, model ) {
                 //Refresh the form data with the given model and show it
                 this.refreshData( model );
+                this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.object.title.edit]') );
                 this.element.show();
             },
 
             'dbadmin.object.item.add-new subscribe': function( msg, model ) {
                 //Refresh the form data with a new Object model and show it
                 this.refreshData( new hris.Object() );
+                this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.object.title.new]') );
                 this.element.show();
             },
 

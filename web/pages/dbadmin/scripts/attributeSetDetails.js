@@ -110,13 +110,15 @@
             },
 
             'dbadmin.attributeset.item.selected subscribe': function(msg, model){
-              this.refreshData( model );
-              this.element.show();
+                this.refreshData( model );
+                this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.attributeset.title.edit]') );
+                this.element.show();
             },
 
             'dbadmin.attributeset.item.add-new subscribe': function( msg, model ) {
                 //Refresh the form data with a new Object model and show it
                 this.refreshData( new hris.Attributeset() );
+                this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.attributeset.title.new]') );
                 this.element.show();
             },
 
