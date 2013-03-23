@@ -30,7 +30,8 @@ var hrisHub = null;
 var hasPermission = function (req, res, next) {
     // Verify the current viewer has permission to perform this action.
 
-
+if (!AD.Defaults.authRequired) next();
+else {
     var objectKey = req.aRAD.objectKey;
 //    var tInfo = req.aRAD.tableInfo;
 
@@ -51,7 +52,7 @@ var hasPermission = function (req, res, next) {
         ErrorMSG(req, res, 'ERR_NO_PERMISSION', AD.Const.HTTP.ERROR_FORBIDDEN);  // 403 : you don't have permission
 
     } // end if
-
+}
 }
 
 

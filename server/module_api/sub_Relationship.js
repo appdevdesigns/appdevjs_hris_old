@@ -99,10 +99,10 @@ hrisRelationship.setup = function() {
               }
 
               //// Create the Inverse Relationship
-              var found = Relationship.findAll(params);
-              $.when(found).then(function(relationships) {
+              var found = Relationship.findOne(params);
+              $.when(found).then(function(relationship) {
 
-                  if (typeof relationships[0] == 'undefined') {
+                  if (!relationship) {
 
                       console.log('  creating '+params.relationship_type+' relationship');
 
@@ -180,9 +180,11 @@ hrisRelationship.setup = function() {
                 break;
         }
 
-        Relationship.findAll(params, function(relationships) {
-            if (typeof relationships[0] != 'undefined') {
-                relationships[0].destroy();
+        console.log('... deleting reciprocal Rship:');
+
+        Relationship.findOne(params, function(relationship) {
+            if (relationship) {
+                relationship.destroy();
             }
         });
 
