@@ -38,7 +38,7 @@
                 
                 this.options = options;
                 
-                this.element.hide();
+               // this.element.hide();
 
                 // insert our DOM elements
                 this.insertDOM();
@@ -46,27 +46,11 @@
                 
                 // attach other widgets & functionality here:
                 
-                this.person = [];
+                this.person = this.element.data('ad-person');
+                var model = this.element.data('ad-model');
                 
-                
-                
-                
-                // translate Labels
-                // any DOM element that has an attrib "appdLabelKey='xxxx'" will get it's contents
-                // replaced with our Label.  Careful to not put this on places that have other content!
-                this.xlateLabels();
-            },
-
-
-
-            'userFamily.attributeSetItem.selected subscribe': function(msg, model) {
-                
-                this.element.show();
-		
                 var self= this;
-                self.element.find('.userAttributeRow').remove();
                 
-                 
                 var found =  hris.Attribute.findAll({attributeset_id: model.attributeset_id});
                 $.when(found)
                     .then(function(list){
@@ -82,6 +66,35 @@
                     .fail(function(err){
                           console.log(err);
                     })
+                
+                $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+                    .find( ".portlet-header" )
+                    .addClass( "ui-widget-header ui-corner-all" )
+                    .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
+                    .end()
+                    .find( ".portlet-content" );
+ 
+                $( ".portlet-header .ui-icon" ).click(function() {
+                    $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
+                    $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
+                
+                });
+                
+                
+                
+                // translate Labels
+                // any DOM element that has an attrib "appdLabelKey='xxxx'" will get it's contents
+                // replaced with our Label.  Careful to not put this on places that have other content!
+                this.xlateLabels();
+            },
+
+
+
+            'userFamily.attributeSetItem.selected subscribe': function(msg, model) {
+               
+               // this.element.show();
+		
+               
 
             },
 
@@ -90,7 +103,7 @@
             'userFamily.person.selected subscribe': function(msg, model){
                 this.person= model;	
                 this.element.find('.userAttributeRow').remove();
-                this.element.hide();
+                //this.element.hide();
             },
             
 	        addItem: function(model){

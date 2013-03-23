@@ -30,7 +30,7 @@ var hrisUserFamilySetup = function (topic, data) {
 
 
     $('#attributeSetList').attribute_set_list();
-$('#attributeDetailContainer').user_attributes();
+
 
 
 /*

@@ -48,23 +48,12 @@
                 // insert our DOM elements
                 this.insertDOM();
                 
-                
+                 this.person = [];
                 // attach other widgets & functionality here:
                 $( ".column" ).sortable({
                     connectWith: ".column"
                  });
-                 $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
-                    .find( ".portlet-header" )
-                    .addClass( "ui-widget-header ui-corner-all" )
-                    .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
-                    .end()
-                    .find( ".portlet-content" );
- 
-                $( ".portlet-header .ui-icon" ).click(function() {
-                    $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
-                    $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
-                
-                });
+                 
                 $( ".column" ).disableSelection();
                 // Find the object_id for the object_key = person.
                 var self = this;
@@ -85,7 +74,7 @@
 
 
                 var self= this;
-
+                this.person= model;	
                 if (this.api_person_object_id === undefined) {
                     return;
                 }
@@ -123,8 +112,24 @@
                 var $div = $(view);
 
                 $div.data("ad-model", model);
+                
 
                 this.ul.append($div);
+                
+                
+                /*var view = this.view('/hris/userFamily/view/userAttributes.ejs', {model: model});
+                var $div = $(view);
+
+                $div.data("ad-model", model);
+                $div.user_attributes();*/
+                
+                $('#attributeDetailContainer').append("<div id='" + model.attributeset_label + "'></div>");
+                var $div2 = $('#' + model.attributeset_label)  ;
+                $div2.data("ad-model", model);
+                $div2.data("ad-person", this.person);
+                $div2.user_attributes();
+                
+                
 
             },
             
