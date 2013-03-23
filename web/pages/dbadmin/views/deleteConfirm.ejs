@@ -1,0 +1,24 @@
+<!-- Beginning [controller] view definition -->
+<%
+///// NOTE:  on the server, EJS uses < %- to return unescaped strings
+/////        on the client  EJS uses < %== 
+// This is CLIENT SIDE, so let's make displaying labels easier:
+// use: < %==  L('[labelKey]') % >   // note there is no ';' at the end!
+var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
+
+//// Alternativly you can add these attributes:
+//   appdTitleKey="[label.key]"  for elements that have a title and you want 
+//                               the contents to be multilingual
+//   appLabelKey="[label.key]"   for elements whose contents (el.html()) 
+//                               should be the multilingual info
+%>
+<div class="dbadmin-list-delete-confirm modal" style="display:none">
+    <div class="modal-body">
+        <div><%== L('[list.delete.confirmation]') %></div>
+    </div>
+    
+    <div class="modal-footer">
+        <button class="confirm btn"><%== L('[site.button.Delete]') %></button>
+        <button class="cancel btn btn-primary"><%== L('[site.button.Cancel]') %></button>
+    </div>
+</div>
