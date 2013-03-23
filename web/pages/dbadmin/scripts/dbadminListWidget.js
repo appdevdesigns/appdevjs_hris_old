@@ -120,9 +120,7 @@
                 this.listController.clearList();
                 
                 if (filter) {
-                    // TODO: Enable filter
-                    this.dataManager.findAll({});
-                    //this.dataManager.findAll(filter);
+                    this.dataManager.findAll(filter);
                 }
             }
 
