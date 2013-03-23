@@ -1,0 +1,60 @@
+<!-- Beginning attributeDetails view definition -->
+<%
+///// NOTE:  on the server, EJS uses < %- to return unescaped strings
+/////        on the client  EJS uses < %== 
+// This is CLIENT SIDE, so let's make displaying labels easier:
+// use: < %==  L('[labelKey]') % >   // note there is no ';' at the end!
+var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
+
+//// Alternativly you can add these attributes:
+//   appdTitleKey="[label.key]"  for elements that have a title and you want 
+//                               the contents to be multilingual
+//   appLabelKey="[label.key]"   for elements whose contents (el.html()) 
+//                               should be the multilingual info
+%>
+<form class="form-horizontal">
+    <fieldset>
+    <legend></legend>
+    <div class="control-group">
+        <label class="control-label" for="attribute_label"><%== L('[details.label.label]') %></label>
+        <div class="controls">
+            <input type="text" data-bind="attribute_label" />
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="attribute_column"><%== L('[details.attribute.label.attribute_column]') %></label>
+        <div class="controls">
+            <input type="text" data-bind="attribute_column" />
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="attribute_datatype"><%== L('[details.attribute.label.attribute_datatype]') %></label>
+        <div class="controls">
+            <input type="text" data-bind="attribute_datatype" />
+            <i>Select box?</i>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="meta"><%== L('[details.attribute.label.meta]') %></label>
+        <div class="controls">
+            <input type="text" data-bind="Meta" />
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="attribute_permission"><%== L('[details.attribute.label.attribute_permission]') %></label>
+        <div class="controls">
+            <input type="text" data-bind="attribute_permission" />
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="attribute_uniqueKey"><%== L('[details.attribute.label.attribute_uniqueKey]') %></label>
+        <div class="controls">
+            <input type="checkbox" data-bind="attribute_uniqueKey" />
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="button" class="btn btn-primary submit"><%== L( '[details.label.save]' ) %></button>
+        <button type="button" class="btn cancel"><%== L( '[details.label.cancel]' ) %></button>
+    </div>
+    </fieldset>
+</form>

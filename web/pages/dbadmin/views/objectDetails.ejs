@@ -1,0 +1,41 @@
+<!-- Beginning objectDetails view definition -->
+<%
+///// NOTE:  on the server, EJS uses < %- to return unescaped strings
+/////        on the client  EJS uses < %== 
+// This is CLIENT SIDE, so let's make displaying labels easier:
+// use: < %==  L('[labelKey]') % >   // note there is no ';' at the end!
+var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
+
+//// Alternativly you can add these attributes:
+//   appdTitleKey="[label.key]"  for elements that have a title and you want 
+//                               the contents to be multilingual
+//   appLabelKey="[label.key]"   for elements whose contents (el.html()) 
+//                               should be the multilingual info
+%>
+<form class="form-horizontal">
+	<fieldset>
+	<legend></legend>
+	<div class="control-group">
+		<label class="control-label" for="key"><%== L( '[details.object.label.object_key]' ) %></label>
+		<div class="controls">
+			<input type="text" placeholder="name" data-bind="object_key" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="table"><%== L( '[details.object.label.object_table]' ) %></label>
+		<div class="controls">
+			<input type="text" placeholder="hris_name" data-bind="object_table" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="pkey"><%== L( '[details.object.label.object_pkey]' ) %></label>
+		<div class="controls">
+			<input type="text" placeholder="name_id" data-bind="object_pkey" />
+		</div>
+	</div>
+	<div class="form-actions">
+		<button type="button" class="btn btn-primary submit"><%== L( '[details.label.save]' ) %></button>
+		<button type="button" class="btn cancel"><%== L( '[details.label.cancel]' ) %></button>
+	</div>
+	</fieldset>
+</form>

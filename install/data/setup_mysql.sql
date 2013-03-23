@@ -176,6 +176,7 @@ CREATE TABLE `hris2_object` (
 
 LOCK TABLES `hris2_object` WRITE;
 /*!40000 ALTER TABLE `hris2_object` DISABLE KEYS */;
+INSERT INTO `hris2_object` VALUES (1,'person','person_id','hris2_person'),(2,'passport','passport_id','hris_passport');
 /*!40000 ALTER TABLE `hris2_object` ENABLE KEYS */;
 UNLOCK TABLES;
 
