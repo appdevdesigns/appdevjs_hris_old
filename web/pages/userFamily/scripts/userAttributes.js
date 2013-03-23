@@ -38,7 +38,8 @@
                 
                 this.options = options;
                 
-                
+                this.element.hide();
+
                 // insert our DOM elements
                 this.insertDOM();
                 
@@ -52,25 +53,24 @@
                 // replaced with our Label.  Careful to not put this on places that have other content!
                 this.xlateLabels();
             },
-	'userFamily.attributeSetItem.selected subscribe': function(msg, model)
-            {
-                
 
+
+
+            'userFamily.attributeSetItem.selected subscribe': function(msg, model) {
+                
+                this.element.show();
 		
-		 var self= this;
+                var self= this;
                 self.element.find('.userAttributeRow').remove();
                 
-                 $('#attributeDetailContainer').show();
                  
                 var found =  hris.Attribute.findAll({attributeset_id: model.attributeset_id});
-		
-		$.when(found)
+                $.when(found)
                     .then(function(list){
                         self.element.find('.userAttribute').remove();
 
                         for (var i=0; i< list.length; i++){
-                            
-                            
+
                             self.addItem(list[i]);   
                             
                         }
@@ -80,44 +80,42 @@
                           console.log(err);
                     })
 
-		
-
-
             },
-	    'userFamily.person.selected subscribe': function(msg, model){
-		this.person= model;	
-		this.element.find('.userAttributeRow').remove();
- $('#attributeDetailContainer').hide();
-	    },
+
+
+
+            'userFamily.person.selected subscribe': function(msg, model){
+                this.person= model;	
+                this.element.find('.userAttributeRow').remove();
+                this.element.hide();
+            },
+            
 	        addItem: function(model){
-                
+
                 var view = this.view('/hris/userFamily/view/userAttributeItem.ejs', {model: model, person: this.person});
-             var $div = $(view);
-                          
-            this.element.find('#attributeSetDetail').append($div);
-                
-                
+                var $div = $(view);
+
+                this.element.find('#attributeSetDetail').append($div);
+
             },
+
+
             '#user_attr_save click': function(el, ev){
                 
                 for (var i=0; i< this.attrModelList.length; i++){
-                 var model= this.attrModelList[i];
+                    var model= this.attrModelList[i];
                     var value = $('#tb_' + model.attribute_label).val();
-                   var oldValue= this.person.attr(model.attribute_column)
+                    var oldValue= this.person.attr(model.attribute_column)
                     if(value != oldValue){
                         this.person.attr(model.attribute_column, value) ;
                         this.person.save();
                     }
-                
-                
+
                 }
-                
-                
-                
-                
+
             },
 
-            
+
             insertDOM: function() {
                 
                 this.element.html(this.view('/hris/userFamily/view/userAttributes.ejs', {}));

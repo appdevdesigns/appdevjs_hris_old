@@ -1,4 +1,3 @@
-<!-- Beginning attributeSetListItem view definition -->
 <%
 ///// NOTE:  on the server, EJS uses < %- to return unescaped strings
 /////        on the client  EJS uses < %== 
@@ -13,4 +12,4 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 //                               should be the multilingual info
 %>
 
-<div class='attribute_Set_List'> <%= model.attributeset_label %> </div>
+<li class='attribute_Set_List'><a href="#"><%= model.attributeset_label %></a></li>
