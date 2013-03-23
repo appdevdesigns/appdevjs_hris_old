@@ -1,0 +1,34 @@
+<!-- Beginning Dbadmin view definition -->
+<%
+var $ = AD.jQuery;
+
+// This is SERVER side, so let's make displaying labels easier:
+// use:  < %- L('[labelKey]') % >
+var L = function(key) { return data.labels.getLabel(key); };
+var pL = function(prependText, key) {
+    // prepend the given text to the result of the label
+    var label = $(L(key)).prepend(prependText);
+    return $('<div>').append(label).html();
+};
+%>
+
+<style type="text/css">
+    /* override original appRAD admin list CSS */
+    ul.admin-list li {
+        width: 100% !important;
+    }
+    .pane_right {
+        margin: 0 0.65em !important;
+    }
+</style>
+
+<div class="dbAdmin-container">
+    <div class="row-fluid">
+        <div id="list-sidebar" class="span3 well"></div>
+        <div class="span9 well">
+            <div id="object-details"></div>
+            <div id="attribute-set-details"></div>
+            <div id="attribute-details"></div>
+        </div>
+    </div>
+</div>
