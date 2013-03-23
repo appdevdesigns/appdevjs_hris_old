@@ -96,27 +96,27 @@
             refreshData: function( model ) {
                 this.selectedModel = model;
                 this.ADForm.setModel( model );
-                
-                var self = this;
-                
-                hris.Object.findOne({object_id: model.object_id})
-                .then(function(parent) {
-                    self.element.find('#parent-key').html(parent.object_key);
-                })
-                .fail(function(err){
-                    AD.alert("Error");
-                    console.log('error: ' + err);
-                });
             },
 
+            // Show the view for editing the selected item
             'dbadmin.attributeset.item.selected subscribe': function(msg, model){
                 this.refreshData( model );
                 this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.attributeset.title.edit]') );
                 this.element.show();
             },
 
+            // Show the view for creating a new instance
             'dbadmin.attributeset.item.add-new subscribe': function( msg, model ) {
-                //Refresh the form data with a new Object model and show it
+                // Set up the new instance based on its parent
+                var newModel = new hris.Attributeset();
+                var parent = $('#object-list').controller().selectedModel;
+                newModel.object_id = parent.object_id;
+
+                //XXX: Why would these ever need to be set in the Attributeset model?
+                newModel.attributeset_table = parent.object_table;
+                newModel.attributeset_pkey = parent.object_pkey;
+
+                // Display it
                 this.refreshData( new hris.Attributeset() );
                 this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.attributeset.title.new]') );
                 this.element.show();

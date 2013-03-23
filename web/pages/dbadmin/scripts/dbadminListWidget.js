@@ -32,7 +32,8 @@
                 
                 this.options = options;
                 this.model = hris[options.modelName];
-                
+                this.selectedModel = null;
+
                 if (this.model == hris.Object) {
                     // Initialize with all
                     this.dataManager = this.model.listIterator({});
@@ -92,6 +93,8 @@
                     buttons: { add: true, del: true },
                     dataManager: this.dataManager,
                     onSelect: function(event, model) {
+                        self.selectedModel = model;
+
                         // Show the Detail page (and hide others)
                         AD.Comm.Notification.publish(
                             "dbadmin."+ self.options.modelName.toLowerCase() +".item.selected",
@@ -117,11 +120,14 @@
             refresh: function(filter) {
                 if (!filter) filter = {};
 
+                this.selectedModel = null;
+
                 this.dataManager.findAll(filter);
             },
             
             clear: function() {
                 this.listController.clearList();
+                this.selectedModel = null;
             }
 
 
