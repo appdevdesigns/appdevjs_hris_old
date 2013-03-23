@@ -20,6 +20,21 @@
     text-shadow: 0px 0px 0px;
 }
 
+
+.add-person, .delete-person {
+	width:250px;
+	z-index:200;
+	top:50%;
+	left:30%;
+	padding:0 0 5px 0;
+	position:absolute;
+	background-color:#FFFFFF;
+	border:1px solid #CCCCCC;
+	display:none;
+	text-align:center;
+
+}
+
 .person-active {
 	background-image:url(../images/selected.png);
 	background-position: top right;
