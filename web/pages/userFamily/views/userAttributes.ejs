@@ -6,6 +6,9 @@
 // use: < %==  L('[labelKey]') % >   // note there is no ';' at the end!
 var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 
+               
+
+
 //// Alternativly you can add these attributes:
 //   appdTitleKey="[label.key]"  for elements that have a title and you want 
 //                               the contents to be multilingual
@@ -13,6 +16,33 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 //                               should be the multilingual info
 %>
 <div id="attributeSetDetail"></div>
+
+<div class="column">
+ 
+  <div class="portlet">
+    <div class="portlet-header">Names</div>
+    <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+  </div>
+ 
+  <div class="portlet">
+    <div class="portlet-header">Addresses</div>
+    <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+  </div>
+  
+  <div class="portlet">
+    <div class="portlet-header">Passports</div>
+    <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+  </div>
+  
+  <div class="portlet">
+    <div class="portlet-header">Accounts</div>
+    <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+  </div>
+ 
+</div>
+
+
+
 <div class="control-group">
     <div class="controls">
         <button id="user_attr_save" type="submit" class="btn"><%==  L('[user_family.save]') %></button>
