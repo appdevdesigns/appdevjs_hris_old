@@ -19,20 +19,14 @@
                 // make sure defaults are taken care of
                 var defaults = {
                       uid: options.modelName + '_list_widget',
-/*                      
-                      dataManager:null, // the ListIterator of the data to display
-                      template:null,	// view(): the default view template
-                      templateEdit:null,// veiw(): the edit panel view
-                      templateDelete:null, // view():  the delete confirmation view
-                      title: null      // the MultilingualLabel Key for the title
-*/                      
                 };
                 var options = $.extend(defaults, options);
                 this._super(el, options);
                 
                 this.options = options;
                 this.model = hris[options.modelName];
-                
+                this.selectedModel = null;
+
                 if (this.model == hris.Object) {
                     // Initialize with all
                     this.dataManager = this.model.listIterator({});
@@ -92,6 +86,8 @@
                     buttons: { add: true, del: true },
                     dataManager: this.dataManager,
                     onSelect: function(event, model) {
+                        self.selectedModel = model;
+
                         // Show the Detail page (and hide others)
                         AD.Comm.Notification.publish(
                             "dbadmin."+ self.options.modelName.toLowerCase() +".item.selected",
@@ -105,42 +101,40 @@
                         );
                     },
                     onDelete: function(model) {
-                        //alert('delete');
-                        //model.destroy();
                         self.modelToDelete = model;
                         self.$confirmBox.modal('show');
                     }
                 });
                 this.listController = this.element.find('div.admin-list').controller();
+
+                if (this.options.showButtons == false) {
+                    this.hideButtons();
+                }
             },
             
             refresh: function(filter) {
                 if (!filter) filter = {};
+
+                this.selectedModel = null;
 
                 this.dataManager.findAll(filter);
             },
             
             clear: function() {
                 this.listController.clearList();
+                this.selectedModel = null;
+            },
+            
+            hideButtons: function() {
+                this.element.find('.add-delete').hide();
+                this.listController.onDone();
+            },
+            
+            showButtons: function() {
+                this.element.find('.add-delete').show();
             }
 
 
-//// To setup default functionality
-/*
-            '.col1 li dblclick' : function (e) {
-            
-                this.element.find('#someDiv').append(e);
-            },
-*/
-
-//// To Add Subscriptions:
-/*
-            'apprad.module.selected subscribe': function(message, data) {
-                // data should be { name:'[moduleName]' }
-                this.module = data.name;
-                this.setLookupParams({module: data.name});
-            },
-*/
         });
         
     }) ();

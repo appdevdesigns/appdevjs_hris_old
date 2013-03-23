@@ -97,16 +97,23 @@
                 this.selectedModel = model;
                 this.ADForm.setModel( model );
             },
-            
+
+            // Show the view for editing the selected item
             'dbadmin.attribute.item.selected subscribe': function(msg, model){
                 this.refreshData( model );
                 this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.attribute.title.edit]') );
                 this.element.show();
             },
 
+            // Show the view for creating a new instance
             'dbadmin.attribute.item.add-new subscribe': function( msg, model ) {
-                //Refresh the form data with a new Object model and show it
-                this.refreshData( new hris.Attribute() );
+                // Set up the new instance based on its parent
+                var newModel = new hris.Attribute();
+                var parent = $('#attribute-set-list').controller().selectedModel;
+                newModel.attributeset_id = parent.attributeset_id;
+
+                // Display it
+                this.refreshData( newModel );
                 this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.attribute.title.edit]') );
                 this.element.show();
             },

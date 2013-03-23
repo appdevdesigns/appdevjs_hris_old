@@ -60,25 +60,32 @@
                 this.element.html(this.view('/hris/dbadmin/view/listSidebar.ejs', {}));
 
                 this.object_list = $('#object-list').dbadmin_list_widget({
-                    modelName: 'Object'
+                    modelName: 'Object',
+                    showButtons: true
                 });
 
                 this.attributeset_list = $('#attribute-set-list').dbadmin_list_widget({
-                    modelName: 'Attributeset'
+                    modelName: 'Attributeset',
+                    showButtons: false
                 });
 
                 this.attribute_list = $('#attribute-list').dbadmin_list_widget({
-                    modelName: 'Attribute'
+                    modelName: 'Attribute',
+                    showButtons: false
                 });
             },
 
             'dbadmin.object.item.selected subscribe': function(msg, model) {
                 $('#attribute-set-list').controller().refresh({object_id: model.object_id});
                 $('#attribute-list').controller().clear();
+
+                $('#attribute-set-list').controller().showButtons();
+                $('#attribute-list').controller().hideButtons();
             },
 
             'dbadmin.attributeset.item.selected subscribe': function(msg, model) {
                 $('#attribute-list').controller().refresh({attributeset_id: model.attributeset_id});
+                $('#attribute-list').controller().showButtons();
             },
 
             'dbadmin.attribute.item.selected subscribe': function(msg, model) {
@@ -89,11 +96,16 @@
                 $('#object-list').controller().listController.deSelect();
                 $('#attribute-set-list').controller().clear();
                 $('#attribute-list').controller().clear();
+
+                $('#attribute-set-list').controller().hideButtons();
+                $('#attribute-list').controller().hideButtons();
             },
 
             'dbadmin.attributeset.item.add-new subscribe': function( msg, model ) {
                 $('#attribute-set-list').controller().listController.deSelect();
                 $('#attribute-list').controller().clear();
+
+                $('#attribute-list').controller().hideButtons();
             },
 
             'dbadmin.attribute.item.add-new subscribe': function( msg, model ) {
@@ -104,11 +116,16 @@
                 $('#object-list').controller().listController.deSelect();
                 $('#attribute-set-list').controller().clear();
                 $('#attribute-list').controller().clear();
+
+                $('#attribute-set-list').controller().hideButtons();
+                $('#attribute-list').controller().hideButtons();
             },
 
             'dbadmin.attributeset.details.cancelled subscribe': function( msg, model) {
                 $('#attribute-set-list').controller().listController.deSelect();
                 $('#attribute-list').controller().clear();
+
+                $('#attribute-list').controller().hideButtons();
             },
 
             'dbadmin.attribute.details.cancelled subscribe': function( msg, model) {
