@@ -11,5 +11,42 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 //   appLabelKey="[label.key]"   for elements whose contents (el.html()) 
 //                               should be the multilingual info
 %>
-<ul class="nav nav-pills nav-stacked">
-</ul>
+
+<div  class="span4 well">
+    <div id="attributeMenu" class="row-fluid">
+        <ul class="nav nav-pills nav-stacked"></ul>
+    </div>
+</div>
+<div  class="span8 well form-horizontal">
+    <div  id="attributeDetailContainer"> </div>
+    <div class="column">
+        <div class="portlet">
+            <div class="portlet-header">Names</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
+ 
+        <div class="portlet">
+            <div class="portlet-header">Addresses</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
+  
+        <div class="portlet">
+            <div class="portlet-header">Passports</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
+  
+        <div class="portlet">
+            <div class="portlet-header">Accounts</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
+ 
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button id="user_attr_save" type="submit" class="btn"><%==  L('[user_family.save]') %></button>
+        </div>
+    </div>
+</div>
+
+
+

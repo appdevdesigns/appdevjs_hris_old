@@ -50,7 +50,22 @@
                 
                 
                 // attach other widgets & functionality here:
-
+                $( ".column" ).sortable({
+                    connectWith: ".column"
+                 });
+                 $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+                    .find( ".portlet-header" )
+                    .addClass( "ui-widget-header ui-corner-all" )
+                    .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
+                    .end()
+                    .find( ".portlet-content" );
+ 
+                $( ".portlet-header .ui-icon" ).click(function() {
+                    $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
+                    $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
+                
+                });
+                $( ".column" ).disableSelection();
                 // Find the object_id for the object_key = person.
                 var self = this;
                 hris.Object.findAll({object_key: 'person'})
@@ -91,7 +106,7 @@
 
             },
             '.attribute_Set_List click': function(el, ev){
-                $('#attributeDetailContainer').hide();
+                //$('#attributeDetailContainer').hide();
                 // Add the active class so navigation shows a highlight
                 $('.attribute_Set_List').removeClass('active');
                 var $el = $(el);
