@@ -57,17 +57,38 @@
                 $( ".column" ).disableSelection();
                 // Find the object_id for the object_key = person.
                 var self = this;
-                hris.Object.findAll({object_key: 'person'})
+                this.listEntities = {};
+                hris.Object.findAll()
                 .done(function(list) {
-                    if (list[0]) {
-                        self.api_person_object_id = list[0].object_id;
+                    for (var i = 0; i < list.length; i++) {
+                        self.listEntities[list[i].object_id] = list[i].object_key;
+                        if (list[i].object_key == 'person') {
+                            self.api_person_object_id = list[i].object_id;
+                        }
                     }
+                    self.findRelatedEntities();
+
                 });
+
                 // translate Labels
                 // any DOM element that has an attrib "appdLabelKey='xxxx'" will get it's contents
                 // replaced with our Label.  Careful to not put this on places that have other content!
                 this.xlateLabels();
             },
+
+            findRelatedEntities: function() {
+                var self = this;
+                this.listRelationships = [];
+                hris.Relationship.findAll({objA_id: this.api_person_object_id})
+                .done(function(list) {
+                    for (var i = 0; i < list.length; i++) {
+                        var objectId = list[i].objB_id;
+                        var objectKey = self.listEntities[objectId];
+                        self.listRelationships.push(objectKey);
+                    }
+                });
+            },
+
             'userFamily.person.selected subscribe': function(msg, model)
             {
                 this.element.show();
@@ -88,7 +109,7 @@
                         
                        
                         for (var i=0; i< list.length; i++){
-                            self.addItem(list[i]);  
+                            self.addAttributeSetItem(list[i]);
                             } 
                             
                         $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
@@ -112,7 +133,11 @@
                         });
                             
                         })
-                    .fail(function(err){ })
+                    .fail(function(err){ });
+
+                for (var i = 0; i < this.listRelationships.length; i++) {
+                    this.addRelationshipItem(this.listRelationships[i]);
+                }
 
             },
             '.attribute_Set_List click': function(el, ev){
@@ -129,7 +154,7 @@
                 AD.Comm.Notification.publish('userFamily.attributeSetItem.selected', model);
                 return false;
             },
-            addItem: function(model){
+            addAttributeSetItem: function(model){
                 
                 var view = this.view('/hris/userFamily/view/attributeSetListItem.ejs', {model: model});
                 var $div = $(view);
@@ -155,6 +180,9 @@
 
             },
             
+            addRelationshipItem: function(name){
+                this.ul.append("<li><a href='#'>"+name+"</a></li>");
+            },
             
             insertDOM: function() {
                 
