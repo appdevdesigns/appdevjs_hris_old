@@ -65,16 +65,16 @@ hrisObject.setup = function() {
 
             //// OK, make sure this object is cached for us:
             cachedObjects[object[Object.id]] = object.attrs();
-            
-            
+
+
             // sql:
             // CREATE TABLE `hris2_attributes` (
             //   `attribute_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
             //   PRIMARY KEY (`attribute_id`)
             // ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-        	
+
             var sql = AD.Util.String.render(sqlCommands.newTable, object.attrs());
-        	
+
 // console.log('sql:'+sql);
 
 
@@ -149,6 +149,8 @@ console.log('sql:'+sql);
 
         //// 2: Remove any relationships referenced by/to this object
 
+
+
         } else {
 
             /// Odd ... where did this reference come from?
@@ -178,6 +180,7 @@ console.log('sql:'+sql);
         var Object = AD.Model.List['hris.Object'];
 
         Object.findAll({}, function(list){
+
            for (var i=0; i<list.length;i++) {
 
                var pkey = list[i].id;
@@ -191,6 +194,7 @@ console.log('sql:'+sql);
 //console.log(cachedObjects);
 //console.log('--------------');
 //console.log();
+
 
            //// now announce all the public API for those defined objects:
            // for each object

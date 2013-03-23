@@ -17,6 +17,15 @@ module.exports = hrisRelationship;
 var hrisHub = null;   // Module's Notification Center (note: be sure not to use this until setup() is called)
 
 
+var runSQL = function(sql) {
+    console.log('sql:'+sql);
+    db.runSQL(sql,[], function(err, results, fields){
+        if (err) {
+          console.log(err);
+        }
+    });
+}
+
 //-----------------------------------------------------------------------------
 hrisRelationship.setup = function() {
   // setup any handlers, subscriptions, etc... that need to have passed in
@@ -38,91 +47,79 @@ hrisRelationship.setup = function() {
    * @param {string} event the notification key this matched
    * @param {obj} data the primary key id of the newly created relationship { id:1 }
    */
-  var newRelationship = function(event, data) {
+    var newRelationship = function(event, data) {
 
-    console.log('newRelationship');
-    // data only contains the { id:xx } but we want to provide a guid
-    // to modules as well, so we manually look it up:
-    var Relationship = AD.Model.List['hris.Relationship'];
+      console.log('newRelationship');
 
-    Relationship.findOne({id:data.id}, function(relationship) {
-      if (relationship) {
+      var Relationship = AD.Model.List['hris.Relationship'];
 
-        var relationshipId = relationship.relationship_id;
-        var relationshipObjAId = relationship.objA_id;
-        var relationshipObjBId = relationship.objB_id;
-        var relationshipType = relationship.relationship_type;
+      Relationship.findOne({id:data.id}, function(relationship) {
+          if (relationship) {
 
-        var Object = AD.Model.List['hris.Object'];
+              var relationshipType = relationship.relationship_type;
+              var params;
 
-        Object.findOne({id:relationshipObjAId}, function(objA) {
-          Object.findOne({id:relationshipObjBId}, function(objB) {
+              // Add a foreign key to the child table if it doesn't already exist
+              switch(relationshipType) {
 
-            // Add a foreign key to the child table if it doesn't already exist
-            switch(relationshipType) {
-              case 'belongs_to':
-                var params = {objA_id: objB.object_id,
-                              objB_id: objA.object_id,
-                              relationship_type: 'has_many'};
+                  case 'belongs_to':
 
-                var found = Relationship.findAll(params)
+                      // Define the inverse relationship
+                      params = {objA_id: relationship.objB_id,
+                                objB_id: relationship.objA_id,
+                                relationship_type: 'has_many'};
 
-                $.when(found).then(function(relationships) {
-                  if (typeof relationships[0] == 'undefined') {
-                    console.log('creating has_many')
-                    // Create the inverse
-                    Relationship.create(params, function(id) {
-                      console.log(id)
-                    }, function(err) {
-                      console.log(err)
-                    });
-                  }
-                });
+                      //// Now update the tables
+                      var Object = AD.Model.List['hris.Object'];
+                      var objaFound = Object.findOne({id:relationship.objA_id});
+                      var objbFound = Object.findOne({id:relationship.objB_id});
+                      $.when(objaFound, objbFound).then(function(objA, objB){
 
-                // Add the foreign key column
-                var sql = 'ALTER TABLE '+AD.Defaults.dbName+'.'+ objA.object_table + ' ADD ';
-                sql += objB.object_pkey + ' int(10) UNSIGNED';
-                sql += ';'
-                // Add an index
-                sql + 'ALTER TABLE '+AD.Defaults.dbName+'.'+ objA.object_table + ' ADD INDEX (' + objB.object_pkey + ')' ;
-                console.log(sql)
-                db.runSQL(sql,[], function(err, results, fields){
-                  if (err) {
-                    console.log(err);
-                  }
-                });
+                          // Add the foreign key column
+                          var sql = 'ALTER TABLE '+AD.Defaults.dbName+'.'+ objA.object_table + ' ADD ';
+                          sql += objB.object_pkey + ' int(11) UNSIGNED';
+                          runSQL(sql);
 
-                break;
+                          // Add an index
+                          sql = 'ALTER TABLE '+AD.Defaults.dbName+'.'+ objA.object_table + ' ADD INDEX (' + objB.object_pkey + ')' ;
+                          runSQL(sql);
+                      });
+                      break;
 
-              case 'has_many':
-                var params = {objA_id: objB.object_id,
-                              objB_id: objA.object_id,
-                              relationship_type: 'belongs_to'};
+                  case 'has_many':
 
-                var found = Relationship.findAll(params)
+                      // Define the inverse relationship
+                      params = {objA_id: relationship.objB_id,
+                                objB_id: relationship.objA_id,
+                                relationship_type: 'belongs_to'};
 
-                $.when(found).then(function(relationships) {
-                  if (typeof relationships[0] == 'undefined') {
-                    // Create the inverse
-                    Relationship.create(params, function(id) {
-                      console.log(id)
-                    }, function(err) {
-                      console.log(err)
-                    });
-                  }
-                });
+                      // NOTE: don't need to add a column because we added it on belongs_to
 
-                // don't need to add a column because we added it on belongs_to
-                break;
+                      break;
               }
-            });
-          });
-        }
-      });
+
+              //// Create the Inverse Relationship
+              var found = Relationship.findOne(params);
+              $.when(found).then(function(relationship) {
+
+                  if (!relationship) {
+
+                      console.log('  creating '+params.relationship_type+' relationship');
+
+                      Relationship.create(params, function(data) {
+                          console.log('  -> created!  new rship id:'+data.id);
+                      }, function(err) {
+                          console.log(err)
+                      });
+                  }
+              });
+
+            } // if rship
+        }); // end rship findOne
     }
     hrisHub.subscribe('hris.Relationship.created', newRelationship);
 
-
+/*
     var deleteRelationship = function(event, data) {
       console.log('======')
       console.log(data)
@@ -161,6 +158,36 @@ hrisRelationship.setup = function() {
            }
         });
       });
+    }
+*/
+    var deleteRelationship = function(event, data) {
+
+        var Relationship = AD.Model.List['hris.Relationship'];
+        var params;
+
+        // Delete reciprocal relationship
+        switch(data.relationship_type) {
+            case 'belongs_to':
+                params = {  objA_id: data.objB_id,
+                            objB_id: data.objA_id,
+                            relationship_type: 'has_many'};
+                break;
+
+            case 'has_many':
+                params = {  objA_id: data.objB_id,
+                            objB_id: data.objA_id,
+                            relationship_type: 'belongs_to'};
+                break;
+        }
+
+        console.log('... deleting reciprocal Rship:');
+
+        Relationship.findOne(params, function(relationship) {
+            if (relationship) {
+                relationship.destroy();
+            }
+        });
+
     }
     hrisHub.subscribe('hris.Relationship.destroyed', deleteRelationship);
 
