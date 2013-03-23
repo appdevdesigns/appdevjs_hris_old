@@ -65,7 +65,7 @@ hrisAttribute.setup = function() {
         	var attributeDataType = attribute.attribute_datatype;
 
             AttributeSet.findOne({id:attributeSetId}, function(attributeSet){
-            	 var sql = 'ALTER TABLE '+ attributeSet.attributeSet_table + ' ADD ';
+            	 var sql = 'ALTER TABLE '+AD.Defaults.dbName+'.'+ attributeSet.attributeSet_table + ' ADD ';
                  sql += attributeColumn;
                  sql += ' '+ attributeDataType;
                  db.runSQL(sql,[], function(err, results, fields){
@@ -85,6 +85,8 @@ hrisAttribute.setup = function() {
     //  data: { id:#, guid:'string' }
     var deleteAttribute = function(event, data) {
 
+        //// To keep from shooting ourselves in the foot, don't drop the columns
+ /*
     	Attribute.findOne({id:data.id}, function(attribute) {
 
         	var attributeSetId = attribute.attributeset_id;
@@ -102,11 +104,15 @@ hrisAttribute.setup = function() {
                  });
             });
         });
+*/
     }
     hrisHub.subscribe('hris.Attribute.destroyed', deleteAttribute);
 
-    var updateAttribute = function(event, data) {
 
+
+
+    var updateAttribute = function(event, data) {
+/*
     	Attribute.findOne({id:data.id}, function(attribute) {
 
         	var attributeSetId = attribute.attributeset_id;
@@ -132,6 +138,7 @@ hrisAttribute.setup = function() {
                  });
             });
         });
+*/
     }
     hrisHub.subscribe('hris.Attribute.updated', updateAttribute)
 

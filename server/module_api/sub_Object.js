@@ -180,6 +180,7 @@ console.log('sql:'+sql);
         var Object = AD.Model.List['hris.Object'];
 
         Object.findAll({}, function(list){
+
            for (var i=0; i<list.length;i++) {
 
                var pkey = list[i].id;

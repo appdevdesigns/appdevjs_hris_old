@@ -168,7 +168,6 @@ HRiS.Express.destroyObject = function (req, res, next) {
  * @param {obj} res  The express response object
  * @param {fn}  next The express callback function
  */
-
 HRiS.Express.updateObject = function (req, res, next) {
 
     // get object/table definition
@@ -473,7 +472,8 @@ HRiS.Objects.definition = function (key, onSuccess, onError) {
  */
 
 
-    if ('undefined' == typeof objects[key]) {
+//// Prevent Caching of data
+ //   if ('undefined' == typeof objects[key]) {
 
         var loaded = objLoadDefinition(key);
         $.when(loaded)
@@ -489,12 +489,12 @@ HRiS.Objects.definition = function (key, onSuccess, onError) {
                     dfd.reject(err);
                 });
 
-    } else {
+//    } else {
 
-        // we have it, so perform the callback immediately
-        if (onSuccess) { onSuccess(objects[key]);}
-        dfd.resolve(objects[key]);
-    }
+//        // we have it, so perform the callback immediately
+//        if (onSuccess) { onSuccess(objects[key]);}
+//        dfd.resolve(objects[key]);
+//    }
 
     return dfd;
 }
@@ -2040,6 +2040,36 @@ HRiS.publicLinks = {
  */
 var __doc;
 
+HRiS.allObjectIDs = function (objKey) {
+
+    var dfd = $.Deferred();
+
+    HRiS.Objects.definition(objKey, function(tableInfo){
+
+
+        var sql = 'SELECT * FROM ' + AD.Defaults.dbName +'.'+tableInfo.table;
+        db.runSQL(sql, [], function(err, results, fields) {
+
+            if (err) {
+                console.error('allObjectIDs(): had an error');
+                console.error(err);
+                dfd.reject(err);
+
+            } else {
+
+//console.log(results);
+
+                var ids = [];
+                for (var i=0; i<results.length; i++){
+                    ids.push(results[i][tableInfo.pKey]);
+                }
+                dfd.resolve(ids);
+            }
+
+        });
+    });
+    return dfd;
+}
 
 
 ///// NOTE: HRiS.Objects._cache  { 'objKey': { #id: {obj} } };

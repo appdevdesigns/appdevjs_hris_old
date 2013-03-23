@@ -62,9 +62,8 @@ var whichObject = function (req, res, next) {
 var hasPermission = function (req, res, next) {
     // Verify the current viewer has permission to perform this action.
 
-
-    if (!AD.Defaults.authRequired) next();
-
+if (!AD.Defaults.authRequired) next();
+else {
     // Viewer needs :
     // hris.[objKey].[action] permission
 
@@ -88,7 +87,7 @@ var hasPermission = function (req, res, next) {
         errorMSG(req, res, 'ERR_NO_PERMISSION', AD.Const.HTTP.ERROR_FORBIDDEN);  // 403 : you don't have permission
 
     } // end if
-
+}
 }
 
 
@@ -156,9 +155,15 @@ var getViewerScope = function (req, res, next) {
 
     */
 
+//// for testing, we just send back all our matches for this object:
+
     // an obj with findAll.attr format(  {person_id:{'in':[1,2,3,4,5]}} ) ?
-    req.aRAD.scopeArray = [1,2,3]; //'(1=1)';
-    next();
+//    req.aRAD.scopeArray = [1,2,3]; //'(1=1)';
+    var found = HRiS.allObjectIDs(objKey);
+    $.when(found).then(function(ids){
+        req.aRAD.scopeArray = ids;
+        next();
+    });
 };
 
 
@@ -315,13 +320,13 @@ var computeNonCachedObjects = function (req, res, next) {
     // req.aRAD.idsNotFound = [1,2,3,...];  // all the ids of ppl that have not been cached
 
 //console.log('computeNonCachedObjects()');
-    var objKey = req.aRAD.objectKey;
-    var filteredList = req.aRAD.filteredScopeArray;
+//    var objKey = req.aRAD.objectKey;
+//    var filteredList = req.aRAD.filteredScopeArray;
 
-    var notFound = HRiS.Objects.nonCachedIDs(objKey, filteredList);
+//    var notFound = HRiS.Objects.nonCachedIDs(objKey, filteredList);
 
-    req.aRAD.idsNotFound = notFound;  //these are the objects we need to pull out
-
+//    req.aRAD.idsNotFound = notFound;  //these are the objects we need to pull out
+req.aRAD.idsNotFound=req.aRAD.filteredScopeArray;  // force caching of all objects
     next();
 };
 
