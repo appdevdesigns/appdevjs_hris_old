@@ -90,19 +90,42 @@
                         for (var i=0; i< list.length; i++){
                             self.addItem(list[i]);  
                             } 
+                            
+                        $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+                            .find( ".portlet-header" )
+                            .addClass( "ui-widget-header ui-corner-all" )
+                            .prepend( "<span class='resize-portlet ui-icon ui-icon-minusthick'></span>")
+                            .prepend( "<span class='close-portlet ui-icon ui-icon-close'></span>")
+                            .end()
+                            .find( ".portlet-content" );    
+                        $( ".portlet-header .resize-portlet" ).click(function() {
+                            $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
+                            $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
+                
+                        });
+                        $( ".portlet-header .close-portlet" ).click(function() {
+                            var par = $( this ).parents( ".portlet:first" ).parent();
+                              $('#asl_' + par.attr('id')).show();
+                            par.hide();
+                            
+                          
+                        });
+                            
                         })
                     .fail(function(err){ })
 
             },
             '.attribute_Set_List click': function(el, ev){
-                //$('#attributeDetailContainer').hide();
-                // Add the active class so navigation shows a highlight
-                $('.attribute_Set_List').removeClass('active');
+               
+                
+               
                 var $el = $(el);
-                $el.addClass('active');
+                
+                //$el.addClass('active');
 
                 var model = el.data('ad-model');
-
+                $('#' + model.attributeset_id).show()  ;
+                $el.hide();
                 AD.Comm.Notification.publish('userFamily.attributeSetItem.selected', model);
                 return false;
             },
@@ -110,7 +133,6 @@
                 
                 var view = this.view('/hris/userFamily/view/attributeSetListItem.ejs', {model: model});
                 var $div = $(view);
-
                 $div.data("ad-model", model);
                 
 
@@ -123,8 +145,8 @@
                 $div.data("ad-model", model);
                 $div.user_attributes();*/
                 
-                $('#attributeDetailContainer').append("<div id='" + model.attributeset_label + "'></div>");
-                var $div2 = $('#' + model.attributeset_label)  ;
+                $('#attributeDetailContainer').append("<div id='" + model.attributeset_id + "'></div>");
+                var $div2 = $('#' + model.attributeset_id)  ;
                 $div2.data("ad-model", model);
                 $div2.data("ad-person", this.person);
                 $div2.user_attributes();

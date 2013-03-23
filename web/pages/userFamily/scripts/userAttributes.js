@@ -38,20 +38,20 @@
                 
                 this.options = options;
                 
-               // this.element.hide();
-
+                this.element.hide();
+                this.person = this.element.data('ad-person');
+                this.model = this.element.data('ad-model');
                 // insert our DOM elements
                 this.insertDOM();
                 
                 
                 // attach other widgets & functionality here:
                 
-                this.person = this.element.data('ad-person');
-                var model = this.element.data('ad-model');
+               
                 
                 var self= this;
                 
-                var found =  hris.Attribute.findAll({attributeset_id: model.attributeset_id});
+                var found =  hris.Attribute.findAll({attributeset_id:  this.model.attributeset_id});
                 $.when(found)
                     .then(function(list){
                         self.element.find('.userAttribute').remove();
@@ -67,18 +67,9 @@
                           console.log(err);
                     })
                 
-                $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
-                    .find( ".portlet-header" )
-                    .addClass( "ui-widget-header ui-corner-all" )
-                    .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
-                    .end()
-                    .find( ".portlet-content" );
+              
  
-                $( ".portlet-header .ui-icon" ).click(function() {
-                    $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
-                    $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
                 
-                });
                 
                 
                 
@@ -88,21 +79,10 @@
                 this.xlateLabels();
             },
 
-
-
-            'userFamily.attributeSetItem.selected subscribe': function(msg, model) {
-               
-               // this.element.show();
-		
-               
-
-            },
-
-
-
             'userFamily.person.selected subscribe': function(msg, model){
                 this.person= model;	
-                this.element.find('.userAttributeRow').remove();
+               this.element.find('.userAttributeRow').remove();
+                this.element.show
                 //this.element.hide();
             },
             
@@ -134,7 +114,7 @@
 
             insertDOM: function() {
                 
-                this.element.html(this.view('/hris/userFamily/view/userAttributes.ejs', {}));
+                this.element.html(this.view('/hris/userFamily/view/userAttributes.ejs', {model: this.model}));
                 
             }
             
