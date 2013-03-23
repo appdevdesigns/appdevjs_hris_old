@@ -54,7 +54,7 @@
                     connectWith: ".column"
                  });
                  
-                $( ".column" ).disableSelection();
+                //$( ".column" ).disableSelection();
                 // Find the object_id for the object_key = person.
                 var self = this;
                 this.listEntities = {};
