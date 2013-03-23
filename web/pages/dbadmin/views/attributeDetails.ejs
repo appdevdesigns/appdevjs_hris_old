@@ -16,28 +16,34 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
     <fieldset>
     <legend></legend>
     <div class="control-group">
+        <label class="control-label" for="attribute_label"><%== L('[details.label.label]') %></label>
+        <div class="controls">
+            <input type="text" data-bind="attribute_label" />
+        </div>
+    </div>
+    <div class="control-group">
         <label class="control-label" for="attribute_column"><%== L('[details.attribute.label.attribute_column]') %></label>
         <div class="controls">
-            <input type="text" placeholder="person_surname" data-bind="attribute_column" />
+            <input type="text" data-bind="attribute_column" />
         </div>
     </div>
     <div class="control-group">
         <label class="control-label" for="attribute_datatype"><%== L('[details.attribute.label.attribute_datatype]') %></label>
         <div class="controls">
-            <input type="text" placeholder="name_id" data-bind="attribute_datatype" />
+            <input type="text" data-bind="attribute_datatype" />
             <i>Select box?</i>
         </div>
     </div>
     <div class="control-group">
         <label class="control-label" for="meta"><%== L('[details.attribute.label.meta]') %></label>
         <div class="controls">
-            <input type="text" placeholder="???" data-bind="Meta" />
+            <input type="text" data-bind="Meta" />
         </div>
     </div>
     <div class="control-group">
         <label class="control-label" for="attribute_permission"><%== L('[details.attribute.label.attribute_permission]') %></label>
         <div class="controls">
-            <input type="text" placeholder="???" data-bind="attribute_permission" />
+            <input type="text" data-bind="attribute_permission" />
         </div>
     </div>
     <div class="control-group">
