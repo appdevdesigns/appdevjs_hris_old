@@ -88,12 +88,16 @@
                     }
                 });
             },
+            
 
             'userFamily.person.selected subscribe': function(msg, model)
             {
                 $(".showEdit").hide();
                 this.element.show();
-
+                //this.element.find('.userAttributeRow').remove();
+                
+                //clear all the portlets from the container from the Container
+                $('#attributeDetailContainer').empty();
 
                 var self= this;
                 this.person= model;	
@@ -108,11 +112,13 @@
                         self.element.find('.userAttributeRow').remove();
                         self.element.find('.attribute_Set_List').remove();
                         
-                       
+                        //iterate through each AttributeSet
                         for (var i=0; i< list.length; i++){
                             self.addAttributeSetItem(list[i]);
                             } 
-                            
+                        
+                        
+                        //Att the portal classes and event handers  
                         $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
                             .find( ".portlet-header" )
                             .addClass( "ui-widget-header ui-corner-all" )
@@ -157,7 +163,7 @@
                 return false;
             },
             addAttributeSetItem: function(model){
-                
+                //Add the list item
                 var view = this.view('/hris/userFamily/view/attributeSetListItem.ejs', {model: model});
                 var $div = $(view);
                 $div.data("ad-model", model);
@@ -166,11 +172,7 @@
                 this.ul.append($div);
                 
                 
-                /*var view = this.view('/hris/userFamily/view/userAttributes.ejs', {model: model});
-                var $div = $(view);
-
-                $div.data("ad-model", model);
-                $div.user_attributes();*/
+                //Now add the portlet item
                 
                 $('#attributeDetailContainer').append("<div id='" + model.attributeset_id + "'></div>");
                 var $div2 = $('#' + model.attributeset_id)  ;
@@ -184,13 +186,17 @@
 
 
             '#user_attr_save click': function(el, ev){
+                //TODO implement save
                 
-               
+                
+                $('.hideEdit').show();
+                $('.showEdit').hide();
+               ev.preventDefault();
             },
             '#user_attr_edit click': function(el, ev){
                 $('.hideEdit').hide();
                 $('.showEdit').show();
-                
+                ev.preventDefault();
 
             },
             

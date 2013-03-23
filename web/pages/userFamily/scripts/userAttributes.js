@@ -80,12 +80,7 @@
                 this.xlateLabels();
             },
 
-            'userFamily.person.selected subscribe': function(msg, model){
-                this.person= model;	
-               this.element.find('.userAttributeRow').remove();
-                this.element.show
-                //this.element.hide();
-            },
+            
             
 	        addItem: function(model){
 
