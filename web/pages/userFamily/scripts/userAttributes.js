@@ -63,6 +63,8 @@
                         }
                         self.attrModelList= list;
                         $(".showEdit").hide();
+                        self.person.bindToForm(self)
+                        
                     })
                     .fail(function(err){
                           console.log(err);
