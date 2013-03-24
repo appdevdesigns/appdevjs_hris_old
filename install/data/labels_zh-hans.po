@@ -173,3 +173,21 @@ msgstr "[zh-hans]:Key"
 msgid "(translators ignore this tag:[26]) Primary Key"
 msgstr "[zh-hans]:Primary Key"
 
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attributeset.label.attributeset_table]
+msgid "(translators ignore this tag:[27]) Table"
+msgstr "[zh-hans]:Table"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.label.label]
+msgid "Label"
+msgstr "[zh-hans]:Label"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attributeset.label.type_id]
+msgid "Type"
+msgstr "[zh-hans]:Type"
+

@@ -35,6 +35,7 @@ hrisObject.setup = function() {
     //  this.listModels = the list of Model objects in the current Module
     //
 
+
     hrisHub = this.module.hub;  // <-- should have a reference to our Module
     HRiS = this.module.HRiS;
 //console.log('started hrisObject hub');
@@ -50,6 +51,7 @@ hrisObject.setup = function() {
      * @param {obj} data the primary key id of the newly created Object( { id:1 } )
      */
     //  data: { id:# }
+
     var newObject = function(event, data) {
 
     	console.log('newObject');
@@ -115,6 +117,7 @@ hrisObject.setup = function() {
      * @param {string} event the notification key this matched
      * @param {obj} data the primary key id of the newly created Object( { id:1 } )
      */
+
     // data is { id:#, guid:'string' }
     var deleteObject = function(event, data) {
 
@@ -199,8 +202,10 @@ console.log('sql:'+sql);
 
            // build obj_id: { attribute_name:'' , .... } list
            var objLookup = {};
+           var pkeyLookup = {};
            for (var i=0; i<list.length; i++) {
                objLookup[list[i].object_id] = {};
+               pkeyLookup[list[i].object_id] = list[i].object_pkey;
            }
 
            var foundAS = Attributeset.findAll({});
@@ -247,7 +252,8 @@ console.log('sql:'+sql);
                     // clone the link with object substitutions:
                     var newLinks = AD.Util.Object.clone(HRiS.publicLinks);
                     for (var l in newLinks) {
-                        newLinks[l].uri = AD.Util.String.render(newLinks[l].uri, attrs);
+                        var pkeyField = pkeyLookup[oID];
+                        newLinks[l].uri = AD.Util.String.render(newLinks[l].uri, attrs).replace('[id]', '['+pkeyField+']');
 
                         if (l=='create' || l=='update') {
 
