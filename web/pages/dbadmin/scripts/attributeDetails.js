@@ -138,23 +138,10 @@
                 this.element.hide();
             },
 
+            'dbadmin.attribute.item.deleted subscribe': function( msg, model ) {
+                this.element.hide();
+            }
 
-//// To setup default functionality
-/*
-            '.col1 li dblclick' : function (e) {
-            
-                this.element.find('#someDiv').append(e);
-            },
-*/
-
-//// To Add Subscriptions:
-/*
-            'apprad.module.selected subscribe': function(message, data) {
-                // data should be { name:'[moduleName]' }
-                this.module = data.name;
-                this.setLookupParams({module: data.name});
-            },
-*/
         });
         
     }) ();

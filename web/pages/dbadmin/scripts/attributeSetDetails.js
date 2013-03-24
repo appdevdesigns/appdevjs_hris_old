@@ -140,6 +140,10 @@
             'dbadmin.attribute.item.add-new subscribe': function( msg, model ) {
                 this.element.hide();
             },
+            
+            'dbadmin.attributeset.item.deleted subscribe': function( msg, model ) {
+                this.element.hide();
+            }
 
         });
 
