@@ -277,7 +277,9 @@ console.log(newLinks);
 
     });
 }
+/*
 Object.setupModuleHub = function() {
     HRiS = this.module.HRiS; // don't create a new instance by require();
     Object.module.hub.subscribe(AD.Const.Notifications.MODULE_READY, initializeCachedObjects);
 }
+*/
