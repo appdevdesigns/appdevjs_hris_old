@@ -40,6 +40,7 @@
 
                 this.selectedModel = null;
                 this.addForm = null;
+                this.relationshipMgr = new hris.Relationship();
                 
                 // insert our DOM elements
                 this.insertDOM();
@@ -90,11 +91,19 @@
             refreshData: function( model ) {
                 this.selectedModel = model;
                 this.ADForm.setModel( model );
+                this.updateRelationshipDropdown();
+            },
+
+            updateRelationshipDropdown: function() {
+                this.element.find( '#add-relationship-dropdown' ).html(
+                    this.view( '/hris/dbadmin/view/objectDetails_addList.ejs', { objs: hris.Object.findAll( {} ) } )
+                );
             },
             
             insertDOM: function() {
                 this.element.html( this.view( '/hris/dbadmin/view/objectDetails.ejs', {} ) );
                 this.addForm = $( 'form', this.element );
+                $( 'select', this.element).selectpicker();
             },
             
             '#object-object_key change': function(el, ev) {
@@ -137,6 +146,10 @@
                 this.element.hide();
             },
 
+            'a.add-relationship click': function( event ) {
+                console.log( 'click' );
+                event.preventDefault();
+            },
 
 //// To setup default functionality
 /*

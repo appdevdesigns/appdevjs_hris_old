@@ -33,6 +33,47 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 			<input id="object-object_pkey" type="text" data-bind="object_pkey" />
 		</div>
 	</div>
+	<div class="control-group">
+		<label class="control-label" for="pkey">Relationships</label>
+		<div class="controls">
+			<div class="btn-group">
+				<button class="btn dropdown-toggle" data-toggle="dropdown">
+					Add
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" id="add-relationship-dropdown"></ul>
+			</div>
+		</div>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Type</th>
+				<th>Object</th>
+				<th>Label</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<select class="selectpicker span2">
+						<option>One to One</option>
+						<option selected="selected">One to Many</option>
+						<option>Many to One</option>
+						<option>Many to Many</option>
+					</select>
+				</td>
+				<td>
+					Passport
+				</td>
+				<td>
+					<input class="input-medium" type="text" placeholder="Label" value="Passports" />
+				</td>
+				<td><a class="btn" href="#"><i class="icon-minus-sign"></i> Remove</a></td>
+			</tr>
+		</tbody>
+	</table>
 	<div class="form-actions">
 		<button type="button" class="btn btn-primary submit"><%== L( '[details.label.save]' ) %></button>
 		<button type="button" class="btn cancel"><%== L( '[details.label.cancel]' ) %></button>
