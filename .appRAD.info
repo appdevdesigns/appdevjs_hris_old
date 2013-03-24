@@ -8,7 +8,8 @@ module.exports = {
 	"iconPath": "/appRAD/portal/icon.jpg",
 	"labels": {
 		"installed": {
-			"/hris/errors": "/hris/errors"
+			"/hris/errors": "/hris/errors",
+			"/page/hris/dbadmin": "/page/hris/dbadmin"
 		}
 	},
 	"sqlTables": {
