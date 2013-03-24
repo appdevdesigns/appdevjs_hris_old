@@ -46,14 +46,14 @@ var dbadminPage = new AD.App.Interface({
 */
     listWidgets: [ 
 // AppRAD: WIDGET DEPENDENCY //    
-      'appdev_list_select'
+      'appdev_list_admin'
     ]
 });
 dbadminPage.registerDependency([
-    '/scripts/jQueryRotate.2.2.js',
-    '/appRAD/portal/scripts/appdevListAdmin.js',
+    //'/scripts/jQueryRotate.2.2.js',
+    //'/appRAD/portal/scripts/appdevListAdmin.js',
     //'/appRAD/portal/css/appRAD-fluid.css',
-    '/appRAD/portal/css/AdminList.css'
+    //'/appRAD/portal/css/AdminList.css'
 ]);
 module.exports = dbadminPage;   
 

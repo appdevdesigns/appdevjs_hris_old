@@ -40,6 +40,7 @@
 
                 this.selectedModel = null;
                 this.addForm = null;
+                this.relationshipMgr = new hris.Relationship();
                 
                 // insert our DOM elements
                 this.insertDOM();
@@ -90,11 +91,29 @@
             refreshData: function( model ) {
                 this.selectedModel = model;
                 this.ADForm.setModel( model );
+                this.updateRelationshipDropdown();
+            },
+
+            updateRelationshipDropdown: function() {
+                this.element.find( '#add-relationship-dropdown' ).html(
+                    this.view( '/hris/dbadmin/view/objectDetails_addList.ejs', { objs: hris.Object.findAll( {} ) } )
+                );
             },
             
             insertDOM: function() {
                 this.element.html( this.view( '/hris/dbadmin/view/objectDetails.ejs', {} ) );
                 this.addForm = $( 'form', this.element );
+                $( 'select', this.element).selectpicker();
+            },
+            
+            '#object-object_key change': function(el, ev) {
+                var value = el.val();
+                if ($('#object-object_table').val() == '') {
+                    $('#object-object_table').val('hris_' + value);
+                }
+                if ($('#object-object_pkey').val() == '') {
+                    $('#object-object_pkey').val(value + '_id');
+                }
             },
 
             'dbadmin.object.item.selected subscribe': function( msg, model ) {
@@ -127,23 +146,14 @@
                 this.element.hide();
             },
 
-
-//// To setup default functionality
-/*
-            '.col1 li dblclick' : function (e) {
-            
-                this.element.find('#someDiv').append(e);
+            'a.add-relationship click': function( event ) {
+                console.log( 'click' );
             },
-*/
 
-//// To Add Subscriptions:
-/*
-            'apprad.module.selected subscribe': function(message, data) {
-                // data should be { name:'[moduleName]' }
-                this.module = data.name;
-                this.setLookupParams({module: data.name});
-            },
-*/
+            'dbadmin.object.item.deleted subscribe': function( msg, model ) {
+                this.element.hide();
+            }
+
         });
         
     }) ();

@@ -78,6 +78,7 @@
                 
                 this.element.html(this.view('/hris/dbadmin/view/attributeDetails.ejs', {}));
                 this.addForm = $( 'form', this.element );
+                this.element.find( 'select' ).selectpicker();
                 
             },
             
@@ -113,6 +114,7 @@
                 var newModel = new hris.Attribute();
                 var parent = $('#attribute-set-list').controller().selectedModel;
                 newModel.attributeset_id = parent.attributeset_id;
+                newModel.attribute_column = parent.attributeset_key + '_';
 
                 // Display it
                 this.refreshData( newModel );
@@ -136,23 +138,10 @@
                 this.element.hide();
             },
 
+            'dbadmin.attribute.item.deleted subscribe': function( msg, model ) {
+                this.element.hide();
+            }
 
-//// To setup default functionality
-/*
-            '.col1 li dblclick' : function (e) {
-            
-                this.element.find('#someDiv').append(e);
-            },
-*/
-
-//// To Add Subscriptions:
-/*
-            'apprad.module.selected subscribe': function(message, data) {
-                // data should be { name:'[moduleName]' }
-                this.module = data.name;
-                this.setLookupParams({module: data.name});
-            },
-*/
         });
         
     }) ();
