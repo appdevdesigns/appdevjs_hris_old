@@ -1,20 +1,20 @@
 
 
 /**
- * @class [moduleName].client.pages.personSummary
- * @parent [moduleName].client.pages.personSummary
+ * @class [moduleName].client.pages.relatedObjects
+ * @parent [moduleName].client.pages.relatedObjects
  * 
- *  Setup the personSummary Widget
+ *  Setup the relatedObjects Widget
  */
 
-//steal('/hris/userFamily/view/personSummary.ejs').then(function() {
+//steal('/hris/userFamily/view/relatedObjects.ejs').then(function() {
 
     // Keep all variables and functions inside an encapsulated scope
     (function() {
     
     
         //// Setup Widget:
-        AD.Controller.extend('personSummary', {
+        AD.Controller.extend('relatedObjects', {
     
             
             init: function (el, options) {
@@ -23,7 +23,7 @@
                 
                 // make sure defaults are taken care of
                 var defaults = {
-                      uid:'personSummary_uuid_notGiven',
+                      uid:'relatedObjects_uuid_notGiven',
 /*                      
                       dataManager:null, // the ListIterator of the data to display
                       template:null,	// view(): the default view template
@@ -35,14 +35,13 @@
                 var options = $.extend(defaults, options);
                 this._super(el, options);
                 
-                
                 this.options = options;
                 
-                
+                this.relatedObjectName = this.element.data('related-object-name');
                 // insert our DOM elements
                 this.insertDOM();
-                var _self = this;
-                              
+                
+                
                 // attach other widgets & functionality here:
                 
                 
@@ -57,10 +56,17 @@
             
             insertDOM: function() {
                 
-                this.element.html(this.view('/hris/userFamily/view/personSummary.ejs', {}));
-                this.element.hide();
+                this.element.html(this.view('/hris/userFamily/view/relatedObjects.ejs', {name:this.relatedObjectName}));
                 
             },
+            
+            'userFamily.relationshipItem.click subscribe': function(msg, model) {
+                console.log('my link was clicked, i should update');
+                // At this point, the model (a Person model) does not contain a passports attribute any more
+                // even though the original JSON response had it.
+                console.log(this.relatedObjectName);
+                console.log(model[this.relatedObjectName].length);
+            }
             
             
 //// To setup default functionality
@@ -77,39 +83,8 @@
                 // data should be { name:'[moduleName]' }
                 this.module = data.name;
                 this.setLookupParams({module: data.name});
-            },           
-            
+            },
 */
-            'userFamily.person.selected subscribe' : function(message, model) {
-                this.element.show();
-                
-                $('#person-name').text(model.person_givenname+ ' ' + model.person_surname );
-                $('#person-gender').text(model.gender_id);
-                $('#person-workstatus').text("[WorkStatus]");
-                $('#person-chinesename').text("[Chinesename]");
-                if(model.person_birthdate == null) {
-                    $('#person-dob').text('');
-                } else {
-                    $('#person-dob').text(model.person_birthdate);
-                }                
-              
-             },
-         
-            
-            'userFamily.userDetails.saved subscribe' : function(message, model) {
-                this.element.show();
-                
-                $('#person-name').text(model.person_givenname+ ' ' + model.person_surname );
-                $('#person-gender').text(model.gender_id);
-                $('#person-workstatus').text("[WorkStatus]");
-                $('#person-chinesename').text("[Chinesename]");
-                if(model.person_birthdate == null) {
-                    $('#person-dob').text('');
-                } else {
-                    $('#person-dob').text(model.person_birthdate);
-                }                
-              
-             }
         });
         
     }) ();

@@ -53,15 +53,5 @@ msgstr "[zh-hans]:Last Name:"
 msgid "Submit" 
 msgstr "[zh-hans]:Submit" 
  
-#. path: /page/hris/userFamily 
-#. code: zh-hans 
-#. key: [test] 
-msgid "[zh-hans]:test" 
-msgstr "[zh-hans]:test" 
- 
-#. path: /page/hris/userFamily 
-#. code: zh-hans 
-#. key: [hris.test] 
-msgid "[zh-hans]:test" 
-msgstr "[zh-hans]:test" 
+
  

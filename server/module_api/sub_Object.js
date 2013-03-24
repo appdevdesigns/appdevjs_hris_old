@@ -35,6 +35,7 @@ hrisObject.setup = function() {
     //  this.listModels = the list of Model objects in the current Module
     //
 
+
     hrisHub = this.module.hub;  // <-- should have a reference to our Module
     HRiS = this.module.HRiS;
 //console.log('started hrisObject hub');
@@ -50,6 +51,7 @@ hrisObject.setup = function() {
      * @param {obj} data the primary key id of the newly created Object( { id:1 } )
      */
     //  data: { id:# }
+
     var newObject = function(event, data) {
 
     	console.log('newObject');
@@ -115,6 +117,7 @@ hrisObject.setup = function() {
      * @param {string} event the notification key this matched
      * @param {obj} data the primary key id of the newly created Object( { id:1 } )
      */
+
     // data is { id:#, guid:'string' }
     var deleteObject = function(event, data) {
 
@@ -177,12 +180,14 @@ console.log('sql:'+sql);
     // When all our resources are loaded, then use our object model
     // to load our object instances.
     var initializeCachedObjects = function() {
+
         var Object = AD.Model.List['hris.Object'];
+        var Attributeset = AD.Model.List['hris.Attributeset'];
+        var Attribute = AD.Model.List['hris.Attribute'];
 
         Object.findAll({}, function(list){
 
            for (var i=0; i<list.length;i++) {
-
                var pkey = list[i].id;
                var val = 'val';//list[i].attr(pkey);
                cachedObjects[list[i][Object.id]] = list[i].attrs();
@@ -195,22 +200,78 @@ console.log('sql:'+sql);
 //console.log('--------------');
 //console.log();
 
-
-           //// now announce all the public API for those defined objects:
-           // for each object
+           // build obj_id: { attribute_name:'' , .... } list
+           var objLookup = {};
+           var pkeyLookup = {};
            for (var i=0; i<list.length; i++) {
-               var attrs = list[i].attrs();
-
-               // clone the link with object substitutions:
-               var newLinks = AD.Util.Object.clone(HRiS.publicLinks);
-               for (var l in newLinks) {
-                   newLinks[l].uri = AD.Util.String.render(newLinks[l].uri, attrs);
-               }
-
-               ////Register the public site/api
-               hrisObject.setupSiteAPI(attrs['object_key'], newLinks);
-               console.log(' ... HRiS : registering defined object :'+attrs['object_key']);
+               objLookup[list[i].object_id] = {};
+               pkeyLookup[list[i].object_id] = list[i].object_pkey;
            }
+
+           var foundAS = Attributeset.findAll({});
+           var foundAtt = Attribute.findAll({});
+           $.when(foundAS, foundAtt). then(function(listAS, listATT) {
+
+               //
+               // compile objID:ASID
+               var oAS = {};
+               for (var as=0; as < listAS.length; as++) {
+//console.log( listAS[as]);
+                   var oID = listAS[as].object_id;
+
+                   var asID = listAS[as].attributeset_id;
+
+                   if ('undefined' == typeof oAS[asID])  oAS[asID] = {};
+                   oAS[asID]=oID;
+               }
+//console.log( 'oAS:');
+//console.log(oAS);
+//console.log('---');
+//console.log(objLookup);
+                for (var at=0; at< listATT.length; at++){
+
+                    var asID = listATT[at].attributeset_id;
+                    var oID = oAS[asID];
+                    var atID = listATT[at].attribute_id;
+                    var atName = listATT[at].attribute_column;
+//console.log( 'asID['+asID+'] oID['+oID+'] atID['+atID+'] atName['+atName+']');
+
+                    if ('undefined' == typeof objLookup[oID]) objLookup[oID] = {};
+
+                    objLookup[oID][atName]= atID;
+                }
+//console.log(objLookup);
+
+
+                //// now announce all the public API for those defined objects:
+                // for each object
+                for (var i=0; i<list.length; i++) {
+                    var attrs = list[i].attrs();
+                    var oID = attrs.object_id;
+
+                    // clone the link with object substitutions:
+                    var newLinks = AD.Util.Object.clone(HRiS.publicLinks);
+                    for (var l in newLinks) {
+                        var pkeyField = pkeyLookup[oID];
+                        newLinks[l].uri = AD.Util.String.render(newLinks[l].uri, attrs).replace('[id]', '['+pkeyField+']');
+
+                        if (l=='create' || l=='update') {
+
+                            var listParams = objLookup[oID];
+                            for (var lp in listParams) {
+                                newLinks[l].params[lp] = '['+lp+']';
+                            }
+                        }
+                    }
+console.log(newLinks);
+                    ////Register the public site/api
+                    hrisObject.setupSiteAPI(attrs['object_key'], newLinks);
+                    console.log(' ... HRiS : registering defined object :'+attrs['object_key']);
+                }
+           });
+
+
+
 
 //console.log('');
 //console.log('newLinks:');

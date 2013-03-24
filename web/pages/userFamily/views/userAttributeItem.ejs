@@ -17,7 +17,7 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 <label class="userAttribute control-label" for="<%= 'tb_' + model.attribute_id %>"><%= model.attribute_label %></label>
 <div class="controls">
     <div>
-      <input type="text" data-bind="<%=  model.attribute_column %>" id="<%= 'tb_' + model.attribute_id %>" class="userAttributeValue showEdit" placeholder='<%= model.attribute_question %>' value='<%= person.attr( model.attribute_column) %>' />
+      <input type="text" data-bind="<%=  model.attribute_column %>" id="<%= 'tb_' + model.attribute_id %>" class="userAttributeValue showEdit" placeholder='<%= model.attribute_question %>' />
       <label type="text"  class="userAttributeValue hideEdit"><%= person.attr( model.attribute_column) %></label>
 </div>
 

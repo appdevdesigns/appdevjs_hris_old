@@ -50,23 +50,8 @@
                
                 
                 var self= this;
-                
-                var found =  hris.Attribute.findAll({attributeset_id:  this.model.attributeset_id});
-                $.when(found)
-                    .then(function(list){
-                        self.element.find('.userAttribute').remove();
-
-                        for (var i=0; i< list.length; i++){
-
-                            self.addItem(list[i]);   
-                            
-                        }
-                        self.attrModelList= list;
-                        $(".showEdit").hide();
-                    })
-                    .fail(function(err){
-                          console.log(err);
-                    })
+                this.setupForm();
+               
                 
               
  
@@ -80,11 +65,14 @@
                 this.xlateLabels();
             },
 
-            'userFamily.person.selected subscribe': function(msg, model){
-                this.person= model;	
-               this.element.find('.userAttributeRow').remove();
-                this.element.show
-                //this.element.hide();
+            'userFamily.userDetails.saved subscribe': function(msg, person)
+            {
+                
+                this.person = person;
+                this.element.find('#attributeSetDetail').empty();
+                this.setupForm();
+ 
+                
             },
             
 	        addItem: function(model){
@@ -94,6 +82,27 @@
 
                 this.element.find('#attributeSetDetail').append($div);
 
+            },
+            setupForm: function(){
+                var self= this;
+                var found =  hris.Attribute.findAll({attributeset_id:  this.model.attributeset_id});
+                $.when(found)
+                    .then(function(list){
+                        self.element.find('.userAttribute').remove();
+
+                        for (var i=0; i< list.length; i++){
+
+                            self.addItem(list[i]);   
+                            
+                        }
+                        self.attrModelList= list;
+                        $(".showEdit").hide();
+                        self.person.bindToForm(self)
+                        
+                    })
+                    .fail(function(err){
+                          console.log(err);
+                })
             },
 
 

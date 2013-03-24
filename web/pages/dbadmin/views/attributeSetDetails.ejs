@@ -38,14 +38,23 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
     <div class='control-group'>
         <label class='control-label' for='attributeset_key'><%== L('[details.attributeset.label.attributeset_key]') %></label>
         <div class='controls'>
-            <input type="text" data-bind="attributeset_key" />
+            <input type="text" data-bind="attributeset_key"/>
+        </div>
+    </div>
+    <div class='control-group'>
+        <label class='control-label' for='type_id'><%== L('[details.attributeset.label.type_id]') %></label>
+        <div class='controls'>
+            <input type="text" data-bind="type_id" />
         </div>
     </div>
     <div class='control-group'>
         <label class='control-label' for='attributeset_relation'><%== L('[details.attributeset.label.attributeset_relation]') %></label>
         <div class='controls'>
-            <input type="text" data-bind="attributeset_relation" />
-            <i>Select box?</i>
+            <select class="selectpicker" data-bind="attributeset_relation">
+                <option>one</option>
+                <option>many</option>
+                <!-- TODO: Add more options? -->
+            </select>
         </div>
     </div>
     <div class='control-group'>

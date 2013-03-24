@@ -88,12 +88,17 @@
                     }
                 });
             },
+            
+            
 
             'userFamily.person.selected subscribe': function(msg, model)
             {
                 $(".showEdit").hide();
                 this.element.show();
-
+                //this.element.find('.userAttributeRow').remove();
+                
+                //clear all the portlets from the container from the Container
+                $('#attributeDetailContainer').empty();
 
                 var self= this;
                 this.person= model;	
@@ -108,11 +113,13 @@
                         self.element.find('.userAttributeRow').remove();
                         self.element.find('.attribute_Set_List').remove();
                         
-                       
+                        //iterate through each AttributeSet
                         for (var i=0; i< list.length; i++){
                             self.addAttributeSetItem(list[i]);
                             } 
-                            
+                        
+                        
+                        //Add the portal classes and event handers
                         $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
                             .find( ".portlet-header" )
                             .addClass( "ui-widget-header ui-corner-all" )
@@ -142,10 +149,9 @@
                 }
 
             },
+
+
             '.attribute_Set_List click': function(el, ev){
-               
-                
-               
                 var $el = $(el);
                 
                 //$el.addClass('active');
@@ -156,8 +162,15 @@
                 AD.Comm.Notification.publish('userFamily.attributeSetItem.selected', model);
                 return false;
             },
-            addAttributeSetItem: function(model){
+
+            '.relationship-item click': function(el, ev) {
                 
+                AD.Comm.Notification.publish('userFamily.relationshipItem.click', this.person);
+                return false;
+            },
+
+            addAttributeSetItem: function(model){
+                //Add the list item
                 var view = this.view('/hris/userFamily/view/attributeSetListItem.ejs', {model: model});
                 var $div = $(view);
                 $div.data("ad-model", model);
@@ -166,11 +179,7 @@
                 this.ul.append($div);
                 
                 
-                /*var view = this.view('/hris/userFamily/view/userAttributes.ejs', {model: model});
-                var $div = $(view);
-
-                $div.data("ad-model", model);
-                $div.user_attributes();*/
+                //Now add the portlet item
                 
                 $('#attributeDetailContainer').append("<div id='" + model.attributeset_id + "'></div>");
                 var $div2 = $('#' + model.attributeset_id)  ;
@@ -184,13 +193,22 @@
 
 
             '#user_attr_save click': function(el, ev){
+                //TODO implement save
+                this.person.loadFromDOM(this.element);
+                this.person.save({id:this.person.person_id});
                 
-               
+                $('.hideEdit').show();
+                $('.showEdit').hide();
+                
+                
+                
+                AD.Comm.Notification.publish('userFamily.userDetails.saved', this.person);
+               ev.preventDefault();
             },
             '#user_attr_edit click': function(el, ev){
                 $('.hideEdit').hide();
                 $('.showEdit').show();
-                
+                ev.preventDefault();
 
             },
             
@@ -198,6 +216,12 @@
                 var view = this.view('/hris/userFamily/view/relationshipListItem.ejs', {name: name});
                 var $div = $(view);
                 this.ul.append($div);
+
+                $div = $('<div></div>');
+                $('#attributeDetailContainer').append($div);
+                $div.data('related-object-name', name);
+                $div.data('person', this.person);
+                $div.related_objects();
             },
             
             insertDOM: function() {
