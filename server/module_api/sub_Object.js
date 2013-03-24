@@ -51,7 +51,7 @@ hrisObject.setup = function() {
      * @param {obj} data the primary key id of the newly created Object( { id:1 } )
      */
     //  data: { id:# }
-/*
+
     var newObject = function(event, data) {
 
     	console.log('newObject');
@@ -106,7 +106,7 @@ hrisObject.setup = function() {
     }
     hrisHub.subscribe('hris.Object.created', newObject);
 
-*/
+
 
     /**
      * @function hris.Object.destroyed
@@ -117,7 +117,7 @@ hrisObject.setup = function() {
      * @param {string} event the notification key this matched
      * @param {obj} data the primary key id of the newly created Object( { id:1 } )
      */
- /*
+
     // data is { id:#, guid:'string' }
     var deleteObject = function(event, data) {
 
@@ -163,18 +163,18 @@ console.log('sql:'+sql);
     }
     hrisHub.subscribe('hris.Object.destroyed', deleteObject);
 
-*/
 
-/*
+
+
     var updateObject = function(event, data) {
 
         // check for changes in table/primary key???
     }
     hrisHub.subscribe('hris.Object.updated', updateObject)
 
-*/
 
-/*
+
+
     ////  Manage our Object Cache tracking
 
     // When all our resources are loaded, then use our object model
@@ -282,7 +282,7 @@ console.log(newLinks);
         });
     }
     hrisHub.subscribe(AD.Const.Notifications.MODULE_READY, initializeCachedObjects);
-*/
+
 
 } // end setup()
 
