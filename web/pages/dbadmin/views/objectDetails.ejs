@@ -48,7 +48,6 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 	<table id="object-relationships" class="table">
 		<thead>
 			<tr>
-                <th>Label
 				<th>Type</th>
 				<th>Label</th>
 				<th></th>
@@ -57,23 +56,20 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 		<tbody>
             <tr style="display:none;" class='template-row'>
                 <td>
-                    <input type="text" class="input-small" placeholder="objA Label" data-bind="objA_label" />
-                    <i class='rel-objA-key'></i>
-                </td>
-                <td>
                     <select data-bind="relationship_type" class="span2">
                         <%# <option value="one_to_one">Has One</option> %>
                         <option value="has_many">Has Many</option>
                         <option value="belongs_to">Belong To</option>
                         <option value="many_to_many">Many-to-Many</option>
                     </select>
-                    <div class='rel-column-name'>
+                    <i title="Advanced Options" class="rel-show-advanced icon-chevron-down"></i>
+                    <div class='rel-column-name' style="display:none;">
                         <label>Column Name</label>
                         <input type="text" class="input-small" placeholder="parent_id" data-bind="column_name" />
                     </div>
                 </td>
                 <td>
-                    <input type="text" class="input-small" placeholder="objB Label" data-bind="objB_label"/>
+                    <input type="text" class="input-medium" placeholder="objB Label" data-bind="objB_label"/>
                     <i class='rel-objB-key'></i>
                 </td>
                 <td>

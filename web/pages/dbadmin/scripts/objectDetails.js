@@ -97,25 +97,20 @@
                 this.element.find('#object-relationships tbody tr:visible').remove();
 
                 // Add new relationships
-                var foundA = hris.Relationship.findAll({objA_id: model.object_id});
-                var foundB = hris.Relationship.findAll({objB_id: model.object_id});
+                var found = hris.Relationship.findAll({objA_id: model.object_id});
                 var self = this;
-                $.when(foundA, foundB).then(function(listA, listB){
+                $.when(found).then(function(list){
                     var addRow = function(item) {
                         // TODO: This should be set automatically in the model
-                        var foundA = hris.Object.findOne({object_id: item.objA_id});
-                        var foundB = hris.Object.findOne({object_id: item.objB_id});
-                        $.when(foundA, foundB).then(function(objA, objB) {
-                            item.objA = objA;
-                            item.objB = objB;
+                        var found = hris.Object.findOne({object_id: item.objB_id});
+                        $.when(found).then(function(obj) {
+                            item.objA = self.currentModel;
+                            item.objB = obj;
                             self.addRelationshipRow(item);
                         });
                     };
-                    for(var i=0; i<listA.length; i++) {
-                        addRow(listA[i]);
-                    }
-                    for(var i=0; i<listB.length; i++) {
-                        addRow(listB[i]);
+                    for(var i=0; i<list.length; i++) {
+                        addRow(list[i]);
                     }
                 });
             },
@@ -147,13 +142,10 @@
                 newRow.removeClass('template-row');
                 newRow.show();
 
-                if (!rel.objA_label)
-                    rel.objA_label = rel.objA.object_key;
                 if (!rel.objB_label)
                     rel.objB_label = rel.objB.object_key;
                 rel.bindToForm(newRow);
 
-                $('.rel-objA-key', newRow).html(rel.objA.object_key);
                 $('.rel-objB-key', newRow).html(rel.objB.object_key);
                 $('select', newRow).selectpicker();
                 $('select', newRow).change();
@@ -212,16 +204,22 @@
                 ev.preventDefault();
             },
 
-            // Hides or shows the div that allows you to select the column_name
+            // Hides or shows the "Advanced" icon
             '#object-relationships select change': function(el, ev) {
                 switch(el.val()) {
                 case 'belongs_to':
                 case 'has_many':
-                    el.closest('td').find('.rel-column-name').show();
+                    el.closest('td').find('.rel-show-advanced').show();
                     break;
                 default:
+                    el.closest('td').find('.rel-show-advanced').hide();
                     el.closest('td').find('.rel-column-name').hide();
                 }
+            },
+
+            // Hides or shows the div that allows you to select the column_name
+            '.rel-show-advanced click': function(el, ev) {
+                el.closest('td').find('.rel-column-name').toggle();
             },
 
             'dbadmin.object.item.deleted subscribe': function( msg, model ) {
