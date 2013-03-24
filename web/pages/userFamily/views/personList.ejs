@@ -18,17 +18,17 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 <div class="add-person">
     <!--CONTENT OF ADD OPTION - START-->
 
-		<h3 align='left'> First Name: </h3>
+		<b align='left'> <%== L('[hris.userFamily.firstName]') %> </b>
 		<input id="person-addform-firstname" type="text" class="input-medium option-input" data-bind="person_givenname" placeholder="[FirstName]">
 	    
-	    <h3 align='left'>Last Name: </h3>
+	    <b align='left'><%== L('[hris.userFamily.lastName]') %>  </b>
 	    <input id="person-addform-lastname" type="text" class="input-medium option-input" data-bind="person_surname" placeholder="[LastName]">
         <div class="control-group error">
             <label id="error-AddPerson" class="control-label center-align" for="inputError">[hris.userFamily.errorPersonAccountInUse]</label>
         </div>
         <div class="save center-align">
-            <button id="btn-addCancel" class="btn btn-medium option-cancel">Cancel</button>
-            <button id="btn-addSubmit" class="btn  btn-medium btn-primary option-submit">Submit</button>
+            <button id="btn-addCancel" class="btn btn-medium option-cancel"><%== L('[hris.userFamily.cancel]') %> </button>
+            <button id="btn-addSubmit" class="btn  btn-medium btn-primary option-submit"><%== L('[hris.userFamily.submit]') %> </button>
             <span id="addBusy" class="busy-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </div>
     <!--CONTENT OF ADD OPTION - START-->
