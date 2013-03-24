@@ -173,3 +173,21 @@ msgstr "Key"
 msgid "(translators ignore this tag:[26]) Primary Key"
 msgstr "Primary Key"
 
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attributeset.label.attributeset_table]
+msgid "(translators ignore this tag:[27]) Table"
+msgstr "Table"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.label.label]
+msgid "Label"
+msgstr "Label"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attributeset.label.type_id]
+msgid "Type"
+msgstr "Type"
+

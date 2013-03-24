@@ -18,19 +18,19 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 	<div class="control-group">
 		<label class="control-label" for="key"><%== L( '[details.object.label.object_key]' ) %></label>
 		<div class="controls">
-			<input type="text" placeholder="name" data-bind="object_key" />
+			<input id="object-object_key" type="text" placeholder="name" data-bind="object_key" />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="table"><%== L( '[details.object.label.object_table]' ) %></label>
 		<div class="controls">
-			<input type="text" placeholder="hris_name" data-bind="object_table" />
+			<input id="object-object_table" type="text" data-bind="object_table" />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="pkey"><%== L( '[details.object.label.object_pkey]' ) %></label>
 		<div class="controls">
-			<input type="text" placeholder="name_id" data-bind="object_pkey" />
+			<input id="object-object_pkey" type="text" data-bind="object_pkey" />
 		</div>
 	</div>
 	<div class="form-actions">

@@ -113,6 +113,7 @@
                 var newModel = new hris.Attribute();
                 var parent = $('#attribute-set-list').controller().selectedModel;
                 newModel.attributeset_id = parent.attributeset_id;
+                newModel.attribute_column = parent.attributeset_key + '_';
 
                 // Display it
                 this.refreshData( newModel );

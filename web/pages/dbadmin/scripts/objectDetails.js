@@ -96,6 +96,16 @@
                 this.element.html( this.view( '/hris/dbadmin/view/objectDetails.ejs', {} ) );
                 this.addForm = $( 'form', this.element );
             },
+            
+            '#object-object_key change': function(el, ev) {
+                var value = el.val();
+                if ($('#object-object_table').val() == '') {
+                    $('#object-object_table').val('hris_' + value);
+                }
+                if ($('#object-object_pkey').val() == '') {
+                    $('#object-object_pkey').val(value + '_id');
+                }
+            },
 
             'dbadmin.object.item.selected subscribe': function( msg, model ) {
                 //Refresh the form data with the given model and show it
