@@ -113,7 +113,7 @@
                 // Set up the new instance based on its parent
                 var newModel = new hris.Attributeset();
                 var parent = $('#object-list').controller().selectedModel;
-                newModel.object_id = parent.object_id;
+                newModel.attr('object_id', parent.object_id);
 
                 //XXX: Why would these ever need to be set in the Attributeset model?
                 newModel.attributeset_table = parent.object_table;
