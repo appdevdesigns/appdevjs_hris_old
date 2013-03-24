@@ -36,16 +36,15 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
         </div>
     </div>
     <div class='control-group'>
-        <label class='control-label' for='type_id'><%== L('[details.attributeset.label.type_id]') %></label>
+        <label class='control-label' for='attributeset_key'><%== L('[details.attributeset.label.attributeset_key]') %></label>
         <div class='controls'>
-            <input type="text" data-bind="type_id" />
+            <input type="text" data-bind="attributeset_key"/>
         </div>
     </div>
     <div class='control-group'>
-        <label class='control-label' for='attributeset_pkey'><%== L('[details.attributeset.label.attributeset_pkey]') %></label>
+        <label class='control-label' for='type_id'><%== L('[details.attributeset.label.type_id]') %></label>
         <div class='controls'>
-            <input type="text" data-bind="attributeset_pkey" disabled/>
-            <i>Would we ever want to edit this?</i>
+            <input type="text" data-bind="type_id" />
         </div>
     </div>
     <div class='control-group'>
