@@ -45,33 +45,41 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 			</div>
 		</div>
 	</div>
-	<table class="table">
+	<table id="object-relationships" class="table">
 		<thead>
 			<tr>
+                <th>Label
 				<th>Type</th>
-				<th>Object</th>
 				<th>Label</th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>
-					<select class="selectpicker span2">
-						<option>One to One</option>
-						<option selected="selected">One to Many</option>
-						<option>Many to One</option>
-						<option>Many to Many</option>
-					</select>
-				</td>
-				<td>
-					Passport
-				</td>
-				<td>
-					<input class="input-medium" type="text" placeholder="Label" value="Passports" />
-				</td>
-				<td><a class="btn" href="#"><i class="icon-minus-sign"></i> Remove</a></td>
-			</tr>
+            <tr style="display:none;" class='template-row'>
+                <td>
+                    <input type="text" class="input-small" placeholder="objA Label" data-bind="objA_label" />
+                    <i class='rel-objA-key'></i>
+                </td>
+                <td>
+                    <select data-bind="relationship_type" class="span2">
+                        <%# <option value="one_to_one">Has One</option> %>
+                        <option value="has_many">Has Many</option>
+                        <option value="belongs_to">Belong To</option>
+                        <option value="many_to_many">Many-to-Many</option>
+                    </select>
+                    <div class='rel-column-name'>
+                        <label>Column Name</label>
+                        <input type="text" class="input-small" placeholder="parent_id" data-bind="column_name" />
+                    </div>
+                </td>
+                <td>
+                    <input type="text" class="input-small" placeholder="objB Label" data-bind="objB_label"/>
+                    <i class='rel-objB-key'></i>
+                </td>
+                <td>
+                    <a class="btn" href="#"><i class="icon-minus-sign"></i></a>
+                </td>
+            </tr>
 		</tbody>
 	</table>
 	<div class="form-actions">

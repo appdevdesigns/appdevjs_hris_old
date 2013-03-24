@@ -92,20 +92,73 @@
                 this.selectedModel = model;
                 this.ADForm.setModel( model );
                 this.updateRelationshipDropdown();
+
+                // Clear previous relationships
+                this.element.find('#object-relationships tbody tr:visible').remove();
+
+                // Add new relationships
+                var foundA = hris.Relationship.findAll({objA_id: model.object_id});
+                var foundB = hris.Relationship.findAll({objB_id: model.object_id});
+                var self = this;
+                $.when(foundA, foundB).then(function(listA, listB){
+                    var addRow = function(item) {
+                        // TODO: This should be set automatically in the model
+                        var foundA = hris.Object.findOne({object_id: item.objA_id});
+                        var foundB = hris.Object.findOne({object_id: item.objB_id});
+                        $.when(foundA, foundB).then(function(objA, objB) {
+                            item.objA = objA;
+                            item.objB = objB;
+                            self.addRelationshipRow(item);
+                        });
+                    };
+                    for(var i=0; i<listA.length; i++) {
+                        addRow(listA[i]);
+                    }
+                    for(var i=0; i<listB.length; i++) {
+                        addRow(listB[i]);
+                    }
+                });
             },
 
             updateRelationshipDropdown: function() {
+                var objs = hris.Object.findAll( {} );
                 this.element.find( '#add-relationship-dropdown' ).html(
-                    this.view( '/hris/dbadmin/view/objectDetails_addList.ejs', { objs: hris.Object.findAll( {} ) } )
+                    this.view( '/hris/dbadmin/view/objectDetails_addList.ejs', { objs: objs } )
                 );
+
+                // Attach model to the DOM
+                $.when(objs).then(function(list){
+                    for(var i=0; i<list.length; i++) {
+                        $("#add-relationship-dropdown a[object_id=" + list[i].object_id + "]").data("ad-model", list[i]);
+                    }
+                });
             },
-            
+
             insertDOM: function() {
                 this.element.html( this.view( '/hris/dbadmin/view/objectDetails.ejs', {} ) );
                 this.addForm = $( 'form', this.element );
-                $( 'select', this.element).selectpicker();
             },
-            
+
+            // Adds a Relationship to the table
+            addRelationshipRow: function(rel) {
+                var html = this.element.find('#object-relationships .template-row').clone();
+                $('#object-relationships tr:last').after(html);
+                var newRow = this.element.find('#object-relationships tr:last');
+                newRow.removeClass('template-row');
+                newRow.show();
+
+                if (!rel.objA_label)
+                    rel.objA_label = rel.objA.object_key;
+                if (!rel.objB_label)
+                    rel.objB_label = rel.objB.object_key;
+                rel.bindToForm(newRow);
+
+                $('.rel-objA-key', newRow).html(rel.objA.object_key);
+                $('.rel-objB-key', newRow).html(rel.objB.object_key);
+                $('select', newRow).selectpicker();
+                $('select', newRow).change();
+            },
+
             '#object-object_key change': function(el, ev) {
                 var value = el.val();
                 if ($('#object-object_table').val() == '') {
@@ -146,8 +199,29 @@
                 this.element.hide();
             },
 
-            'a.add-relationship click': function( event ) {
-                console.log( 'click' );
+            // Add a new Relationship
+            'a.add-relationship click': function(el, ev) {
+                var model = el.data('ad-model');
+                var rel = new hris.Relationship();
+                rel.objA_id = this.selectedModel.object_id;
+                rel.objA = this.selectedModel;
+                rel.objB_id = model.object_id;
+                rel.objB = model;
+                this.addRelationshipRow(rel);
+
+                ev.preventDefault();
+            },
+
+            // Hides or shows the div that allows you to select the column_name
+            '#object-relationships select change': function(el, ev) {
+                switch(el.val()) {
+                case 'belongs_to':
+                case 'has_many':
+                    el.closest('td').find('.rel-column-name').show();
+                    break;
+                default:
+                    el.closest('td').find('.rel-column-name').hide();
+                }
             },
 
             'dbadmin.object.item.deleted subscribe': function( msg, model ) {
