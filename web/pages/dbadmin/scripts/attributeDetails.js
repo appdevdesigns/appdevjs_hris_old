@@ -78,6 +78,7 @@
                 
                 this.element.html(this.view('/hris/dbadmin/view/attributeDetails.ejs', {}));
                 this.addForm = $( 'form', this.element );
+                this.element.find( 'select' ).selectpicker();
                 
             },
             

@@ -51,7 +51,7 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
     <div class='control-group'>
         <label class='control-label' for='attributeset_relation'><%== L('[details.attributeset.label.attributeset_relation]') %></label>
         <div class='controls'>
-            <select data-bind="attributeset_relation">
+            <select class="selectpicker" data-bind="attributeset_relation">
                 <option>one</option>
                 <option>many</option>
                 <!-- TODO: Add more options? -->
