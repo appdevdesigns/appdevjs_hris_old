@@ -1,39 +1,201 @@
-msgid "" 
-msgstr "" 
-"Content-Type: text/plain; charset=utf-8" 
-"Content-Transfer-Encoding: 8bit" 
- 
-#. ######################################### 
-#. Labels for module: hris 
-#. Source language: en 
-#. Target language: zh-hans 
-#. ######################################### 
- 
- 
- 
-#. path: /hris/errors 
-#. code: zh-hans 
-#. key: [hris.error.objNotFound] 
-msgid "Requested Object not found." 
-msgstr "[zh-hans]: Requested Object not found" 
- 
-#. path: /hris/errors 
-#. code: zh-hans 
-#. key: [hris.error.packagingObj] 
-msgid "Error packaging object for export." 
-msgstr "[zh-hans]: Error packaging object for export." 
- 
-#. path: /hris/errors 
-#. code: zh-hans 
-#. key: [hris.error.tableAccess] 
-msgid "Error accessing expected table." 
-msgstr "[zh-hans]: Error accessing expected table.\n" 
- 
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8"
+"Content-Transfer-Encoding: 8bit"
+
+#. #########################################
+#. Labels for module: hris
+#. Source language: en
+#. Target language: zh-hans
+#. #########################################
+
+
+
+#. path: /hris/errors
+#. code: zh-hans
+#. key: [hris.error.objNotFound]
+msgid "Requested Object not found."
+msgstr "[zh-hans]: Requested Object not found"
+
+#. path: /hris/errors
+#. code: zh-hans
+#. key: [hris.error.packagingObj]
+msgid "Error packaging object for export."
+msgstr "[zh-hans]: Error packaging object for export."
+
+#. path: /hris/errors
+#. code: zh-hans
+#. key: [hris.error.tableAccess]
+msgid "Error accessing expected table."
+msgstr "[zh-hans]: Error accessing expected table.\n"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attribute.label.meta]
+msgid "Meta"
+msgstr "[zh-hans]:Meta"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attribute.label.attribute_datatype]
+msgid "Data Type"
+msgstr "[zh-hans]:Data Type"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [list.title.attributeset]
+msgid "Attribute Sets"
+msgstr "Attribute Sets"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [list.title.attribute]
+msgid "Attributes"
+msgstr "Attributes"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attribute.label.attribute_column]
+msgid "Column"
+msgstr "[zh-hans]:Column"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [list.delete.confirmation]
+msgid "There will be Consequences for deleting this. Do you really want to do this?"
+msgstr "[zh-hans]:There will be Consequences for deleting this. Do you really want to do this?"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.object.label.object_key]
+msgid "Key"
+msgstr "[zh-hans]:Key"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.object.label.object_table]
+msgid "Table"
+msgstr "[zh-hans]:Table"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.object.label.object_pkey]
+msgid "Primary Key"
+msgstr "[zh-hans]:Primary Key"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.label.save]
+msgid "Save"
+msgstr "[zh-hans]:Save"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.label.cancel]
+msgid "Cancel"
+msgstr "[zh-hans]:Cancel"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [list.title.object]
+msgid "Objects"
+msgstr "Objects"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.object.title.edit]
+msgid "Object Details"
+msgstr "[zh-hans]:Object Details"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attributeset.title.edit]
+msgid "Attribute Set Details"
+msgstr "[zh-hans]:Attribute Set Details"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attribute.title.edit]
+msgid "Attribute Details"
+msgstr "[zh-hans]:Attribute Details"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.object.title.new]
+msgid "New Object"
+msgstr "[zh-hans]:New Object"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attributeset.title.new]
+msgid "New Attribute Set"
+msgstr "[zh-hans]:New Attribute Set"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attribute.title.new]
+msgid "New Attribute"
+msgstr "[zh-hans]:New Attribute"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attribute.label.attribute_permission]
+msgid "Permission"
+msgstr "[zh-hans]:Permission"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attribute.label.attribute_uniqueKey]
+msgid "Unique Key"
+msgstr "[zh-hans]:Unique Key"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attributeset.label.attributeset_relation]
+msgid "Relation"
+msgstr "[zh-hans]:Relation"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attributeset.label.attributeset_uniqueKey]
+msgid "(translators ignore this tag:[24]) Unique Key"
+msgstr "[zh-hans]:Unique Key"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attributeset.label.attributeset_key]
+msgid "(translators ignore this tag:[25]) Key"
+msgstr "[zh-hans]:Key"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attributeset.label.attributeset_pkey]
+msgid "(translators ignore this tag:[26]) Primary Key"
+msgstr "[zh-hans]:Primary Key"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attributeset.label.attributeset_table]
+msgid "(translators ignore this tag:[27]) Table"
+msgstr "[zh-hans]:Table"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.label.label]
+msgid "Label"
+msgstr "[zh-hans]:Label"
+
+#. path: /page/hris/dbadmin
+#. code: zh-hans
+#. key: [details.attributeset.label.type_id]
+msgid "Type"
+msgstr "[zh-hans]:Type"
+
 #. path: /page/hris/userFamily 
 #. code: zh-hans 
 #. key: [hris.userFamily.firstName] 
 msgid "First Name" 
-msgstr "[zh-hans]:名字" 
+msgstr "[zh-hans]: First Name" 
  
 #. path: /page/hris/userFamily 
 #. code: zh-hans 

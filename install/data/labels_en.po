@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=utf-8"
 "Content-Transfer-Encoding: 8bit"
- 
+
 #. #########################################
 #. Labels for module: hris
 #. Source language: en
@@ -29,30 +29,116 @@ msgstr "Error packaging object for export."
 msgid "Error accessing expected table."
 msgstr "Error accessing expected table."
 
-#. path: /page/hris/userFamily
+#. path: /page/hris/dbadmin
 #. code: en
-#. key: [hris.userFamily.firstName]
-msgid "First Name"
-msgstr "First Name"
+#. key: [details.attribute.label.meta]
+msgid "Meta"
+msgstr "Meta"
 
-#. path: /page/hris/userFamily
+#. path: /page/hris/dbadmin
 #. code: en
-#. key: [hris.userFamily.cancel]
+#. key: [details.attribute.label.attribute_datatype]
+msgid "Data Type"
+msgstr "Data Type"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [list.title.attributeset]
+msgid "Attribute Sets"
+msgstr "Attribute Sets"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [list.title.attribute]
+msgid "Attributes"
+msgstr "Attributes"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attribute.label.attribute_column]
+msgid "Column"
+msgstr "Column"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [list.delete.confirmation]
+msgid "There will be Consequences for deleting this. Do you really want to do this?"
+msgstr "There will be Consequences for deleting this. Do you really want to do this?"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.object.label.object_key]
+msgid "Key"
+msgstr "Key"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.object.label.object_table]
+msgid "Table"
+msgstr "Table"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.object.label.object_pkey]
+msgid "Primary Key"
+msgstr "Primary Key"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.label.save]
+msgid "Save"
+msgstr "Save"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.label.cancel]
 msgid "Cancel"
 msgstr "Cancel"
- 
-#. path: /page/hris/userFamily
-#. code: en
-#. key: [hris.userFamily.lastName]
-msgid "Last Name"
-msgstr "Last Name"
 
-#. path: /page/hris/userFamily
+#. path: /page/hris/dbadmin
 #. code: en
-#. key: [hris.userFamily.submit]
-msgid "Submit"
-msgstr "Submit"
- 
+#. key: [list.title.object]
+msgid "Objects"
+msgstr "Objects"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.object.title.edit]
+msgid "Object Details"
+msgstr "Object Details"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attributeset.title.edit]
+msgid "Attribute Set Details"
+msgstr "Attribute Set Details"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attribute.title.edit]
+msgid "Attribute Details"
+msgstr "Attribute Details"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.object.title.new]
+msgid "New Object"
+msgstr "New Object"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attributeset.title.new]
+msgid "New Attribute Set"
+msgstr "New Attribute Set"
+
+#. path: /page/hris/dbadmin
+#. code: en
+#. key: [details.attribute.title.new]
+msgid "New Attribute"
+msgstr "New Attribute"
+
+#. path: /page/hris/dbadmin
+#. code: en
 #. key: [details.attribute.label.attribute_permission]
 msgid "Permission"
 msgstr "Permission"
@@ -104,3 +190,27 @@ msgstr "Label"
 #. key: [details.attributeset.label.type_id]
 msgid "Type"
 msgstr "Type"
+
+#. path: /page/hris/userFamily 
+#. code: en 
+#. key: [hris.userFamily.firstName] 
+msgid "First Name" 
+msgstr "First Name" 
+ 
+#. path: /page/hris/userFamily 
+#. code: en 
+#. key: [hris.userFamily.cancel] 
+msgid "Cancel" 
+msgstr "Cancel" 
+ 
+#. path: /page/hris/userFamily 
+#. code: en 
+#. key: [hris.userFamily.lastName] 
+msgid "Last Name" 
+msgstr "Last Name:" 
+ 
+#. path: /page/hris/userFamily 
+#. code: en 
+#. key: [hris.userFamily.submit] 
+msgid "Submit" 
+msgstr "Submit" 
