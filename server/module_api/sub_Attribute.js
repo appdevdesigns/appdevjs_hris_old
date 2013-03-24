@@ -45,7 +45,7 @@ hrisAttribute.setup = function() {
      */
     //  data: { id:# }
     var newAttribute = function(event, data) {
-
+/*
     	console.log('newAttribute');
         // data only contains the { id:xx } but we want to provide a guid
         // to modules as well, so we manually look it up:
@@ -76,7 +76,7 @@ hrisAttribute.setup = function() {
                  });
             });
         });
-
+*/
     }
     hrisHub.subscribe('hris.Attribute.created', newAttribute);
 

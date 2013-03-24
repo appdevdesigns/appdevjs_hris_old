@@ -19,10 +19,6 @@
         id:'attribute_id',
         labelKey:'attribute_label',
         _isMultilingual:true,
-        _relationships:{
-            belongs_to:[], // array of Model Names: ['Attributeset', 'site.Viewer', ... ]
-            has_many:[]    // array of Model Names
-            },
         //connectionType:'server', // optional field
         cache:false,
         existing: function(params) {
@@ -56,7 +52,7 @@
 
                 },
                 trans: {
-                  id:"int(11) unsigned",
+                  attributetrans_id:"int(11) unsigned",
                   attribute_id:"int(11)",
                   language_code:"varchar(10)",
                   attribute_label:"text",
@@ -66,7 +62,7 @@
                 }
             },
             primaryKey:'attribute_id',
-            multilingualFields: ['id', 'attribute_label', 'attribute_question']
+            multilingualFields: ['attribute_label', 'attribute_question']
         });
     }
 
