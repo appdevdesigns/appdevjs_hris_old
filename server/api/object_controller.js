@@ -119,13 +119,123 @@ Object.update = function (req, res, next) {
 ///// Model Events:
 
 //.onCreated() : is called each time an instance of Attribute.model is created
-//Attribute.onCreated = function (ev, modelInstance) {}
+//Object.onCreated = function (ev, modelInstance) {}
 
 
 //.onUpdated() : is called each time an instance of Attribute.model is created
-//Attribute.onUpdated = function (ev, modelInstance) {}
+//Object.onUpdated = function (ev, modelInstance) {}
 
 
 //.onDestroyed() : is called each time an instance of Attribute.model is created
-//Attribute.onDestroyed = function (ev, modelInstance) {}
+//Object.onDestroyed = function (ev, modelInstance) {}
 
+
+
+
+///// On Module Load:
+//When all our resources are loaded, then use our object model
+// to load our object instances.
+/*
+var initializeCachedObjects = function() {
+
+    var Object = AD.Model.List['hris.Object'];
+    var Attributeset = AD.Model.List['hris.Attributeset'];
+    var Attribute = AD.Model.List['hris.Attribute'];
+
+    Object.findAll({}, function(list){
+
+       for (var i=0; i<list.length;i++) {
+           var pkey = list[i].id;
+           var val = 'val';//list[i].attr(pkey);
+           cachedObjects[list[i][Object.id]] = list[i].attrs();
+       }
+
+//console.log('');
+//console.log('--------------');
+//console.log('cached objects:');
+//console.log(cachedObjects);
+//console.log('--------------');
+//console.log();
+
+       // build obj_id: { attribute_name:'' , .... } list
+       var objLookup = {};
+       for (var i=0; i<list.length; i++) {
+           objLookup[list[i].object_id] = {};
+       }
+
+       var foundAS = Attributeset.findAll({});
+       var foundAtt = Attribute.findAll({});
+       $.when(foundAS, foundAtt). then(function(listAS, listATT) {
+
+           //
+           // compile objID:ASID
+           var oAS = {};
+           for (var as=0; as < listAS.length; as++) {
+//console.log( listAS[as]);
+               var oID = listAS[as].object_id;
+
+               var asID = listAS[as].attributeset_id;
+
+               if ('undefined' == typeof oAS[asID])  oAS[asID] = {};
+               oAS[asID]=oID;
+           }
+//console.log( 'oAS:');
+//console.log(oAS);
+//console.log('---');
+//console.log(objLookup);
+            for (var at=0; at< listATT.length; at++){
+
+                var asID = listATT[at].attributeset_id;
+                var oID = oAS[asID];
+                var atID = listATT[at].attribute_id;
+                var atName = listATT[at].attribute_column;
+//console.log( 'asID['+asID+'] oID['+oID+'] atID['+atID+'] atName['+atName+']');
+
+                if ('undefined' == typeof objLookup[oID]) objLookup[oID] = {};
+
+                objLookup[oID][atName]= atID;
+            }
+//console.log(objLookup);
+
+
+            //// now announce all the public API for those defined objects:
+            // for each object
+            for (var i=0; i<list.length; i++) {
+                var attrs = list[i].attrs();
+                var oID = attrs.object_id;
+
+                // clone the link with object substitutions:
+                var newLinks = AD.Util.Object.clone(HRiS.publicLinks);
+                for (var l in newLinks) {
+                    newLinks[l].uri = AD.Util.String.render(newLinks[l].uri, attrs);
+
+                    if (l=='create' || l=='update') {
+
+                        var listParams = objLookup[oID];
+                        for (var lp in listParams) {
+                            newLinks[l].params[lp] = '['+lp+']';
+                        }
+                    }
+                }
+console.log(newLinks);
+                ////Register the public site/api
+                hrisObject.setupSiteAPI(attrs['object_key'], newLinks);
+                console.log(' ... HRiS : registering defined object :'+attrs['object_key']);
+            }
+       });
+
+
+
+
+//console.log('');
+//console.log('newLinks:');
+//console.log(newLinks);
+
+
+
+    });
+}
+Object.setupModuleHub = function() {
+    Object.module.hub.subscribe(AD.Const.Notifications.MODULE_READY, initializeCachedObjects);
+}
+*/
