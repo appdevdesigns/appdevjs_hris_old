@@ -6,10 +6,16 @@ var error = AD.Util.Error;
 var errorDump = AD.Util.ErrorDump;
 var $ = AD.jQuery;
 var db = AD.Model.Datastore;
+var HRiS= null;       // the shared HRiS code.
 
 var Object = new AD.Resource('hris', 'Object');
 module.exports = Object;
 
+
+var sqlCommands = {
+        newTable : 'CREATE TABLE '+AD.Defaults.dbName+'.`[object_table]` ( `[object_pkey]` int(11) unsigned NOT NULL AUTO_INCREMENT, PRIMARY KEY (`[object_pkey]`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8;',
+        dropTable: 'DROP TABLE IF EXISTS '+AD.Defaults.dbName+'.`[object_table]`'
+}
 
 
 //.publicLinks() : return an object representing the url definition for this resource
@@ -76,6 +82,12 @@ Object.create = function (req, res, next) {
     $.when(existing(params)).then(function(obj) {
             if (!obj) {
 
+
+                //// any provided values can't be ''!
+                if( params.object_pkey.trim() == '' ) params.object_pkey = null;
+                if( params.object_table.trim() == '' ) params.object_table = null;
+
+
                 // assign pkey and table values if not already provided:
                 params.object_pkey  = params.object_pkey || params.object_key+'_id';
                 params.object_table = params.object_table || 'hris_'+params.object_key;
@@ -98,7 +110,7 @@ Object.create = function (req, res, next) {
 //.update() : the operation that performs your .model.update(id, params)
 //          store any results in : res.aRAD.result = {};
 //Object.update = function (req, res, next) { next();}
-Object.oldUpdate = Object.create;
+Object.oldUpdate = Object.update;
 Object.update = function (req, res, next) {
     var params = req.aRAD.params;
     delete params.object_pkey;
@@ -127,29 +139,56 @@ Object.update = function (req, res, next) {
 
 
 //.onDestroyed() : is called each time an instance of Attribute.model is created
-//Object.onDestroyed = function (ev, modelInstance) {}
+Object.onDestroyed = function (ev, modelInstance) {
 
+console.log('... deleteObject:');
+
+
+
+        //// 1: Drop Table referenced by this object
+        var sql = AD.Util.String.render(sqlCommands.dropTable, object);
+
+console.log('sql:'+sql);
+
+
+         db.runSQL(sql,[], function(err, results, fields){
+             if (err) {
+                 console.log(err);
+             }
+//                       AD.Comm.Notification.publish('hris.'+attributeColumn+'.created', data);
+// console.log('hey! check it out!');
+         });
+
+
+
+
+
+    //// 2: Remove any relationships referenced by/to this object
+
+
+
+    }
 
 
 
 ///// On Module Load:
 //When all our resources are loaded, then use our object model
 // to load our object instances.
-/*
+
 var initializeCachedObjects = function() {
 
-    var Object = AD.Model.List['hris.Object'];
+    var ObjectModel = AD.Model.List['hris.Object'];
     var Attributeset = AD.Model.List['hris.Attributeset'];
     var Attribute = AD.Model.List['hris.Attribute'];
 
-    Object.findAll({}, function(list){
-
+    ObjectModel.findAll({}, function(list){
+/*
        for (var i=0; i<list.length;i++) {
            var pkey = list[i].id;
            var val = 'val';//list[i].attr(pkey);
            cachedObjects[list[i][Object.id]] = list[i].attrs();
        }
-
+*/
 //console.log('');
 //console.log('--------------');
 //console.log('cached objects:');
@@ -159,8 +198,10 @@ var initializeCachedObjects = function() {
 
        // build obj_id: { attribute_name:'' , .... } list
        var objLookup = {};
+       var pkeyLookup = {};
        for (var i=0; i<list.length; i++) {
            objLookup[list[i].object_id] = {};
+           pkeyLookup[list[i].object_id] = list[i].object_pkey;
        }
 
        var foundAS = Attributeset.findAll({});
@@ -207,7 +248,8 @@ var initializeCachedObjects = function() {
                 // clone the link with object substitutions:
                 var newLinks = AD.Util.Object.clone(HRiS.publicLinks);
                 for (var l in newLinks) {
-                    newLinks[l].uri = AD.Util.String.render(newLinks[l].uri, attrs);
+                    var pkeyField = pkeyLookup[oID];
+                    newLinks[l].uri = AD.Util.String.render(newLinks[l].uri, attrs).replace('[id]', '['+pkeyField+']');
 
                     if (l=='create' || l=='update') {
 
@@ -219,7 +261,7 @@ var initializeCachedObjects = function() {
                 }
 console.log(newLinks);
                 ////Register the public site/api
-                hrisObject.setupSiteAPI(attrs['object_key'], newLinks);
+                Object.setupSiteAPI(attrs['object_key'], newLinks);
                 console.log(' ... HRiS : registering defined object :'+attrs['object_key']);
             }
        });
@@ -236,6 +278,6 @@ console.log(newLinks);
     });
 }
 Object.setupModuleHub = function() {
+    HRiS = this.module.HRiS; // don't create a new instance by require();
     Object.module.hub.subscribe(AD.Const.Notifications.MODULE_READY, initializeCachedObjects);
 }
-*/
