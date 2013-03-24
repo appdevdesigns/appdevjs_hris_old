@@ -148,25 +148,12 @@
 
             'a.add-relationship click': function( event ) {
                 console.log( 'click' );
-                event.preventDefault();
             },
 
-//// To setup default functionality
-/*
-            '.col1 li dblclick' : function (e) {
-            
-                this.element.find('#someDiv').append(e);
-            },
-*/
+            'dbadmin.object.item.deleted subscribe': function( msg, model ) {
+                this.element.hide();
+            }
 
-//// To Add Subscriptions:
-/*
-            'apprad.module.selected subscribe': function(message, data) {
-                // data should be { name:'[moduleName]' }
-                this.module = data.name;
-                this.setLookupParams({module: data.name});
-            },
-*/
         });
         
     }) ();
