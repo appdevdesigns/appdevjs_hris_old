@@ -118,7 +118,7 @@
                             } 
                         
                         
-                        //Att the portal classes and event handers  
+                        //Add the portal classes and event handers
                         $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
                             .find( ".portlet-header" )
                             .addClass( "ui-widget-header ui-corner-all" )
@@ -148,10 +148,9 @@
                 }
 
             },
+
+
             '.attribute_Set_List click': function(el, ev){
-               
-                
-               
                 var $el = $(el);
                 
                 //$el.addClass('active');
@@ -162,6 +161,13 @@
                 AD.Comm.Notification.publish('userFamily.attributeSetItem.selected', model);
                 return false;
             },
+
+            '.relationship-item click': function(el, ev) {
+                console.log('relationship item click');
+                AD.Comm.Notification.publish('userFamily.relationshipItem.click', this.person);
+                return false;
+            },
+
             addAttributeSetItem: function(model){
                 //Add the list item
                 var view = this.view('/hris/userFamily/view/attributeSetListItem.ejs', {model: model});
@@ -204,6 +210,12 @@
                 var view = this.view('/hris/userFamily/view/relationshipListItem.ejs', {name: name});
                 var $div = $(view);
                 this.ul.append($div);
+
+                $div = $('<div></div>');
+                $('#attributeDetailContainer').append($div);
+                $div.data('related-object-name', name);
+                $div.data('person', this.person);
+                $div.related_objects();
             },
             
             insertDOM: function() {
