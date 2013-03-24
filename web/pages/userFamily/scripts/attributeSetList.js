@@ -164,7 +164,7 @@
             },
 
             '.relationship-item click': function(el, ev) {
-                console.log('relationship item click');
+                
                 AD.Comm.Notification.publish('userFamily.relationshipItem.click', this.person);
                 return false;
             },
@@ -199,6 +199,10 @@
                 
                 $('.hideEdit').show();
                 $('.showEdit').hide();
+                
+                
+                
+                AD.Comm.Notification.publish('userFamily.userDetails.saved', this.person);
                ev.preventDefault();
             },
             '#user_attr_edit click': function(el, ev){

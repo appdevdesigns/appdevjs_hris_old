@@ -50,7 +50,41 @@
                
                 
                 var self= this;
+                this.setupForm();
+               
                 
+              
+ 
+                
+                
+                
+                
+                // translate Labels
+                // any DOM element that has an attrib "appdLabelKey='xxxx'" will get it's contents
+                // replaced with our Label.  Careful to not put this on places that have other content!
+                this.xlateLabels();
+            },
+
+            'userFamily.userDetails.saved subscribe': function(msg, person)
+            {
+                
+                this.person = person;
+                this.element.find('#attributeSetDetail').empty();
+                this.setupForm();
+ 
+                
+            },
+            
+	        addItem: function(model){
+
+                var view = this.view('/hris/userFamily/view/userAttributeItem.ejs', {model: model, person: this.person});
+                var $div = $(view);
+
+                this.element.find('#attributeSetDetail').append($div);
+
+            },
+            setupForm: function(){
+                var self= this;
                 var found =  hris.Attribute.findAll({attributeset_id:  this.model.attributeset_id});
                 $.when(found)
                     .then(function(list){
@@ -68,29 +102,7 @@
                     })
                     .fail(function(err){
                           console.log(err);
-                    })
-                
-              
- 
-                
-                
-                
-                
-                // translate Labels
-                // any DOM element that has an attrib "appdLabelKey='xxxx'" will get it's contents
-                // replaced with our Label.  Careful to not put this on places that have other content!
-                this.xlateLabels();
-            },
-
-            
-            
-	        addItem: function(model){
-
-                var view = this.view('/hris/userFamily/view/userAttributeItem.ejs', {model: model, person: this.person});
-                var $div = $(view);
-
-                this.element.find('#attributeSetDetail').append($div);
-
+                })
             },
 
 
