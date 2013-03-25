@@ -226,6 +226,7 @@
                 rel.objB_id = model.object_id;
                 rel.objB = model;
                 this.addRelationshipRow(rel);
+                this.element.find('button.submit').prop('disabled', false);
 
                 ev.preventDefault();
             },
