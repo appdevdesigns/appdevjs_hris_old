@@ -12,6 +12,14 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 //   appLabelKey="[label.key]"   for elements whose contents (el.html()) 
 //                               should be the multilingual info
 %>
+<style>
+#object-relationships tbody tr.rel-delete-row
+{
+    background-color:red;
+    opacity:0.4;
+}
+</style>
+
 <form class="form-horizontal">
 	<fieldset>
 	<legend></legend>
@@ -45,37 +53,20 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 			</div>
 		</div>
 	</div>
-	<table class="table">
+	<table id="object-relationships" class="table">
 		<thead>
 			<tr>
 				<th>Type</th>
-				<th>Object</th>
 				<th>Label</th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>
-					<select class="selectpicker span2">
-						<option>One to One</option>
-						<option selected="selected">One to Many</option>
-						<option>Many to One</option>
-						<option>Many to Many</option>
-					</select>
-				</td>
-				<td>
-					Passport
-				</td>
-				<td>
-					<input class="input-medium" type="text" placeholder="Label" value="Passports" />
-				</td>
-				<td><a class="btn" href="#"><i class="icon-minus-sign"></i> Remove</a></td>
-			</tr>
+            <!-- Relationships go here -->
 		</tbody>
 	</table>
 	<div class="form-actions">
-		<button type="button" class="btn btn-primary submit"><%== L( '[details.label.save]' ) %></button>
+		<button type="button" class="btn btn-primary submit" disabled><%== L( '[details.label.save]' ) %></button>
 		<button type="button" class="btn cancel"><%== L( '[details.label.cancel]' ) %></button>
 	</div>
 	</fieldset>
