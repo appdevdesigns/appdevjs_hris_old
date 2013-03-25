@@ -45,7 +45,7 @@ hrisAttribute.setup = function() {
      */
     //  data: { id:# }
     var newAttribute = function(event, data) {
-/*
+
     	console.log('newAttribute');
         // data only contains the { id:xx } but we want to provide a guid
         // to modules as well, so we manually look it up:
@@ -65,7 +65,7 @@ hrisAttribute.setup = function() {
         	var attributeDataType = attribute.attribute_datatype;
 
             AttributeSet.findOne({id:attributeSetId}, function(attributeSet){
-            	 var sql = 'ALTER TABLE '+AD.Defaults.dbName+'.'+ attributeSet.attributeSet_table + ' ADD ';
+            	 var sql = 'ALTER TABLE '+AD.Defaults.dbName+'.'+ attributeSet.attributeset_table + ' ADD ';
                  sql += attributeColumn;
                  sql += ' '+ attributeDataType;
                  db.runSQL(sql,[], function(err, results, fields){
@@ -76,7 +76,7 @@ hrisAttribute.setup = function() {
                  });
             });
         });
-*/
+
     }
     hrisHub.subscribe('hris.Attribute.created', newAttribute);
 
