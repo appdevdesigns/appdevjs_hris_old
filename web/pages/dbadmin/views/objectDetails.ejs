@@ -56,7 +56,7 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 		<tbody>
             <tr style="display:none;" class='template-row'>
                 <td>
-                    <select data-bind="relationship_type" class="span2">
+                    <select data-bind="relationship_type" class="span3">
                         <%# <option value="one_to_one">Has One</option> %>
                         <option value="has_many">Has Many</option>
                         <option value="belongs_to">Belong To</option>
@@ -70,7 +70,7 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
                 </td>
                 <td>
                     <input type="text" class="input-medium" placeholder="objB Label" data-bind="objB_label"/>
-                    <i class='rel-objB-key'></i>
+                    <a href=# class='rel-objB-key'><i></i></a>
                 </td>
                 <td>
                     <a class="btn" href="#"><i class="icon-minus-sign"></i></a>

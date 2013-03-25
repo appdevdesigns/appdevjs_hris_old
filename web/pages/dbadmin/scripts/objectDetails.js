@@ -146,7 +146,8 @@
                     rel.objB_label = rel.objB.object_key;
                 rel.bindToForm(newRow);
 
-                $('.rel-objB-key', newRow).html(rel.objB.object_key);
+                $('.rel-objB-key i', newRow).html(rel.objB.object_key);
+                $('.rel-objB-key', newRow).data('ad-model', rel.objB);
                 $('select', newRow).selectpicker();
                 $('select', newRow).change();
             },
@@ -215,6 +216,12 @@
                     el.closest('td').find('.rel-show-advanced').hide();
                     el.closest('td').find('.rel-column-name').hide();
                 }
+            },
+
+            '.rel-objB-key click': function(el, ev) {
+                var model = el.data('ad-model');
+                $('#object-list').controller().listController.select(model);
+                ev.preventDefault();
             },
 
             // Hides or shows the div that allows you to select the column_name
