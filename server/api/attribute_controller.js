@@ -316,3 +316,13 @@ var getObjectFromAttribute = function (attribute){
     });
     return dfd;
 }
+
+
+
+
+
+//.resourceKey : the resource identifier to register your public links under:
+//eg, a call to /site/api/[app]/[resourceKey]/[action] to return you action link
+Attribute.resourceKey = 'APIAttribute';
+
+
