@@ -112,7 +112,7 @@
                 this.updateRelationshipDropdown();
 
                 // Clear previous relationships
-                this.element.find('#object-relationships tbody tr:visible').remove();
+                this.element.find('#object-relationships tbody tr').remove();
 
                 // Add new relationships
                 var found = hris.Relationship.findAll({objA_id: model.object_id});
