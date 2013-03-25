@@ -81,9 +81,27 @@
             // Called when the 'Submit' button is clicked
             onSubmit: function( model ) {
                 model.save( function(instance, data) {
+                    // Save Relationships
+                    var callbacks = [];
+                    $('#object-relationships tbody tr:visible').each( function(i, el) {
+                        var $this = $(this);
+                        var rel = new hris.Relationship();
+                        rel.loadFromDOM($this);
+                        if ($this.hasClass('rel-delete-row')) {
+                            // Destroy
+                            callbacks.push(rel.destroy());
+                        } else {
+                            // Update/Create
+                            callbacks.push(rel.save());
+                        }
+                    });
+                    $.when(callbacks).then(function(list) {
+                        console.log("Relationships done updating");
+                    });
+
                     AD.Comm.Notification.publish('dbadmin.object.changed', instance);
                 }, function() {
-                    AD.alert('Failed to Save');
+                    AD.alert('Failed to save Object');
                 });
                 return false;
             },
@@ -136,18 +154,20 @@
 
             // Adds a Relationship to the table
             addRelationshipRow: function(rel) {
-                var html = this.element.find('#object-relationships .template-row').clone();
-                $('#object-relationships tr:last').after(html);
+                var html = this.view('/hris/dbadmin/view/objectDetails_relationshipRow.ejs', {
+                    objB_key: rel.objB.object_key
+                } );
+                $('#object-relationships tbody').append(html);
                 var newRow = this.element.find('#object-relationships tr:last');
-                newRow.removeClass('template-row');
-                newRow.show();
 
+                // Set data from the related objects
                 if (!rel.objB_label)
                     rel.objB_label = rel.objB.object_key;
-                rel.bindToForm(newRow);
 
-                $('.rel-objB-key i', newRow).html(rel.objB.object_key);
+                // Bind data
+                rel.bindToForm(newRow);
                 $('.rel-objB-key', newRow).data('ad-model', rel.objB);
+
                 $('select', newRow).selectpicker();
                 $('select', newRow).change();
             },
@@ -227,6 +247,12 @@
             // Hides or shows the div that allows you to select the column_name
             '.rel-show-advanced click': function(el, ev) {
                 el.closest('td').find('.rel-column-name').toggle();
+            },
+
+            // When the "Delete" button is clicked
+            '.rel-delete-btn click': function(el, ev) {
+                el.closest('tr').toggleClass('rel-delete-row');
+                ev.preventDefault();
             },
 
             'dbadmin.object.item.deleted subscribe': function( msg, model ) {
