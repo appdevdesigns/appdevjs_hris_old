@@ -16,17 +16,16 @@ module.exports = Attributeset;
 
 
 //.publicLinks() : return an object representing the url definition for this resource
-/*
 Attributeset.publicLinks = function () {
     return  {
-        findAll: { method:'GET',    uri:'/hris/[resource]',        params:{}, type:'resource' },
-        findOne: { method:'GET',    uri:'/hris/[resource]/[id]',   params:{}, type:'resource' },
-        create:  { method:'POST',   uri:'/hris/[resource]',        params:{}, type:'action' },
-        update:  { method:'PUT',    uri:'/hris/[resource]/[id]',   params:{}, type:'action' },
-        destroy: { method:'DELETE', uri:'/hris/[resource]/[id]',   params:{}, type:'action' },
+        findAll: { method:'GET',    uri:'/hris/api/attributeset',        params:{}, type:'resource' },
+        findOne: { method:'GET',    uri:'/hris/api/attributeset/[id]',   params:{}, type:'resource' },
+        create:  { method:'POST',   uri:'/hris/api/attributeset',        params:{}, type:'action' },
+        update:  { method:'PUT',    uri:'/hris/api/attributeset/[id]',   params:{}, type:'action' },
+        destroy: { method:'DELETE', uri:'/hris/api/attributeset/[id]',   params:{}, type:'action' },
     }
 }
-*/
+
 
 
 
