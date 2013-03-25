@@ -1,0 +1,27 @@
+<tr>
+    <td>
+        <!-- Hidden fields -->
+        <input type="hidden" data-bind="relationship_id" />
+        <input type="hidden" data-bind="objA_id" />
+        <input type="hidden" data-bind="objB_id" />
+
+        <select data-bind="relationship_type" class="span3">
+            <%# <option value="one_to_one">Has One</option> %>
+            <option value="has_many">Has Many</option>
+            <option value="belongs_to">Belong To</option>
+            <option value="many_to_many">Many-to-Many</option>
+        </select>
+        <i title="Advanced Options" class="rel-show-advanced icon-chevron-down"></i>
+        <div class='rel-column-name' style="display:none;">
+            <label>Column Name</label>
+            <input type="text" class="input-small" placeholder="parent_id" data-bind="column_name" />
+        </div>
+    </td>
+    <td>
+        <input type="text" class="input-medium" placeholder="objB Label" data-bind="objB_label"/>
+        <a href=# class='rel-objB-key'><i><%= objB_key %></i></a>
+    </td>
+    <td>
+        <a class="btn rel-delete-btn" href="#"><i class="icon-minus-sign"></i></a>
+    </td>
+</tr>

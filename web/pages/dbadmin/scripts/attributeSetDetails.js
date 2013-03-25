@@ -99,6 +99,10 @@
             refreshData: function( model ) {
                 this.selectedModel = model;
                 this.ADForm.setModel( model );
+                this.element.find('select').change();   //XXX: bindToForm doesn't call change() on selects
+
+                // Disable submit button until the user changes something
+                this.element.find('button.submit').prop('disabled', true);
             },
 
             // Show the view for editing the selected item
@@ -113,7 +117,7 @@
                 // Set up the new instance based on its parent
                 var newModel = new hris.Attributeset();
                 var parent = $('#object-list').controller().selectedModel;
-                newModel.object_id = parent.object_id;
+                newModel.attr('object_id', parent.object_id);
 
                 //XXX: Why would these ever need to be set in the Attributeset model?
                 newModel.attributeset_table = parent.object_table;
@@ -143,6 +147,11 @@
             
             'dbadmin.attributeset.item.deleted subscribe': function( msg, model ) {
                 this.element.hide();
+            },
+
+            // Enable the "Save" button when something changes
+            ':input change': function(el, ev) {
+                $('button.submit').prop('disabled', false);
             }
 
         });
