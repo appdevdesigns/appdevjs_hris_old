@@ -99,6 +99,7 @@
             refreshData: function( model ) {
                 this.selectedModel = model;
                 this.ADForm.setModel( model );
+                this.element.find('select').change();   //XXX: bindToForm doesn't call change() on selects
 
                 // Disable submit button until the user changes something
                 this.element.find('button.submit').prop('disabled', true);
