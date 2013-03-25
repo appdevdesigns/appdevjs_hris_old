@@ -12,17 +12,16 @@ module.exports = Attribute;
 
 
 //.publicLinks() : return an object representing the url definition for this resource
-/*
 Attribute.publicLinks = function () {
     return  {
-        findAll: { method:'GET',    uri:'/[app]/[resource]',        params:{}, type:'resource' },
-        findOne: { method:'GET',    uri:'/[app]/[resource]/[id]',   params:{}, type:'resource' },
-        create:  { method:'POST',   uri:'/[app]/[resource]',        params:{}, type:'action' },
-        update:  { method:'PUT',    uri:'/[app]/[resource]/[id]',   params:{}, type:'action' },
-        destroy: { method:'DELETE', uri:'/[app]/[resource]/[id]',   params:{}, type:'action' },
+        findAll: { method:'GET',    uri:'/hris/api/attribute',        params:{}, type:'resource' },
+        findOne: { method:'GET',    uri:'/hris/api/attribute/[id]',   params:{}, type:'resource' },
+        create:  { method:'POST',   uri:'/hris/api/attribute',        params:{}, type:'action' },
+        update:  { method:'PUT',    uri:'/hris/api/attribute/[id]',   params:{}, type:'action' },
+        destroy: { method:'DELETE', uri:'/hris/api/attribute/[id]',   params:{}, type:'action' },
     }
 }
-*/
+
 
 
 
@@ -155,7 +154,24 @@ Attribute.create = function (req, res, next) {
 
 //.update() : the operation that performs your .model.update(id, params)
 //          store any results in : res.aRAD.result = {};
-//Attribute.update = function (req, res, next) { next();}
+Attribute.updateNext = Attribute.update;
+Attribute.update = function (req, res, next) {
+
+    var params = req.aRAD.params;
+
+    var id = params.id;
+
+    if (this.model) {
+        var found = this.model.findOne({id:id});
+        $.when(found).then(function( model ){
+
+            pendingUpdate[model.attribute_id] = model.attribute_column;
+            Attribute.updateNext(req, res, next);
+        });
+    }
+
+
+}
 
 
 
@@ -166,11 +182,18 @@ Attribute.create = function (req, res, next) {
 
 
 ///// Additional Actions:
+var sqlCommands = {
+
+        addColumn : 'ALTER TABLE '+AD.Defaults.dbName+'.`[object_table]` ADD [attribute_column] [attribute_datatype]',
+        renameColumn: 'ALTER TABLE '+AD.Defaults.dbName+'.`[object_table]` CHANGE `[oldName]`  `[attribute_column]` [attribute_datatype]'
+}
+
 var db = AD.Model.Datastore;
 
 //.onCreated() : is called each time an instance of Attribute.model is created
 //Attribute.onCreated = function (ev, modelInstance) {}
 Attribute.onCreated = function(ev, attribute) {
+console.log('::attribute onCreated()...');
 
     // attribute is the newly created instance
 
@@ -188,30 +211,108 @@ Attribute.onCreated = function(ev, attribute) {
     var attributeColumn = attribute.attribute_column;
     var attributeDataType = attribute.attribute_datatype;
 
-    AttributeSet.findOne({id:attributeSetId}, function(attributeSet){
-        Object.findOne({id:attributeSet.object_id}, function(object){
 
-             var sql = 'ALTER TABLE '+AD.Defaults.dbName+'.'+ object.object_table + ' ADD ';
-             sql += attributeColumn;
-             sql += ' '+ attributeDataType;
+    var objectFound = getObjectFromAttribute(attribute);
+    $.when(objectFound).then(function(object){
 
-             db.runSQL(sql,[], function(err, results, fields){
-                 if (err) {
-                     console.log(err);
-                 }
-//               AD.Comm.Notification.publish('hris.'+attributeColumn+'.created', data);
-             });
+        var attrs = attribute.attrs();
+        attrs.object_table = object.object_table;
 
-        });
+        var sql = AD.Util.String.render( sqlCommands.addColumn , attrs);
+
+console.log('sql:'+sql);
+         db.runSQL(sql,[], function(err, results, fields){
+             if (err) {
+                 console.log(err);
+             }
+         });
+
     });
+
 }
 
 
+var pendingUpdate = {};
+
 //.onUpdated() : is called each time an instance of Attribute.model is created
 //Attribute.onUpdated = function (ev, modelInstance) {}
+Attribute.onUpdated = function(ev, attribute) {
+console.log('::attribute onUpdated()...');
 
+        // attribute is the newly created instance
+
+console.log(' old name:' + pendingUpdate[attribute.attribute_id]);
+
+
+        var objectFound = getObjectFromAttribute(attribute);
+        $.when(objectFound).then(function(object){
+
+            if (pendingUpdate[attribute.attribute_id]) {
+
+                var attrs = attribute.attrs();
+                attrs.object_table = object.object_table;
+                attrs.oldName = pendingUpdate[attribute.attribute_id];
+
+                var sql = AD.Util.String.render( sqlCommands.renameColumn , attrs);
+console.log('sql:'+sql);
+
+                db.runSQL(sql,[], function(err, results, fields){
+                     if (err) {
+                         console.log(err);
+                     }
+                });
+
+            } else {
+//// TODO : warn of missing data value here!
+            }
+
+        });
+
+}
 
 //.onDestroyed() : is called each time an instance of Attribute.model is created
 //Attribute.onDestroyed = function (ev, modelInstance) {}
+Attribute.onDestroyed = function(ev, attribute) {
+console.log('::attribute onDestroyed()...');
+
+            // attribute is the deleted model
 
 
+            var objectFound = getObjectFromAttribute(attribute);
+            $.when(objectFound).then(function(object){
+
+                var attrs = attribute.attrs();
+                attrs.object_table = object.object_table;
+                attrs.oldName = attribute.attribute_column;
+                attrs.attribute_column += '_deleted';
+
+                var sql = AD.Util.String.render( sqlCommands.renameColumn , attrs);
+console.log('sql:'+sql);
+//// TODO: case of deleted column name  already existing?  (who is the DB administrator???)
+
+                db.runSQL(sql,[], function(err, results, fields){
+                     if (err) {
+                         console.log(err);
+                     }
+                });
+
+            });
+
+    }
+
+
+
+var getObjectFromAttribute = function (attribute){
+    var dfd = $.Deferred();
+
+    var AttributeSet = AD.Model.List['hris.Attributeset'];
+    var Object = AD.Model.List['hris.Object'];
+
+    AttributeSet.findOne({id:attribute.attributeset_id}, function(attributeSet){
+  //console.log(' found attributset ...');
+          Object.findOne({id:attributeSet.object_id}, function(object){
+              dfd.resolve(object);
+          });
+    });
+    return dfd;
+}
