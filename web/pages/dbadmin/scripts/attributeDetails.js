@@ -79,7 +79,6 @@
                 this.element.html(this.view('/hris/dbadmin/view/attributeDetails.ejs', {}));
                 this.addForm = $( 'form', this.element );
                 this.element.find( 'select' ).selectpicker();
-                
             },
             
             isValid: function( data ) {
@@ -99,6 +98,7 @@
             refreshData: function( model ) {
                 this.selectedModel = model;
                 this.ADForm.setModel( model );
+                this.element.find('select').change();   //XXX: bindToForm doesn't call change() on selects
 
                 // Disable submit button until the user changes something
                 this.element.find('button.submit').prop('disabled', true);
@@ -148,7 +148,21 @@
             // Enable the "Save" button when something changes
             ':input change': function(el, ev) {
                 $('button.submit').prop('disabled', false);
-            }
+            },
+
+            // Called when the datatype is changed
+            'select change': function(el, ev) {
+                this.showOrHideMETA();
+            },
+
+            // Hide/show the META field depending on the value of the datatype field
+            showOrHideMETA: function() {
+                if (this.element.find('select').val() == 'LOOKUP') {
+                    this.element.find('.attribute-meta-div').show();
+                } else {
+                    this.element.find('.attribute-meta-div').hide();
+                }
+            } 
 
         });
         
