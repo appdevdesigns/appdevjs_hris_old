@@ -195,7 +195,7 @@
             '#user_attr_save click': function(el, ev){
                 //TODO implement save
                 this.person.loadFromDOM(this.element);
-                this.person.save({id:this.person.person_id});
+                this.person.save( {id:this.person.person_id});
                 
                 $('.hideEdit').show();
                 $('.showEdit').hide();

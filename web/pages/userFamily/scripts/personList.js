@@ -136,6 +136,15 @@
             var errMsg = AD.Comm.Error.message(err);
             this.$addFormError.html(errMsg).show();
         },
+        'userFamily.userDetails.saved subscribe': function(msg, person)
+        {
+            
+           
+            
+            this.listPersons.refresh();
+            this.xlateLabels();
+            
+        },
 
 
 
