@@ -307,14 +307,9 @@ var initializeCachedObjects = function() {
             }
        });
 
-
-
-
 //console.log('');
 //console.log('newLinks:');
 //console.log(newLinks);
-
-
 
     });
 }
@@ -322,6 +317,15 @@ Object.setupModuleHub = function() {
     HRiS = this.module.HRiS; // don't create a new instance by require();
     Object.module.hub.subscribe(AD.Const.Notifications.MODULE_READY, initializeCachedObjects);
 }
+
+
+
+//.resourceKey : the resource identifier to register your public links under:
+//eg, a call to /site/api/[app]/[resourceKey]/[action] to return you action link
+Object.resourceKey = 'APIObject';
+
+
+
 
 
 var renderUri = function( link, attributes, pkeyName) {

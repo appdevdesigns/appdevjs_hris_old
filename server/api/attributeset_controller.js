@@ -60,13 +60,19 @@ Attributeset.publicLinks = function () {
 ///// Model Events:
 
 //.onCreated() : is called each time an instance of Attribute.model is created
-//Attribute.onCreated = function (ev, modelInstance) {}
+//Attributeset.onCreated = function (ev, modelInstance) {}
 
 
 //.onUpdated() : is called each time an instance of Attribute.model is created
-//Attribute.onUpdated = function (ev, modelInstance) {}
+//Attributeset.onUpdated = function (ev, modelInstance) {}
 
 
 //.onDestroyed() : is called each time an instance of Attribute.model is created
-//Attribute.onDestroyed = function (ev, modelInstance) {}
+//Attributeset.onDestroyed = function (ev, modelInstance) {}
+
+
+
+//.resourceKey : the resource identifier to register your public links under:
+//eg, a call to /site/api/[app]/[resourceKey]/[action] to return you action link
+Attributeset.resourceKey = 'APIAttributeset';
 
