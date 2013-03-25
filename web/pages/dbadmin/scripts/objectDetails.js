@@ -114,23 +114,28 @@
                 // Clear previous relationships
                 this.element.find('#object-relationships tbody tr').remove();
 
-                // Add new relationships
-                var found = hris.Relationship.findAll({objA_id: model.object_id});
-                var self = this;
-                $.when(found).then(function(list){
-                    var addRow = function(item) {
-                        // TODO: This should be set automatically in the model
-                        var found = hris.Object.findOne({object_id: item.objB_id});
-                        $.when(found).then(function(obj) {
-                            item.objA = self.currentModel;
-                            item.objB = obj;
-                            self.addRelationshipRow(item);
-                        });
-                    };
-                    for(var i=0; i<list.length; i++) {
-                        addRow(list[i]);
-                    }
-                });
+                if (model.object_id) {
+                    // Add existing relationships
+                    var found = hris.Relationship.findAll({objA_id: model.object_id});
+                    var self = this;
+                    $.when(found).then(function(list){
+                        var addRow = function(item) {
+                            // TODO: This should be set automatically in the model
+                            var found = hris.Object.findOne({object_id: item.objB_id});
+                            $.when(found).then(function(obj) {
+                                item.objA = self.currentModel;
+                                item.objB = obj;
+                                self.addRelationshipRow(item);
+                            });
+                        };
+                        for(var i=0; i<list.length; i++) {
+                            addRow(list[i]);
+                        }
+                    });
+                }
+
+                // Disable submit button until the user changes something
+                this.element.find('button.submit').prop('disabled', true);
             },
 
             updateRelationshipDropdown: function() {
@@ -169,7 +174,7 @@
                 $('.rel-objB-key', newRow).data('ad-model', rel.objB);
 
                 $('select', newRow).selectpicker();
-                $('select', newRow).change();
+                this.toggleShowAdvanced($('select', newRow));
             },
 
             '#object-object_key change': function(el, ev) {
@@ -226,7 +231,7 @@
             },
 
             // Hides or shows the "Advanced" icon
-            '#object-relationships select change': function(el, ev) {
+            toggleShowAdvanced: function(el) {
                 switch(el.val()) {
                 case 'belongs_to':
                 case 'has_many':
@@ -238,6 +243,11 @@
                 }
             },
 
+            '#object-relationships select change': function(el, ev) {
+                this.toggleShowAdvanced(el);
+            },
+
+            // Show Details for Object B
             '.rel-objB-key click': function(el, ev) {
                 var model = el.data('ad-model');
                 $('#object-list').controller().listController.select(model);
@@ -252,7 +262,13 @@
             // When the "Delete" button is clicked
             '.rel-delete-btn click': function(el, ev) {
                 el.closest('tr').toggleClass('rel-delete-row');
+                this.element.find('button.submit').prop('disabled', false);
                 ev.preventDefault();
+            },
+
+            // Enable the "Save" button when something changes
+            ':input change': function(el, ev) {
+                this.element.find('button.submit').prop('disabled', false);
             },
 
             'dbadmin.object.item.deleted subscribe': function( msg, model ) {
