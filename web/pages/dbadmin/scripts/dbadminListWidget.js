@@ -16,9 +16,13 @@
                 //// Setup your controller here:
                 var self = this;
                 
+                // eventKey is used for publishing notifications related to
+                // the widget's model.
+                this.eventKey = options.modelName.toLowerCase();
+                
                 // make sure defaults are taken care of
                 var defaults = {
-                      uid: options.modelName + '_list_widget',
+                      uid: this.eventKey + '_list_widget',
                 };
                 var options = $.extend(defaults, options);
                 this._super(el, options);
@@ -57,6 +61,10 @@
                         .then(function() {
                             self.$confirmBox.modal('hide');
                             self.refresh();
+                            AD.Comm.Notification.publish(
+                                'dbadmin.'+ self.eventKey +'.item.deleted', 
+                                {}
+                            );
                         });
                     }
                 });
@@ -75,7 +83,7 @@
                 this.element.append('<div class="admin-list">');
                 this.element.find('div.admin-list').appdev_list_admin({
                     uid: this.options.uid,
-                    title: '[list.title.'+ self.options.modelName.toLowerCase() +']',
+                    title: '[list.title.'+ self.eventKey +']',
                     buttons: { add: true, del: true },
                     dataManager: this.dataManager,
                     onSelect: function(event, model) {
@@ -83,13 +91,13 @@
 
                         // Show the Detail page (and hide others)
                         AD.Comm.Notification.publish(
-                            "dbadmin."+ self.options.modelName.toLowerCase() +".item.selected",
+                            "dbadmin."+ self.eventKey +".item.selected",
                             model
                         );
                     },
                     onAdd: function(ev) {
                         AD.Comm.Notification.publish(
-                            "dbadmin."+ self.options.modelName.toLowerCase() +".item.add-new",
+                            "dbadmin."+ self.eventKey +".item.add-new",
                             {}
                         );
                     },
@@ -112,12 +120,13 @@
 
                 if (!this.currentFilter) {
                     this.clear();
+                    dfd.resolve();
                 } else {
                     this.dataManager.findAll(this.currentFilter).then(function() {
                         dfd.resolve();
                     });
-                    return dfd;
                 }
+                return dfd;
             },
 
             clear: function() {
