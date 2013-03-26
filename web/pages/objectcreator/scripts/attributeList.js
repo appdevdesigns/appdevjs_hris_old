@@ -64,20 +64,27 @@
                     for (var i = 0; i < list.length; i++) {
                         self.listDone.push(self.getAttributes(list[i]));
                     }
-                });
-                $.when.apply(listDone).then(function() {
-                    AD.Comm.Notification.publish('objectcreator.attributeList.refresh', null);
+                    $.when.apply($, self.listDone).then(function() {
+                        AD.Comm.Notification.publish('objectcreator.attributeList.refresh', self.listAttributes);
+                    });
+
                 });
             },
             
             getAttributes: function(attributeset) {
+                var dfed = $.Deferred();
                 var self = this;
-                return hris.Attribute.findAll({attributeset_id: attributeset.attributeset_id})
+                hris.Attribute.findAll({attributeset_id: attributeset.attributeset_id})
                 .then(function(list) {
                     for (var i = 0; i < list.length; i++) {
                         self.listAttributes.push(list[i]);
                     }
+                    dfed.resolve();
+                })
+                .fail(function() {
+                    dfed.reject();
                 });
+                return dfed;
             },
             
             addAttribute: function(text) {

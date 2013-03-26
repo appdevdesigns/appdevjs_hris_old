@@ -62,7 +62,12 @@
             },
             
             'objectcreator.attributeList.refresh subscribe': function(msg, model) {
-                console.log('object grid needs to update');
+                this.element.show();
+                var ul = this.element.find('ul');
+                this.element.find('li').remove();
+                for (var i = 0; i < model.length; i++) {
+                    ul.append('<li>'+model[i].attribute_column+'</li>');
+                }
             }
 //// To setup default functionality
 /*

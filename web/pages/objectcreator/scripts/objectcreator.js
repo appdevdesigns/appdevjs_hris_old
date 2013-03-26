@@ -29,6 +29,7 @@ var hrisObjectcreatorSetup = function (topic, data) {
     $('#create-form').create_form();
     $('#create-button').create_button();
     $('#list-view').object_grid();
+    $('<div></div>').attribute_list();
 
 /*
  		//// NOTE: all your business logic should be contained in separate 
