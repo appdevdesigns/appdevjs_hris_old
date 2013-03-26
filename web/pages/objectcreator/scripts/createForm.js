@@ -37,7 +37,8 @@
                 
                 
                 this.options = options;
-                
+
+                this.addForm = null;
                 
                 // insert our DOM elements
                 this.element.hide();
@@ -45,7 +46,23 @@
                 
                 
                 // attach other widgets & functionality here:
-                
+                var self = this;
+                this.addForm.ad_form( {
+                    submit: 'button.submit',
+                    cancel: 'button.cancel',
+                    onSubmit: this.onSubmit,
+                    onCancel: function() {
+                        self.ADForm.clear();
+                        self.element.hide();
+
+                        // Clear the list selection
+                        AD.Comm.Notification.publish('dbadmin.object.details.cancelled');
+
+                        return false;
+                    }
+                } );
+                this.ADForm = this.addForm.data( 'ADForm' );
+
                 
                 
                 // translate Labels
@@ -59,6 +76,7 @@
             insertDOM: function() {
                 
                 this.element.html(this.view('/hris/objectcreator/view/createForm.ejs', {}));
+                this.addForm = this.element.find('form');
                 
             },
             
@@ -67,8 +85,24 @@
             },
 
             'objectcreator.attributeList.refresh subscribe': function(msg, model) {
-                console.log('create form needs to update');
-            }
+                this.element.find('div.dynamic').remove();
+                for (var i = 0; i < model.length; i++) {
+                    this.addItem(model[i]);
+                }
+            },
+
+            submit: function(form) {
+                console.log('submitting.');
+            },
+
+	        addItem: function(model){
+                var view = this.view('/hris/objectcreator/view/createFormItem.ejs', {model: model});
+                var $div = $(view);
+
+                this.element.find('fieldset.dynamic').append($div);
+
+            },
+
 
             
 //// To setup default functionality

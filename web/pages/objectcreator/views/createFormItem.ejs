@@ -11,13 +11,9 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 //   appLabelKey="[label.key]"   for elements whose contents (el.html()) 
 //                               should be the multilingual info
 %>
-<form class="form-horizontal">
-    <fieldset class="dynamic">
-    </fieldset>
-    <fieldset class="static">
-	<div class="form-actions">
-		<button type="button" class="btn btn-primary submit"><%== L( '[details.label.save]' ) %></button>
-		<button type="button" class="btn cancel"><%== L( '[details.label.cancel]' ) %></button>
+	<div class="control-group dynamic">
+		<label class="control-label" for="key"><%= model.attribute_label %></label>
+		<div class="controls">
+			<input id="<%= model.attribute_column %>" type="text" data-bind="<%= model.attribute_column %>" />
+		</div>
 	</div>
-    </fieldset>
-</form>
