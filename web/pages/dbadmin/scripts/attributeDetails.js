@@ -99,6 +99,10 @@
             refreshData: function( model ) {
                 this.selectedModel = model;
                 this.ADForm.setModel( model );
+                this.element.find('select').change();   //XXX: bindToForm doesn't call change() on selects
+
+                // Disable submit button until the user changes something
+                this.element.find('button.submit').prop('disabled', true);
             },
 
             // Show the view for editing the selected item
@@ -113,8 +117,8 @@
                 // Set up the new instance based on its parent
                 var newModel = new hris.APIAttribute();
                 var parent = $('#attribute-set-list').controller().selectedModel;
-                newModel.attributeset_id = parent.attributeset_id;
-                newModel.attribute_column = parent.attributeset_key + '_';
+                newModel.attr('attributeset_id', parent.attributeset_id);
+                newModel.attr('attribute_column', parent.attributeset_key + '_');
 
                 // Display it
                 this.refreshData( newModel );
@@ -140,7 +144,26 @@
 
             'dbadmin.attribute.item.deleted subscribe': function( msg, model ) {
                 this.element.hide();
-            }
+            },
+
+            // Enable the "Save" button when something changes
+            ':input change': function(el, ev) {
+                $('button.submit').prop('disabled', false);
+            },
+
+            // Called when the datatype is changed
+            'select change': function(el, ev) {
+                this.showOrHideMETA();
+            },
+
+            // Hide/show the META field depending on the value of the datatype field
+            showOrHideMETA: function() {
+                if (this.element.find('select').val() == 'LOOKUP') {
+                    this.element.find('.attribute-meta-div').show();
+                } else {
+                    this.element.find('.attribute-meta-div').hide();
+                }
+            } 
 
         });
 
