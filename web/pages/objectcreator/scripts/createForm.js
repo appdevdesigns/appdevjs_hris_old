@@ -39,6 +39,8 @@
                 this.options = options;
 
                 this.addForm = null;
+                this.object_key = null;
+                this.hris_model = null;
                 
                 // insert our DOM elements
                 this.element.hide();
@@ -50,7 +52,6 @@
                 this.addForm.ad_form( {
                     submit: 'button.submit',
                     cancel: 'button.cancel',
-                    onSubmit: this.onSubmit,
                     onCancel: function() {
                         self.ADForm.clear();
                         self.element.hide();
@@ -80,6 +81,18 @@
                 
             },
             
+            'objectcreator.object.selected subscribe': function(msg, model) {
+                this.object_key = model.object_key;
+                // Important assumption: that object_key is the lowercase
+                // version of the hris model
+                // Also note this is not object_label, which is multilingual,
+                // in which case, toUpperCase would break.
+                this.hris_model = this.object_key.charAt(0).toUpperCase() + this.object_key.slice(1);
+                if (hris[this.hris_model]) {
+                    this.ADForm.options.dataManager = new hris[this.hris_model]();
+                }
+            },
+
             'objectcreator.create.click subscribe': function(msg, model) {
                 this.element.show();
             },
@@ -89,10 +102,6 @@
                 for (var i = 0; i < model.length; i++) {
                     this.addItem(model[i]);
                 }
-            },
-
-            submit: function(form) {
-                console.log('submitting.');
             },
 
 	        addItem: function(model){
