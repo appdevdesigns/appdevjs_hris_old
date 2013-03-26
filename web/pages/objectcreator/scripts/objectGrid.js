@@ -61,39 +61,9 @@
                 
             },
             
-            'objectcreator.object.selected subscribe': function(msg, model) {
-                this.element.show();
-                this.updateAttributes(model);
-
-            },
-            
-            updateAttributes: function(object) {
-                var self = this;
-                this.element.find('li').remove();
-                hris.Attributeset.findAll({object_id: object.object_id})
-                .then(function(list) {
-                    for (var i = 0; i < list.length; i++) {
-                        self.getAttributes(list[i]);
-                    }
-                });
-            },
-            
-            getAttributes: function(attributeset) {
-                var self = this;
-                hris.Attribute.findAll({attributeset_id: attributeset.attributeset_id})
-                .then(function(list) {
-                    for (var i = 0; i < list.length; i++) {
-                        self.addAttribute(list[i].attribute_label);
-                    }
-                });
-            },
-            
-            addAttribute: function(text) {
-
-                this.element.find('ul').append('<li>'+text+'</li>');
-
+            'objectcreator.attributeList.refresh subscribe': function(msg, model) {
+                console.log('object grid needs to update');
             }
-            
 //// To setup default functionality
 /*
             '.col1 li dblclick' : function (e) {

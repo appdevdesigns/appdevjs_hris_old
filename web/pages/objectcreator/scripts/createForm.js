@@ -64,8 +64,11 @@
             
             'objectcreator.create.click subscribe': function(msg, model) {
                 this.element.show();
-            }
+            },
 
+            'objectcreator.attributeList.refresh subscribe': function(msg, model) {
+                console.log('create form needs to update');
+            }
 
             
 //// To setup default functionality
