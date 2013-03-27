@@ -25,6 +25,7 @@ module.exports = {
 		"hris_passport": "hris_passport",
 		"hris2_relationship": "hris2_relationship",
 		"hris2_lookup": "hris2_lookup",
-		"hris2_lookup_trans": "hris2_lookup_trans"
+		"hris2_lookup_trans": "hris2_lookup_trans",
+		"hris2_relationship_trans": "hris2_relationship_trans"
 	}
 };   

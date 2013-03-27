@@ -66,6 +66,37 @@ console.log(params);
     } else {
         var column = {attribute_column: params.attribute_column};
 
+        var foundOne = false;
+
+        var setsFound = getAllAttributesetFromAttribute(params);
+        $.when(setsFound).then(function(listAttributeSets){
+
+            var listParams = [];
+
+            for (var i=0; i<listAttributeSets.length; i++) {
+console.log(' checking attrs_id:'+listAttributeSets[i].attributeset_id);
+                var currParams = {
+                        attribute_column: params.attribute_column,
+                        attributeset_id: listAttributeSets[i].attributeset_id
+                        };
+
+                listParams.push( Attribute.model.findAll(currParams, function(list){
+console.log('    .... ');
+console.log(list);
+console.log();
+                    if (list.length > 0) dfd.reject('col.conflict');  // if (list.length > 0) foundOne = true;
+                }));
+            }
+
+            $.when.apply($, listParams).then(function(){
+console.log(' ... final when:  foundOne['+foundOne+']');
+                if (foundOne)  dfd.reject('col.conflict');
+                else dfd.resolve(true);
+            });
+
+        });
+
+  /*
         var found = Attribute.model.findAll(column);
         $.when(found)
             .then(function(list){
@@ -76,6 +107,7 @@ console.log(params);
             .fail(function(err) {
                 dfd.reject(err);
             });
+*/
     }
 
     return dfd;
@@ -318,7 +350,23 @@ var getObjectFromAttribute = function (attribute){
 }
 
 
+var getAllAttributesetFromAttribute = function(attribute) {
+    var dfd = $.Deferred();
 
+    var AttributeSet = AD.Model.List['hris.Attributeset'];
+
+    var objectFound = getObjectFromAttribute(attribute);
+    $.when(objectFound).then(function(object){
+
+        var setsFound = AttributeSet.findAll({object_id:object.object_id});
+        $.when(setsFound).then(function(listAttributesets){
+           dfd.resolve( listAttributesets);
+        });
+
+    });
+
+    return dfd;
+}
 
 
 //.resourceKey : the resource identifier to register your public links under:

@@ -1,4 +1,4 @@
-<tr>
+<tr <%= model %> >
     <td>
         <!-- Hidden fields -->
         <input type="hidden" data-bind="relationship_id" />
@@ -18,8 +18,8 @@
         </div>
     </td>
     <td>
-        <input type="text" class="input-medium" placeholder="objB Label" data-bind="objB_label"/>
-        <a href=# class='rel-objB-key'><i><%= objB_key %></i></a>
+        <input type="text" class="input-medium" placeholder="objB Label" data-bind="relationship_label"/>
+        <a href=# class='rel-objB-key' <%= model.objB %> ><i><%= model.objB.object_key %></i></a>
     </td>
     <td>
         <a class="btn rel-delete-btn" href="#"><i class="icon-minus-sign"></i></a>

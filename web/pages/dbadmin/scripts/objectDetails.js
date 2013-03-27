@@ -121,9 +121,9 @@
                     $.when(found).then(function(list){
                         var addRow = function(item) {
                             // TODO: This should be set automatically in the model
-                            var found = hris.APIObject.findOne({object_id: item.objB_id});
-                            $.when(found).then(function(obj) {
-                                item.objA = self.currentModel;
+                            var foundObjB = hris.APIObject.findOne({object_id: item.objB_id});
+                            $.when(foundObjB).then(function(obj) {
+                                item.objA = self.selectedModel;
                                 item.objB = obj;
                                 self.addRelationshipRow(item);
                             });
@@ -143,13 +143,14 @@
                 this.element.find( '#add-relationship-dropdown' ).html(
                     this.view( '/hris/dbadmin/view/objectDetails_addList.ejs', { objs: objs } )
                 );
-
+/*
                 // Attach model to the DOM
                 $.when(objs).then(function(list){
                     for(var i=0; i<list.length; i++) {
                         $("#add-relationship-dropdown a[object_id=" + list[i].object_id + "]").data("ad-model", list[i]);
                     }
                 });
+ */
             },
 
             insertDOM: function() {
@@ -160,18 +161,20 @@
             // Adds a Relationship to the table
             addRelationshipRow: function(rel) {
                 var html = this.view('/hris/dbadmin/view/objectDetails_relationshipRow.ejs', {
-                    objB_key: rel.objB.object_key
+                    model: rel
                 } );
-                $('#object-relationships tbody').append(html);
-                var newRow = this.element.find('#object-relationships tr:last');
+                var newRow = $(html);
+
+                $('#object-relationships tbody').append(newRow);
+//                var newRow = this.element.find('#object-relationships tr:last');
 
                 // Set data from the related objects
-                if (!rel.objB_label)
-                    rel.objB_label = rel.objB.object_key;
+                if (!rel.relationship_label)
+                    rel.attr('relationship_label', rel.objB.object_key);
 
                 // Bind data
                 rel.bindToForm(newRow);
-                $('.rel-objB-key', newRow).data('ad-model', rel.objB);
+//                $('.rel-objB-key', newRow).data('ad-model', rel.objB);
 
                 $('select', newRow).selectpicker();
                 this.toggleShowAdvanced($('select', newRow));
@@ -219,7 +222,7 @@
 
             // Add a new Relationship
             'a.add-relationship click': function(el, ev) {
-                var model = el.data('ad-model');
+                var model = el.model(); // el.data('ad-model'); // el.model():
                 var rel = new hris.APIRelationship();
                 rel.objA_id = this.selectedModel.object_id;
                 rel.objA = this.selectedModel;
@@ -250,7 +253,7 @@
 
             // Show Details for Object B
             '.rel-objB-key click': function(el, ev) {
-                var model = el.data('ad-model');
+                var model = el.model(); //el.data('ad-model');
                 $('#object-list').controller().listController.select(model);
                 ev.preventDefault();
             },

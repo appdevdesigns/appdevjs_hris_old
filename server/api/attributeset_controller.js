@@ -28,6 +28,21 @@ Attributeset.publicLinks = function () {
 
 
 
+//.fieldValidations() : return an object's field validations
+Attributeset.fieldValidations = function () {
+    return  {
+        create:{
+            object_id:['exists','notEmpty','isNumeric'],
+            type_id:['exists', 'notEmpty', 'isNumeric'],
+            attributeset_key:['exists', 'notEmpty'],
+            attributeset_label:['exists', 'notEmpty']
+          },
+        destroy:{},
+        update:{}
+    }
+
+}
+
 
 // .model  : which model are you associated with
 //Attributeset.model = AD.Model.List['hris.Attributeset'];
@@ -47,12 +62,65 @@ Attributeset.publicLinks = function () {
 
 //.update() : the operation that performs your .model.update(id, params)
 //          store any results in : res.aRAD.result = {};
-//Attributeset.update = function (req, res, next) { next();}
+Attributeset.nextUpdate = Attributeset.update;
+Attributeset.update = function (req, res, next) {
 
+    //// Only the following parameters are allowed to be modified:
+    //// type_id,  attributeset_label
+    //// ---->  Keep id: gets passed on for determining which attributeset_id is updated
+    var params = req.aRAD.params;
+    var possibleUpdateParams = {
+            id:'',
+            type_id:'',
+            attributeset_label:''
+    }
+    var newUpdateParams = {}
+
+    for (var u in possibleUpdateParams) {
+
+        if (typeof params[u] != 'undefined') {
+            newUpdateParams[u] = params[u];
+        }
+    }
+
+    req.aRAD.params = newUpdateParams;
+
+    Attributeset.nextUpdate(req, res, next);
+}
 
 
 //.destroy() : the operation that performs your .model.destroy(id, params)
-//Attributeset.destroy = function (req, res, next) { next();}
+Attributeset.nextDestroy = Attributeset.destroy;
+Attributeset.destroy = function (req, res, next) {
+
+    var params = req.aRAD.params;
+
+    ///// NOTE: Don't destroy an Attributeset if it has sub Attributes defined
+
+    // find all Attributes associated with this Attributeset
+    var Attribute = AD.Model.List['hris.Attribute'];
+    var found = Attribute.findAll({attributeset_id:params.attributeset_id || params.id });
+    $.when(found).then(function(list) {
+
+        if (list.length == 0) {
+
+            Attributeset.nextDestroy(req, res, next);
+
+        } else {
+
+            var msg = 'attributeset not empty';
+            var code = AD.Const.HTTP.ERROR_METHODNOTALLOWED;
+
+            log(req, '     '+msg);
+            log(req, '      ->:'+params.attribute_column);
+            var err = { errorID:1, errorMSG: msg };
+            AD.Comm.Service.sendError(req, res, err, code);
+        }
+    })
+        // if there aren't any, the continue to delete
+
+        // else error!
+}
 
 
 
