@@ -11,9 +11,9 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
 //   appLabelKey="[label.key]"   for elements whose contents (el.html()) 
 //                               should be the multilingual info
 %>
-	<div class="control-group dynamic">
-		<label class="control-label" for="key"><%= model.attribute_label %></label>
+	<div class="control-group dynamic-<%= type %>">
+		<label class="control-label" for="key"><%= label %></label>
 		<div class="controls">
-			<input id="<%= model.attribute_column %>" type="text" data-bind="<%= model.attribute_column %>" />
+			<input id="<%= column_name %>" type="text" data-bind="<%= column_name %>" />
 		</div>
 	</div>

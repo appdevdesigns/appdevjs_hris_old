@@ -39,8 +39,8 @@
                 this.options = options;
 
                 this.object_id = null;
-                this.listAttributes = [];
-                this.listDone = [];
+                this.listAttributes = []; // Models for each of the attributes
+                this.listRelationships = []; // Models for each of the related objects
                 
                 
             },
@@ -51,20 +51,57 @@
                 if (this.object_id !== model.object_id) {
                     this.object_id = model.object_id;
                     this.updateAttributes(model);
+                    this.updateRelationships(model);
                 }
 
             },
             
+            updateRelationships: function(object) {
+                var self = this;
+                this.listRelationships = [];
+                var listDone = [];
+
+                // Find relationships with a belongs_to (this implies a foreign key column)
+                hris.Relationship.findAll({objA_id: object.object_id, relationship_type: 'belongs_to'})
+                .then(function(list) {
+                    // Is it possible for an object to have more than one
+                    // belongs to relationship? I would assume no.
+                    // anyway, we'll iterate over the list.
+                    for (var i = 0; i < list.length; i++) {
+                        listDone.push(self.getObjectPkey(list[i]));
+                    }
+                    $.when.apply($, listDone).then(function() {
+                        AD.Comm.Notification.publish('objectcreator.relationships.refresh', self.listRelationships);
+                    });
+
+                });
+            },
+
+            getObjectPkey: function(model) {
+                var dfed = $.Deferred();
+                var self = this;
+                hris.Object.findOne({object_id: model.objB_id})
+                .then(function(item) {
+                    self.listRelationships.push(item);
+                    dfed.resolve();
+                })
+                .fail(function() {
+                    dfed.reject();
+                })
+                return dfed;
+            },
+
             updateAttributes: function(object) {
                 var self = this;
                 this.listAttributes = [];
-                this.listDone = [];
+                var listDone = [];
+
                 hris.Attributeset.findAll({object_id: object.object_id})
                 .then(function(list) {
                     for (var i = 0; i < list.length; i++) {
-                        self.listDone.push(self.getAttributes(list[i]));
+                        listDone.push(self.getAttributes(list[i]));
                     }
-                    $.when.apply($, self.listDone).then(function() {
+                    $.when.apply($, listDone).then(function() {
                         AD.Comm.Notification.publish('objectcreator.attributeList.refresh', self.listAttributes);
                     });
 

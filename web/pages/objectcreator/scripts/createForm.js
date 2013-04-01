@@ -99,7 +99,7 @@
                         self.ADForm.clear();
                     });
                 } else {
-                    console.log("No hris model for "+this.hris_model+" found");
+                    console.error("createForm: No hris model for "+this.hris_model+" found");
                 }
             },
 
@@ -108,14 +108,22 @@
             },
 
             'objectcreator.attributeList.refresh subscribe': function(msg, model) {
-                this.element.find('div.dynamic').remove();
+                this.element.find('div.dynamic-attribute').remove();
                 for (var i = 0; i < model.length; i++) {
-                    this.addItem(model[i]);
+                    this.addItem('attribute', model[i].attribute_column, model[i].attribute_label);
                 }
             },
 
-	        addItem: function(model){
-                var view = this.view('/hris/objectcreator/view/createFormItem.ejs', {model: model});
+            'objectcreator.relationships.refresh subscribe': function(msg, model) {
+                this.element.find('div.dynamic-relationship').remove();
+                for (var i = 0; i < model.length; i++) {
+                    // TODO: Objects do not have translatable labels
+                    this.addItem('relationship', model[i].object_pkey, model[i].object_key);
+                }
+            },
+
+	        addItem: function(type, column_name, label){
+                var view = this.view('/hris/objectcreator/view/createFormItem.ejs', {column_name: column_name, label:label, type:type});
                 var $div = $(view);
 
                 this.element.find('fieldset.dynamic').append($div);
