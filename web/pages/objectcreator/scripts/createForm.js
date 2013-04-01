@@ -90,6 +90,16 @@
                 this.hris_model = this.object_key.charAt(0).toUpperCase() + this.object_key.slice(1);
                 if (hris[this.hris_model]) {
                     this.ADForm.options.dataManager = new hris[this.hris_model]();
+
+                    // Bind our created event to this model
+                    var self = this;
+                    hris[this.hris_model].unbind('created');
+                    hris[this.hris_model].bind('created', function() {
+                        // When an object is created, clear the form.
+                        self.ADForm.clear();
+                    });
+                } else {
+                    console.log("No hris model for "+this.hris_model+" found");
                 }
             },
 
