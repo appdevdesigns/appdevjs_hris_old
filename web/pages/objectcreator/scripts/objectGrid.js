@@ -37,7 +37,9 @@
                 
                 
                 this.options = options;
-                
+
+                this.object_key = null;
+                this.hris_model = null;
                 
                 // insert our DOM elements
                 this.element.hide();
@@ -53,7 +55,21 @@
                 this.xlateLabels();
             },
             
-
+            'objectcreator.object.selected subscribe': function(msg, model) {
+                this.object_key = model.object_key;
+                // Important assumption: that object_key is the lowercase
+                // version of the hris model
+                // Also note this is not object_label, which is multilingual,
+                // in which case, toUpperCase would break.
+                this.hris_model = this.object_key.charAt(0).toUpperCase() + this.object_key.slice(1);
+                if (hris[this.hris_model]) {
+                    hris[this.hris_model].findAll({}).done(function() {
+                        console.log("found them");
+                    });
+                } else {
+                    console.error("objectGrid: No hris model for "+this.hris_model+" found");
+                }
+            },
             
             insertDOM: function() {
                 
