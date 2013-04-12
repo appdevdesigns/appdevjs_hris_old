@@ -59,7 +59,7 @@
 
                 this.element.html(this.view('/hris/dbadmin/view/listSidebar.ejs', {}));
 
-                this.objectList = $('#object-list').dbadmin_list_widget({
+                this.objectList = this.element.find('#object-list').dbadmin_list_widget({
                     modelName: 'Object',
                     showButtons: true
                 })
@@ -68,13 +68,13 @@
                 // Load all
                 this.objectList.refresh({});
 
-                this.attributesetList = $('#attribute-set-list').dbadmin_list_widget({
+                this.attributesetList = this.element.find('#attribute-set-list').dbadmin_list_widget({
                     modelName: 'Attributeset',
                     showButtons: false
                 })
                 .controller();
 
-                this.attributeList = $('#attribute-list').dbadmin_list_widget({
+                this.attributeList = this.element.find('#attribute-list').dbadmin_list_widget({
                     modelName: 'Attribute',
                     showButtons: false
                 })
