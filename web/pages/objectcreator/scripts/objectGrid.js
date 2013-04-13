@@ -40,6 +40,7 @@
 
                 this.object_key = null;
                 this.hris_model = null;
+                this.attribute_refresh_done = $.Deferred();
                 
                 // insert our DOM elements
                 this.element.hide();
@@ -62,12 +63,18 @@
                 // Also note this is not object_label, which is multilingual,
                 // in which case, toUpperCase would break.
                 this.hris_model = this.object_key.charAt(0).toUpperCase() + this.object_key.slice(1);
+                var self = this;
                 if (hris[this.hris_model]) {
-                    hris[this.hris_model].findAll({}).done(function() {
-                        console.log("found them");
+                    var found = hris[this.hris_model].findAll({});
+                    $.when(found, this.attribute_refresh_done).then(function(listFound, attributes) {
+                        // At this point, we have both the attribute list and the 
+                        // list of people, so we know the rows and the columns
+                        // of the grid.
+                        self.updateGrid(listFound, attributes);
                     });
                 } else {
                     console.error("objectGrid: No hris model for "+this.hris_model+" found");
+                    this.updateGrid([],[]);
                 }
             },
             
@@ -78,11 +85,30 @@
             },
             
             'objectcreator.attributeList.refresh subscribe': function(msg, model) {
+                this.attribute_refresh_done.resolve(model);
+            },
+
+            updateGrid: function(rows, columns) {
+                this.element.find('.data').remove();
                 this.element.show();
-                var ul = this.element.find('ul');
-                this.element.find('li').remove();
-                for (var i = 0; i < model.length; i++) {
-                    ul.append('<li>'+model[i].attribute_column+'</li>');
+                var thead = this.element.find('thead');
+                var tbody = this.element.find('tbody');
+
+                //Create the header row
+                var row = $('<tr class="data"></tr>');
+                for (var i = 0; i < columns.length; i++) {
+                    row.append('<th>'+columns[i].attribute_label+'</th>');
+                }
+                thead.append(row);
+
+                // Populate the body
+                for (var r = 0; r < rows.length; r++) {
+                    var row = $('<tr class="data"></tr>');
+                    for (var c = 0; c < columns.length; c++){
+                        var cname = columns[c].attribute_column;
+                        row.append('<td>'+rows[r][cname]+'</td>');
+                    }
+                    tbody.append(row);
                 }
             }
 //// To setup default functionality
