@@ -48,6 +48,8 @@
 
 
             'objectcreator.object.selected subscribe': function(msg, model) {
+                // If the selected object has changed, update the attributes
+                // and relationships.
                 if (this.object_id !== model.object_id) {
                     this.object_id = model.object_id;
                     this.updateAttributes(model);
@@ -68,7 +70,7 @@
                     // belongs to relationship? I would assume no.
                     // anyway, we'll iterate over the list.
                     for (var i = 0; i < list.length; i++) {
-                        listDone.push(self.getObjectPkey(list[i]));
+                        listDone.push(self.getRelatedObject(list[i]));
                     }
                     $.when.apply($, listDone).then(function() {
                         AD.Comm.Notification.publish('objectcreator.relationships.refresh', self.listRelationships);
@@ -77,7 +79,11 @@
                 });
             },
 
-            getObjectPkey: function(model) {
+            getRelatedObject: function(model) {
+            // Subroutine for finding the Object definition of an object by id
+            // Once the Object definition is found, it adds it to the list of
+            // relationships.
+            // Returns a deferred, which resolves when the object is found
                 var dfed = $.Deferred();
                 var self = this;
                 hris.Object.findOne({object_id: model.objB_id})
@@ -94,13 +100,16 @@
             updateAttributes: function(object) {
                 var self = this;
                 this.listAttributes = [];
-                var listDone = [];
+                var listDone = []; // list of deferred objects
 
+                // Find all attribute sets for this object
                 hris.Attributeset.findAll({object_id: object.object_id})
                 .then(function(list) {
                     for (var i = 0; i < list.length; i++) {
+                        // Each attribute set: Find all the attributes
                         listDone.push(self.getAttributes(list[i]));
                     }
+                    // Wait for all the asynchronous calls to complete:
                     $.when.apply($, listDone).then(function() {
                         AD.Comm.Notification.publish('objectcreator.attributeList.refresh', self.listAttributes);
                     });
@@ -109,6 +118,9 @@
             },
             
             getAttributes: function(attributeset) {
+            // Find all attributes for a particular attribute set
+            // Returns a $.Deferred object which resolves when the findAll
+            // call is complete
                 var dfed = $.Deferred();
                 var self = this;
                 hris.Attribute.findAll({attributeset_id: attributeset.attributeset_id})
@@ -124,30 +136,6 @@
                 return dfed;
             },
             
-            addAttribute: function(text) {
-
-                this.element.find('ul').append('<li>'+text+'</li>');
-
-            }
-
-            
-            
-//// To setup default functionality
-/*
-            '.col1 li dblclick' : function (e) {
-            
-                this.element.find('#someDiv').append(e);
-            },
-*/
-
-//// To Add Subscriptions:
-/*
-            'apprad.module.selected subscribe': function(message, data) {
-                // data should be { name:'[moduleName]' }
-                this.module = data.name;
-                this.setLookupParams({module: data.name});
-            },
-*/
         });
         
     }) ();
