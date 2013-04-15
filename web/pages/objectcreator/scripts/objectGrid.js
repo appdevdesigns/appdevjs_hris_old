@@ -67,6 +67,9 @@
                 if (hris[this.hris_model]) {
                     var found = hris[this.hris_model].findAll({});
                     $.when(found, this.attribute_refresh_done).then(function(listFound, attributes) {
+                        // Reset the attribute refresh deferred object
+                        self.attribute_refresh_done = $.Deferred();
+
                         // At this point, we have both the attribute list and the 
                         // list of people, so we know the rows and the columns
                         // of the grid.
