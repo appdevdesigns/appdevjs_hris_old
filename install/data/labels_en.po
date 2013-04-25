@@ -191,3 +191,26 @@ msgstr "Label"
 msgid "Type"
 msgstr "Type"
 
+#. path: /page/hris/userFamily 
+#. code: en 
+#. key: [hris.userFamily.firstName] 
+msgid "First Name" 
+msgstr "First Name" 
+ 
+#. path: /page/hris/userFamily 
+#. code: en 
+#. key: [hris.userFamily.cancel] 
+msgid "Cancel" 
+msgstr "Cancel" 
+ 
+#. path: /page/hris/userFamily 
+#. code: en 
+#. key: [hris.userFamily.lastName] 
+msgid "Last Name" 
+msgstr "Last Name:" 
+ 
+#. path: /page/hris/userFamily 
+#. code: en 
+#. key: [hris.userFamily.submit] 
+msgid "Submit" 
+msgstr "Submit" 

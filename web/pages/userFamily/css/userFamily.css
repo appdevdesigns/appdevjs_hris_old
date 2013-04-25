@@ -1,0 +1,81 @@
+.person-name {
+    width:75px;
+    text-align:center;
+    height:34px;
+    z-index:30;
+    position:absolute;
+    background: rgb(25, 25, 25); /* Fall-back for browsers that don't support rgba */
+    background: rgba(25, 25, 25, .5);
+    top:42px;
+
+}
+
+
+.person-name h5 {
+    font-size:12px;
+    line-height:2px !important;
+    color:#FFFFFF;
+    font-weight:normal;
+    margin:4px 0;
+    text-shadow: 0px 0px 0px;
+}
+
+
+.add-person, .delete-person {
+	width:250px;
+	z-index:200;
+	top:50%;
+	left:30%;
+	padding:0 0 5px 0;
+	position:absolute;
+	background-color:#FFFFFF;
+	border:1px solid #CCCCCC;
+	display:none;
+	text-align:center;
+
+}
+
+.person-active {
+	background-image:url(../images/selected.png);
+	background-position: top right;
+	background-repeat:no-repeat;
+	width:60px;
+	height:50px;
+	z-index:30;
+	position:absolute;
+
+}
+
+
+
+#ui-container {
+    width:800px;
+    margin: 0 auto; /*center on the page */
+}
+
+.person-summary, .person-summary tbody, .person-summary td {
+    border: none;
+}
+
+.person-summary h3 {
+    margin: 0;
+}
+
+.person-summary-info{
+    vertical-align: top;
+}
+
+
+
+
+/* JQueryUI Portlets */
+
+  
+  .portlet { margin: 0 1em 1em 0; }
+  .portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
+  .portlet-header .ui-icon { float: right; }
+  .portlet-content { padding: 0.4em; }
+  .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+  .ui-sortable-placeholder * { visibility: hidden; }
+
+
