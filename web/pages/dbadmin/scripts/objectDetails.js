@@ -3,7 +3,7 @@
 /**
  * @class [moduleName].client.pages.objectDetails
  * @parent [moduleName].client.pages.objectDetails
- * 
+ *
  *  Setup the objectDetails Widget
  */
 
@@ -11,41 +11,41 @@
 
     // Keep all variables and functions inside an encapsulated scope
     (function() {
-    
-    
+
+
         //// Setup Widget:
         AD.Controller.extend('objectDetails', {
-    
-            
+
+
             init: function (el, options) {
 
                 //// Setup your controller here:
-                
+
                 // make sure defaults are taken care of
                 var defaults = {
                       uid:'objectDetails_uuid_notGiven',
-/*                      
+/*
                       dataManager:null, // the ListIterator of the data to display
                       template:null,	// view(): the default view template
                       templateEdit:null,// veiw(): the edit panel view
                       templateDelete:null, // view():  the delete confirmation view
                       title: null      // the MultilingualLabel Key for the title
-*/                      
+*/
                 };
                 var options = $.extend(defaults, options);
                 this._super(el, options);
-                
+
                 this.options = options;
                 var self = this;
 
                 this.selectedModel = null;
                 this.addForm = null;
-                this.relationshipMgr = new hris.Relationship();
-                
+                this.relationshipMgr = new hris.APIRelationship();
+
                 // insert our DOM elements
                 this.insertDOM();
 
-                this.model = new hris.Object();
+                this.model = new hris.APIObject();
                 this.addForm.ad_form( {
                     dataManager: this.model,
                     dataValid: this.isValid,
@@ -67,7 +67,7 @@
                 this.ADForm = this.addForm.data( 'ADForm' );
 
                 this.element.hide();
-                
+
                 // translate Labels
                 // any DOM element that has an attrib "appdLabelKey='xxxx'" will get it's contents
                 // replaced with our Label.  Careful to not put this on places that have other content!
@@ -85,7 +85,7 @@
                     var callbacks = [];
                     $('#object-relationships tbody tr:visible').each( function(i, el) {
                         var $this = $(this);
-                        var rel = new hris.Relationship();
+                        var rel = new hris.APIRelationship();
                         rel.loadFromDOM($this);
                         if ($this.hasClass('rel-delete-row')) {
                             // Destroy
@@ -116,14 +116,14 @@
 
                 if (model.object_id) {
                     // Add existing relationships
-                    var found = hris.Relationship.findAll({objA_id: model.object_id});
+                    var found = hris.APIRelationship.findAll({objA_id: model.object_id});
                     var self = this;
                     $.when(found).then(function(list){
                         var addRow = function(item) {
                             // TODO: This should be set automatically in the model
-                            var found = hris.Object.findOne({object_id: item.objB_id});
-                            $.when(found).then(function(obj) {
-                                item.objA = self.currentModel;
+                            var foundObjB = hris.APIObject.findOne({object_id: item.objB_id});
+                            $.when(foundObjB).then(function(obj) {
+                                item.objA = self.selectedModel;
                                 item.objB = obj;
                                 self.addRelationshipRow(item);
                             });
@@ -139,17 +139,18 @@
             },
 
             updateRelationshipDropdown: function() {
-                var objs = hris.Object.findAll( {} );
+                var objs = hris.APIObject.findAll( {} );
                 this.element.find( '#add-relationship-dropdown' ).html(
                     this.view( '/hris/dbadmin/view/objectDetails_addList.ejs', { objs: objs } )
                 );
-
+/*
                 // Attach model to the DOM
                 $.when(objs).then(function(list){
                     for(var i=0; i<list.length; i++) {
                         $("#add-relationship-dropdown a[object_id=" + list[i].object_id + "]").data("ad-model", list[i]);
                     }
                 });
+ */
             },
 
             insertDOM: function() {
@@ -160,18 +161,20 @@
             // Adds a Relationship to the table
             addRelationshipRow: function(rel) {
                 var html = this.view('/hris/dbadmin/view/objectDetails_relationshipRow.ejs', {
-                    objB_key: rel.objB.object_key
+                    model: rel
                 } );
-                $('#object-relationships tbody').append(html);
-                var newRow = this.element.find('#object-relationships tr:last');
+                var newRow = $(html);
+
+                $('#object-relationships tbody').append(newRow);
+//                var newRow = this.element.find('#object-relationships tr:last');
 
                 // Set data from the related objects
-                if (!rel.objB_label)
-                    rel.objB_label = rel.objB.object_key;
+                if (!rel.relationship_label)
+                    rel.attr('relationship_label', rel.objB.object_key);
 
                 // Bind data
                 rel.bindToForm(newRow);
-                $('.rel-objB-key', newRow).data('ad-model', rel.objB);
+//                $('.rel-objB-key', newRow).data('ad-model', rel.objB);
 
                 $('select', newRow).selectpicker();
                 this.toggleShowAdvanced($('select', newRow));
@@ -196,7 +199,7 @@
 
             'dbadmin.object.item.add-new subscribe': function( msg, model ) {
                 //Refresh the form data with a new Object model and show it
-                this.refreshData( new hris.Object() );
+                this.refreshData( new hris.APIObject() );
                 this.element.find('legend').html( AD.Lang.Labels.getLabelHTML('[details.object.title.new]') );
                 this.element.show();
             },
@@ -219,13 +222,14 @@
 
             // Add a new Relationship
             'a.add-relationship click': function(el, ev) {
-                var model = el.data('ad-model');
-                var rel = new hris.Relationship();
+                var model = el.model(); // el.data('ad-model'); // el.model():
+                var rel = new hris.APIRelationship();
                 rel.objA_id = this.selectedModel.object_id;
                 rel.objA = this.selectedModel;
                 rel.objB_id = model.object_id;
                 rel.objB = model;
                 this.addRelationshipRow(rel);
+                this.element.find('button.submit').prop('disabled', false);
 
                 ev.preventDefault();
             },
@@ -249,7 +253,7 @@
 
             // Show Details for Object B
             '.rel-objB-key click': function(el, ev) {
-                var model = el.data('ad-model');
+                var model = el.model(); //el.data('ad-model');
                 $('#object-list').controller().listController.select(model);
                 ev.preventDefault();
             },
@@ -276,7 +280,7 @@
             }
 
         });
-        
+
     }) ();
 
 // });  // end steal

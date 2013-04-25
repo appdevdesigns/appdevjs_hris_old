@@ -30,16 +30,16 @@ var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
     <div class="control-group">
         <label class="control-label" for="attribute_datatype"><%== L('[details.attribute.label.attribute_datatype]') %></label>
         <div class="controls">
-            <select class="selectpicker" data-bind="attribute_datatype">
-                <option>TEXT</option>
-                <option>BOOL</option>
-                <option>DATE</option>
-                <option>LOOKUP</option>
+            <select data-bind="attribute_datatype">
+                <option value="TEXT" selected>Text</option>
+                <option value="BOOL">Boolean</option>
+                <option value="DATE">Date</option>
+                <option value="LOOKUP">Lookup</option>
                 <!-- TODO: Add more options? -->
             </select>
         </div>
     </div>
-    <div class="control-group">
+    <div class="control-group attribute-meta-div">
         <label class="control-label" for="meta"><%== L('[details.attribute.label.meta]') %></label>
         <div class="controls">
             <input type="text" data-bind="Meta" />

@@ -5,45 +5,45 @@
 
     // Keep all variables and functions inside an encapsulated scope
     (function() {
-    
-    
+
+
         //// Setup Widget:
         AD.Controller.extend('dbadminListWidget', {
-    
-            
+
+
             init: function (el, options) {
 
                 //// Setup your controller here:
                 var self = this;
-                
+
                 // eventKey is used for publishing notifications related to
                 // the widget's model.
                 this.eventKey = options.modelName.toLowerCase();
-                
+
                 // make sure defaults are taken care of
                 var defaults = {
                       uid: this.eventKey + '_list_widget',
                 };
                 var options = $.extend(defaults, options);
                 this._super(el, options);
-                
+
                 this.options = options;
-                this.model = hris[options.modelName];
+                this.model = hris['API'+options.modelName];
                 this.selectedModel = null;
                 this.currentFilter = null;
-                
+
                 this.dataManager = this.model.listIterator(null);   // Initialize as empty
-                
+
                 this.initDeleteConfirmation();
                 this.initAdminList();
-                
+
                 // translate Labels
                 // any DOM element that has an attrib "appdLabelKey='xxxx'" will get it's contents
                 // replaced with our Label.  Careful to not put this on places that have other content!
                 this.xlateLabels();
             },
-            
-            
+
+
             initDeleteConfirmation: function() {
                 var self = this;
 
@@ -62,7 +62,7 @@
                             self.$confirmBox.modal('hide');
                             self.refresh();
                             AD.Comm.Notification.publish(
-                                'dbadmin.'+ self.eventKey +'.item.deleted', 
+                                'dbadmin.'+ self.eventKey +'.item.deleted',
                                 {}
                             );
                         });
@@ -73,11 +73,11 @@
                     self.listController.onDone();
                 });
             },
-            
-            
+
+
             initAdminList: function() {
                 var self = this;
-            
+
                 // Add a child DIV so we have a different one for the Admin
                 // List controller.
                 this.element.append('<div class="admin-list">');
@@ -138,11 +138,11 @@
                 this.element.find('.add-delete').hide();
                 this.listController.onDone();
             },
-            
+
             showButtons: function() {
                 this.element.find('.add-delete').show();
             }
 
         });
-        
+
     }) ();

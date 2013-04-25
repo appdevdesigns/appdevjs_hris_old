@@ -1,7 +1,7 @@
 ////
-//// Relationship
+//// Userfile
 ////
-//// This model is the interface to the hris2_relationship table.
+//// This model is the interface to the hris2_userfile table.
 
 
 (function () {
@@ -14,10 +14,10 @@
     var attr = {
         // Shared model attributes
         _adModule:'hris',
-        _adModel:'Relationship',
-        id:'relationship_id',
-        labelKey:'relationship_label',
-        _isMultilingual:true,
+        _adModel:'Userfile',
+        id:'userfile_id',
+        labelKey:'userfile_name',
+        _isMultilingual:false,
         _relationships:{
             belongs_to:[], // array of Model Names: ['Attributeset', 'site.Viewer', ... ]
             has_many:[]    // array of Model Names
@@ -29,36 +29,25 @@
     if (extendedDefinition) {
         // Extended model attributes
         AD.jQuery.extend(attr, {
-            type:'multilingual',  // 'single' | 'multilingual'
-//            dbName:'live_db',
-            tables:{
-                data:'hris2_relationship',
-                trans:'hris2_relationship_trans'
+            type:'single',  // 'single' | 'multilingual'
+//            dbName:AD.Defaults.dbName,
+            dbTable:'hris2_userfile',
+            modelFields: {
+                  userfile_id:"int(11) unsigned",
+                  userfile_name:"text",
+                  userfile_path:"text",
+                  userfile_mimetype:"varchar(32)",
+                  userfile_date:"date",
+                  attribute_id:"int(11)",
+                  viewer_guid:"text"
+
             },
-            fields: {
-                data: {
-                  relationship_id:"int(11) unsigned",
-                  objA_id:"int(11) unsigned",
-                  objB_id:"int(11) unsigned",
-                  relationship_type:"varchar(25)"
-
-                },
-                trans: {
-                  relationshiptrans_id:"int(11)",
-                  relationship_id:"int(11)",
-                  language_code:"varchar(10)",
-                  relationship_label:"text"
-
-
-                }
-            },
-            primaryKey:'relationship_id',
-            multilingualFields: ['relationship_label']
+            primaryKey:'userfile_id'
         });
     }
 
 
-    var Model = AD.Model.extend("hris.Relationship",
+    var Model = AD.Model.extend("hris.Userfile",
     attr,
     {
         // define instance methods here.

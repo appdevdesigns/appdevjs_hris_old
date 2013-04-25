@@ -31,7 +31,7 @@ CREATE TABLE `hris2_attributes` (
   `attribute_permission` varchar(25) NOT NULL DEFAULT '',
   `attribute_uniqueKey` tinyint(1) NOT NULL,
   PRIMARY KEY (`attribute_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,6 @@ CREATE TABLE `hris2_attributes` (
 
 LOCK TABLES `hris2_attributes` WRITE;
 /*!40000 ALTER TABLE `hris2_attributes` DISABLE KEYS */;
-INSERT INTO `hris2_attributes` VALUES (1,1,'passport_number','TEXT','','',1),(2,1,'passport_issuedate','DATE','','',0),(3,1,'passport_expirationdate','DATE','','',0),(4,1,'country_id','LOOKUP','hris_country','',0),(5,1,'passport_isprimary','BOOL','','',0),(6,2,'person_givenname','TEXT','','',0),(7,2,'person_surname','TEXT','','',0),(8,3,'gender_id','LOOKUP','hris_gender','',0),(9,4,'passport_number','TEXT','','',0),(10,4,'passport_issuedate','DATE','','',0),(11,3,'person_birthdate','DATE','','',0);
 /*!40000 ALTER TABLE `hris2_attributes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,7 +56,7 @@ CREATE TABLE `hris2_type_trans` (
   `language_code` varchar(15) NOT NULL DEFAULT '',
   `type_label` text NOT NULL,
   PRIMARY KEY (`typetrans_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +65,6 @@ CREATE TABLE `hris2_type_trans` (
 
 LOCK TABLES `hris2_type_trans` WRITE;
 /*!40000 ALTER TABLE `hris2_type_trans` DISABLE KEYS */;
-INSERT INTO `hris2_type_trans` VALUES (1,1,'en','Person'),(2,1,'zh-hans','人'),(3,1,'ko','[ko]Person');
 /*!40000 ALTER TABLE `hris2_type_trans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,13 +76,13 @@ DROP TABLE IF EXISTS `hris2_attributes_trans`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `hris2_attributes_trans` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `attributetrans_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `attribute_id` int(11) NOT NULL,
   `language_code` varchar(10) NOT NULL,
   `attribute_label` text NOT NULL,
   `attribute_question` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`attributetrans_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +91,6 @@ CREATE TABLE `hris2_attributes_trans` (
 
 LOCK TABLES `hris2_attributes_trans` WRITE;
 /*!40000 ALTER TABLE `hris2_attributes_trans` DISABLE KEYS */;
-INSERT INTO `hris2_attributes_trans` VALUES (1,1,'en','Passport Number','Enter your passport number.'),(2,2,'en','Issue Date','Enter the issue Date'),(3,3,'en','Expiration Date','Enter the expiration date'),(4,4,'en','Country','Enter the passport country'),(5,5,'en','Is Primary','Is this the primary passport?'),(6,6,'en','Givenname','What\'s your given name?'),(7,7,'en','Surname','Enter your family name'),(8,6,'ko','[ko]Givenname','[ko]Enter your Family Name'),(9,7,'ko','[ko]Surname','[ko]Enter your Surname'),(10,8,'en','Gender','Enter your gender'),(11,8,'ko','[ko]Gender','[ko]Enter your Gender'),(12,9,'en','Number','Enter your passport number'),(13,10,'en','Issue Date',''),(14,9,'ko','[ko]Number',''),(15,10,'ko','[ko]Issue Date',''),(20,11,'en','Birth Date','');
 /*!40000 ALTER TABLE `hris2_attributes_trans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +111,7 @@ CREATE TABLE `hris2_attributeset` (
   `attributeset_key` text NOT NULL,
   `attributeset_pkey` text NOT NULL,
   PRIMARY KEY (`attributeset_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +120,6 @@ CREATE TABLE `hris2_attributeset` (
 
 LOCK TABLES `hris2_attributeset` WRITE;
 /*!40000 ALTER TABLE `hris2_attributeset` DISABLE KEYS */;
-INSERT INTO `hris2_attributeset` VALUES (2,1,1,'hris2_person','one',0,'name','person_id'),(3,1,1,'hris2_person','one',0,'person','person_id'),(4,1,2,'hris_passport','one',0,'passport','passport_id');
 /*!40000 ALTER TABLE `hris2_attributeset` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +136,7 @@ CREATE TABLE `hris2_attributeset_trans` (
   `language_code` varchar(10) NOT NULL DEFAULT '',
   `attributeset_label` text NOT NULL,
   PRIMARY KEY (`attrsettrans_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +145,6 @@ CREATE TABLE `hris2_attributeset_trans` (
 
 LOCK TABLES `hris2_attributeset_trans` WRITE;
 /*!40000 ALTER TABLE `hris2_attributeset_trans` DISABLE KEYS */;
-INSERT INTO `hris2_attributeset_trans` VALUES (4,2,'ko','[ko]names'),(2,2,'en','names'),(3,3,'en','person'),(5,4,'en','passport'),(6,4,'ko','[ko]passport');
 /*!40000 ALTER TABLE `hris2_attributeset_trans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,7 +161,7 @@ CREATE TABLE `hris2_object` (
   `object_pkey` text NOT NULL,
   `object_table` text NOT NULL,
   PRIMARY KEY (`object_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +170,6 @@ CREATE TABLE `hris2_object` (
 
 LOCK TABLES `hris2_object` WRITE;
 /*!40000 ALTER TABLE `hris2_object` DISABLE KEYS */;
-INSERT INTO `hris2_object` VALUES (2,'passport','passport_id','hris_passport'),(1,'person','person_id','hris2_person');
 /*!40000 ALTER TABLE `hris2_object` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,7 +187,7 @@ CREATE TABLE `hris2_object_type` (
   `type_id` int(11) NOT NULL,
   `objtype_isactive` int(1) NOT NULL,
   PRIMARY KEY (`objtype_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,32 +199,6 @@ LOCK TABLES `hris2_object_type` WRITE;
 /*!40000 ALTER TABLE `hris2_object_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `hris2_person`
---
-
-DROP TABLE IF EXISTS `hris2_person`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `hris2_person` (
-  `person_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `person_surname` text NOT NULL,
-  `person_givenname` text NOT NULL,
-  `gender_id` int(11) NOT NULL,
-  `person_birthdate` date NOT NULL,
-  PRIMARY KEY (`person_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `hris2_person`
---
-
-LOCK TABLES `hris2_person` WRITE;
-/*!40000 ALTER TABLE `hris2_person` DISABLE KEYS */;
-INSERT INTO `hris2_person` VALUES (1,'Bourne','Jason',1,'0000-00-00'),(2,'Baggins','Bilbo',1,'1969-01-01'),(28,'bbbb','aaa',0,'0000-00-00'),(27,'ddd','ccc',0,'0000-00-00'),(26,'Liu','Henry',0,'0000-00-00'),(25,'bbb','aaa',0,'0000-00-00'),(24,'lastname','newuser',0,'0000-00-00'),(23,'name','john',0,'0000-00-00'),(3,'Liu','Henry',1,'0000-00-00'),(4,'yao','esther',1,'2013-03-23'),(5,'','',0,'0000-00-00'),(19,'','',0,'0000-00-00'),(18,'','',0,'0000-00-00');
-/*!40000 ALTER TABLE `hris2_person` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `hris2_type`
@@ -244,7 +212,7 @@ CREATE TABLE `hris2_type` (
   `parent_id` int(11) NOT NULL DEFAULT '0',
   `type_key` text NOT NULL,
   PRIMARY KEY (`type_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -253,44 +221,7 @@ CREATE TABLE `hris2_type` (
 
 LOCK TABLES `hris2_type` WRITE;
 /*!40000 ALTER TABLE `hris2_type` DISABLE KEYS */;
-INSERT INTO `hris2_type` VALUES (1,0,'Person	');
 /*!40000 ALTER TABLE `hris2_type` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `hris_passport`
---
-
-DROP TABLE IF EXISTS `hris_passport`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `hris_passport` (
-  `passport_id` int(11) NOT NULL AUTO_INCREMENT,
-  `passport_guid` varchar(45) NOT NULL,
-  `ren_id` int(11) NOT NULL,
-  `passport_number` varchar(50) NOT NULL DEFAULT '-',
-  `country_id` int(11) NOT NULL DEFAULT '1',
-  `passport_issuedate` date NOT NULL DEFAULT '1000-01-01',
-  `passport_expirationdate` date NOT NULL DEFAULT '1000-01-01',
-  `person_id` int(11) NOT NULL,
-  `passport_isprimary` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`passport_id`),
-  UNIQUE KEY `idx_passport_guid` (`passport_guid`),
-  UNIQUE KEY `idx_passport_ren_number` (`ren_id`,`passport_number`),
-  KEY `fk_passport_country_id` (`country_id`),
-  CONSTRAINT `fk_passport_country_id` FOREIGN KEY (`country_id`) REFERENCES `hris_country_data` (`country_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_passport_ren_id` FOREIGN KEY (`ren_id`) REFERENCES `hris_ren_data` (`ren_id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `hris_passport`
---
-
-LOCK TABLES `hris_passport` WRITE;
-/*!40000 ALTER TABLE `hris_passport` DISABLE KEYS */;
-INSERT INTO `hris_passport` VALUES (1,'',1,'1234',1,'1970-01-01','1980-01-01',1,1);
-/*!40000 ALTER TABLE `hris_passport` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -305,8 +236,12 @@ CREATE TABLE `hris2_relationship` (
   `objA_id` int(11) unsigned NOT NULL,
   `objB_id` int(11) unsigned NOT NULL,
   `relationship_type` varchar(25) NOT NULL DEFAULT '',
-  PRIMARY KEY (`relationship_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`relationship_id`),
+  KEY `fk_rship_objA` (`objA_id`),
+  KEY `fk_rship_objB` (`objB_id`),
+  CONSTRAINT `fk_rship_objA` FOREIGN KEY (`objA_id`) REFERENCES `hris2_object` (`object_id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_rship_objB` FOREIGN KEY (`objB_id`) REFERENCES `hris2_object` (`object_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -332,7 +267,7 @@ CREATE TABLE `hris2_lookup` (
   `lookup_table` text NOT NULL,
   `lookup_pkey` text NOT NULL,
   PRIMARY KEY (`lookup_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -341,7 +276,6 @@ CREATE TABLE `hris2_lookup` (
 
 LOCK TABLES `hris2_lookup` WRITE;
 /*!40000 ALTER TABLE `hris2_lookup` DISABLE KEYS */;
-INSERT INTO `hris2_lookup` VALUES (1,'gender','hris_gender','gender_id');
 /*!40000 ALTER TABLE `hris2_lookup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -358,7 +292,7 @@ CREATE TABLE `hris2_lookup_trans` (
   `language_code` varchar(10) NOT NULL DEFAULT '',
   `lookup_label` text NOT NULL,
   PRIMARY KEY (`lookuptrans_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -367,8 +301,32 @@ CREATE TABLE `hris2_lookup_trans` (
 
 LOCK TABLES `hris2_lookup_trans` WRITE;
 /*!40000 ALTER TABLE `hris2_lookup_trans` DISABLE KEYS */;
-INSERT INTO `hris2_lookup_trans` VALUES (1,1,'en','Gender');
 /*!40000 ALTER TABLE `hris2_lookup_trans` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hris2_relationship_trans`
+--
+
+DROP TABLE IF EXISTS `hris2_relationship_trans`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hris2_relationship_trans` (
+  `relationshiptrans_id` int(11) NOT NULL AUTO_INCREMENT,
+  `relationship_id` int(11) NOT NULL,
+  `language_code` varchar(10) NOT NULL DEFAULT '',
+  `relationship_label` text NOT NULL,
+  PRIMARY KEY (`relationshiptrans_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hris2_relationship_trans`
+--
+
+LOCK TABLES `hris2_relationship_trans` WRITE;
+/*!40000 ALTER TABLE `hris2_relationship_trans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hris2_relationship_trans` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -380,4 +338,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-24  2:09:44
+-- Dump completed on 2013-03-26 17:22:26
