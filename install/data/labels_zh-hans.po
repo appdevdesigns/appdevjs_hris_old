@@ -62,8 +62,8 @@ msgstr "[zh-hans]:Column"
 #. path: /page/hris/dbadmin
 #. code: zh-hans
 #. key: [list.delete.confirmation]
-msgid "There will be Consequences for deleting this. Do you really want to do this?"
-msgstr "[zh-hans]:There will be Consequences for deleting this. Do you really want to do this?"
+msgid "There will be Consequences™ for deleting this. Do you really want to do this?"
+msgstr "[zh-hans]:There will be Consequences™ for deleting this. Do you really want to do this?"
 
 #. path: /page/hris/dbadmin
 #. code: zh-hans

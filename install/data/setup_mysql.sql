@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.24, for Win64 (x86)
+-- MySQL dump 10.13  Distrib 5.1.44, for apple-darwin8.11.1 (i386)
 --
--- Host: localhost    Database: appdev
+-- Host: localhost    Database: live_db
 -- ------------------------------------------------------
--- Server version	5.5.24-log
+-- Server version	5.1.44
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -250,7 +250,6 @@ CREATE TABLE `hris2_relationship` (
 
 LOCK TABLES `hris2_relationship` WRITE;
 /*!40000 ALTER TABLE `hris2_relationship` DISABLE KEYS */;
-INSERT INTO `hris2_relationship` VALUES (1,1,2,'has_many'),(2,2,1,'belongs_to');
 /*!40000 ALTER TABLE `hris2_relationship` ENABLE KEYS */;
 UNLOCK TABLES;
 

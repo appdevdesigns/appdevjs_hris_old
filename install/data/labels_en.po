@@ -62,8 +62,8 @@ msgstr "Column"
 #. path: /page/hris/dbadmin
 #. code: en
 #. key: [list.delete.confirmation]
-msgid "There will be Consequences for deleting this. Do you really want to do this?"
-msgstr "There will be Consequences for deleting this. Do you really want to do this?"
+msgid "There will be Consequences™ for deleting this. Do you really want to do this?"
+msgstr "There will be Consequences™ for deleting this. Do you really want to do this?"
 
 #. path: /page/hris/dbadmin
 #. code: en
