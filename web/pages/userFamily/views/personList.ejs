@@ -1,0 +1,36 @@
+<!-- Beginning personList view definition -->
+<%
+///// NOTE:  on the server, EJS uses < %- to return unescaped strings
+/////        on the client  EJS uses < %== 
+// This is CLIENT SIDE, so let's make displaying labels easier:
+// use: < %==  L('[labelKey]') % >   // note there is no ';' at the end!
+var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
+
+//// Alternativly you can add these attributes:
+//   appdTitleKey="[label.key]"  for elements that have a title and you want 
+//                               the contents to be multilingual
+//   appLabelKey="[label.key]"   for elements whose contents (el.html()) 
+//                               should be the multilingual info
+%>
+<div id="myCarousel"></div>
+
+<!--ADD PERSON - START-->
+<div class="add-person">
+    <!--CONTENT OF ADD OPTION - START-->
+
+		<b align='left'> <%== L('[hris.userFamily.firstName]') %> </b>
+		<input id="person-addform-firstname" type="text" class="input-medium option-input" data-bind="person_givenname" placeholder="[FirstName]">
+	    
+	    <b align='left'><%== L('[hris.userFamily.lastName]') %>  </b>
+	    <input id="person-addform-lastname" type="text" class="input-medium option-input" data-bind="person_surname" placeholder="[LastName]">
+        <div class="control-group error">
+            <label id="error-AddPerson" class="control-label center-align" for="inputError">[hris.userFamily.errorPersonAccountInUse]</label>
+        </div>
+        <div class="save center-align">
+            <button id="btn-addCancel" class="btn btn-medium option-cancel"><%== L('[hris.userFamily.cancel]') %> </button>
+            <button id="btn-addSubmit" class="btn  btn-medium btn-primary option-submit"><%== L('[hris.userFamily.submit]') %> </button>
+            <span id="addBusy" class="busy-icon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </div>
+    <!--CONTENT OF ADD OPTION - START-->
+</div>
+<!--ADD PERSON - END-->

@@ -1,0 +1,24 @@
+<%
+var $ = AD.jQuery;
+
+// This is SERVER side, so let's make displaying labels easier:
+// use:  < %- L('[labelKey]') % >
+var L = function(key) { return data.labels.getLabel(key); };
+var pL = function(prependText, key) {
+    // prepend the given text to the result of the label
+    var label = $(L(key)).prepend(prependText);
+    return $('<div>').append(label).html();
+};
+%>
+
+<div id="ui-container" class="container">
+Family information
+<div id="add-person" class="container"><button type="button" id="btn-addperson" class="btn right-align">Add Person</button></div>
+
+<div id="personList"></div>
+
+<div id="personSummary"></div>
+<div id="attributeSetList" class="row-fluid"></div>
+</div>
+
+
