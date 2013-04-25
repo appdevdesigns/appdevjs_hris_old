@@ -1,3 +1,7 @@
 <% for( var i=0; i<objs.length; i++) { %>
-	<li><a tabindex="-1" href="#" class="add-relationship"><%=objs[i].object_key %></a></li>
+    <li>
+        <a tabindex="-1" href="#" class="add-relationship" object_id="<%= objs[i].object_id %>">
+            <%=objs[i].object_key %>
+        </a>
+    </li>
 <% } %>

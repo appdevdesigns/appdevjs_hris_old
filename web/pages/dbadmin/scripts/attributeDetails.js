@@ -99,6 +99,9 @@
             refreshData: function( model ) {
                 this.selectedModel = model;
                 this.ADForm.setModel( model );
+
+                // Disable submit button until the user changes something
+                this.element.find('button.submit').prop('disabled', true);
             },
 
             // Show the view for editing the selected item
@@ -113,8 +116,8 @@
                 // Set up the new instance based on its parent
                 var newModel = new hris.Attribute();
                 var parent = $('#attribute-set-list').controller().selectedModel;
-                newModel.attributeset_id = parent.attributeset_id;
-                newModel.attribute_column = parent.attributeset_key + '_';
+                newModel.attr('attributeset_id', parent.attributeset_id);
+                newModel.attr('attribute_column', parent.attributeset_key + '_');
 
                 // Display it
                 this.refreshData( newModel );
@@ -140,6 +143,11 @@
 
             'dbadmin.attribute.item.deleted subscribe': function( msg, model ) {
                 this.element.hide();
+            },
+
+            // Enable the "Save" button when something changes
+            ':input change': function(el, ev) {
+                $('button.submit').prop('disabled', false);
             }
 
         });
