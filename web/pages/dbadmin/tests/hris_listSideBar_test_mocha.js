@@ -1,10 +1,12 @@
 describe('test listSideBar',function(){
 	var html = '';
 	var object;
-	var docObject;
 	var attributeset;
 	var objectId = -1;
 	var objectList;
+	var attributeList;
+	var attributeSetList;
+	
 	var hiddenButtons = function(buttons){
 		var testResult = true;
 		if (buttons.attr('style') !== 'display: none;'){
@@ -23,25 +25,12 @@ describe('test listSideBar',function(){
 	var deSelectedFields = function(listEntries){
 	    var testResult = true;
 		for(var i=0;i<listEntries.length;i++){
-			var objectItem = $(objectListEntries[i]);
+			var objectItem = $(listEntries[i]);
 			if (objectItem.hasClass('active')){
 				testResult = false;
 			}
 		}
 		return testResult;
-	};
-	
-	var timeOut = function(){
-		//var dfd = $.Deferred();
-		var i = 0;
-		while (i <= 5) {
-			setTimeout("", 5000);
-			i++;
-		}
-		//if (i>5){
-		//	dfd.resolve();
-		//}
-		return i;
 	};
 	
 	before(function(done){
@@ -52,10 +41,9 @@ describe('test listSideBar',function(){
             	'<div id="attribute-details"></div>'+
         		'</div>'+
     			'</div></div>').list_sidebar();
-		docObject = $(document).append(html);
-		objectList = html.find('#object-list').dbadmin_list_widget();
-		attributeList = html.find('#attribute-list').dbadmin_list_widget();
-		attributeSetList = html.find('#attribute-set-list').dbadmin_list_widget();
+		objectList = html.find('#object-list');
+		attributeList = html.find('#attribute-list');
+		attributeSetList = html.find('#attribute-set-list');
 		object = new hris.Object({
             object_key: 'object_test',
             object_pkey: 'test_id',
@@ -211,9 +199,9 @@ describe('test listSideBar',function(){
 		var testResult = true;
 		var model = {};
 		AD.Comm.Notification.publish('dbadmin.attributeset.details.cancelled',model);
-		attributeSetListEntries = attributeSetList.find('li.appdev-list-admin-entry');
-		attributeListEntries = attributeList.find('li.appdev-list-admin-entry');
-		attributeListButtons = attributeList.find('.add-delete');
+		var attributeSetListEntries = attributeSetList.find('li.appdev-list-admin-entry');
+		var attributeListEntries = attributeList.find('li.appdev-list-admin-entry.active');
+		var attributeListButtons = attributeList.find('.add-delete');
 		//attribute set list should be deselected
 		if(!deSelectedFields(attributeSetListEntries)){
 			testResult = false;
@@ -234,7 +222,7 @@ describe('test listSideBar',function(){
 		var testResult = true;
 		var model = {};
 		AD.Comm.Notification.publish('dbadmin.attribute.details.cancelled',model);
-		attributeListEntries = attributeList.find('li.appdev-list-admin-entry');
+		attributeListEntries = attributeList.find('li.appdev-list-admin-entry.active');
 		//attribute list should be deselected
 		if (!deSelectedFields(attributeListEntries)){
 			testResult = false;
@@ -244,32 +232,28 @@ describe('test listSideBar',function(){
 	});
 	
 	it('object selected',function(done){
-		var testResult = true;
 		AD.Comm.Notification.publish('dbadmin.object.changed',object);
-		//var dfd = $.Deferred();
-		//var dfdTimeout = timeOut();
-		//$.when(dfdTimeout).then(function(){
-			//dfd.resolve(true);
-			var objectListEntries = objectList.find('li.appdev-list-admin-entry');
+		setTimeout(function(){
+			var testResult = true;
+			var objectListEntries = objectList.find('li.appdev-list-admin-entry.active');
 			if (deSelectedFields(objectListEntries)){
 				testResult = false;
 			}
 			chai.assert.isTrue(testResult,'object not selected');
 			done();
-		//});
+		}, 5000);
 	});
 	
 	it('attributeset selected',function(done){
-		var testResult = true;
-		AD.Comm.Notification.publish('dbadmin.attributeset.changed',attributeset);
-		//var dfdTimeout = timeOut();
-		//$.when(dfdTimeout).then(function(){
-			var attributeSetListEntries = attributeSetList.find('li.appdev-list-admin-entry active');
+		AD.Comm.Notification.publish('dbadmin.attributeset.changed', attributeset);
+		setTimeout(function(){
+			var testResult = true;
+			var attributeSetListEntries = attributeSetList.find('li.appdev-list-admin-entry.active');
 			if (deSelectedFields(attributeSetListEntries)){
 				testResult = false;
 			}
 			chai.assert.isTrue(testResult,'attributeset not selected');
 			done();
-		//});
+		},5000);
 	});
 })
