@@ -23,7 +23,7 @@
 					 var obj = {
 					 	object_key: 'object_test',
             			object_pkey: 'test_id',
-            			object_table: 'hris2_object_test'
+            			object_table: 'hris_object_test'
 					 };
 					 hris.Object.create(obj, function(object) {
 					 	var attrSet = {

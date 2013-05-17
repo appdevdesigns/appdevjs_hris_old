@@ -1,52 +1,32 @@
 describe('test objectDetails',function(){
 	var html = '';
+	var objectHtml;
 	var object;
 	var attributeset;
 	var objectId = -1;
 	var objectList;
-	var hiddenButtons = function(buttons){
-		var testResult = true;
-		if (buttons.attr('style') !== 'display: none;'){
-		//if (!buttons.is(':visible')){
-			testResult = false;
-		}
-		return testResult;
-	};
-	var emptyList = function(listEntries){
-		var testResult = true;
-		if (listEntries.length !== 0){
-			testResult = false;
-		}
-		return testResult;
-	};
-	var deSelectedFields = function(listEntries){
-	    var testResult = true;
-		for(var i=0;i<listEntries.length;i++){
-			var objectItem = $(objectListEntries[i]);
-			if (objectItem.attr('class') == 'appdev-list-admin-entry active'){
-				testResult = false;
-			}
-		}
-		return testResult;
-	};
+
 	
 	before(function(done){
-		html = $('<div class="dbAdmin-container"><div class="row-fluid">'+
-	   			'<div id="list-sidebar" class="span3 well"></div>'+
-        		'<div class="span9 well"><div id="object-details"></div>'+
-				'<div id="attribute-set-details"></div>'+
-            	'<div id="attribute-details"></div>'+
-        		'</div>'+
-    			'</div></div>').object_details();
+		html = $('<div></div>').object_details();
+		objectHtml = $(document).append(html);
+		object = new hris.Object({
+            object_key: 'object_test',
+            object_pkey: 'test_id',
+            object_table: 'hris_object_test'
+        });
+        object.save();
 		done();
 	});
 	
 	after(function(){
-		hris.APIObject.findAll({},function(list){
-			for (var i=0;i<list.length;i++){
-				//list[i].destroy();
-			}
-		});
+		object.destroy();
+	});
+	
+	it('initialize the DOM',function(done){
+		var form = html.find('form.form-horizontal');
+		chai.assert.lengthOf(form,1,"DOM wasn't loaded with form");
+		done();
 	});
 				
 	it('submit form',function(done){
@@ -74,20 +54,21 @@ describe('test objectDetails',function(){
 		});
 	});
 	
-	it('add relationship',function(done){
+	it('dbadmin object selected/show',function(done){
+		var testResult = false;
+		AD.Comm.Notification.publish('dbadmin.object.item.selected',object);
+		var objectKey = html.find('#object-object_key');
+		if (objectKey.attr('data-bind') == 'object_key'){
+			testResult = true;
+		}
+		chai.assert.isTrue(testResult, 'dbadmin object screen is showing');
+		done();
+	});
+
+	
+	it('dbadmin object add-new',function(done){
 		var data = {};
 		AD.Comm.Notification.publish('dbadmin.object.item.add-new',data);
-		var html = $('<div class="dbAdmin-container"><div class="row-fluid">'+
-	   			'<div id="list-sidebar" class="span3 well"></div>'+
-        		'<div class="span9 well"><div id="object-details"></div>'+
-				'<div id="attribute-set-details"></div>'+
-            	'<div id="attribute-details"></div>'+
-        		'</div>'+
-    			'</div></div>').object_details();
-		var objs = hris.APIObject.findAll( {} );
-        var dropdown = html.find( '#add-relationship-dropdown' ).html(
-            ( '//modules/hris/web/pages/dbadmin/views/objectDetails_addList.ejs', { objs: objs } )
-        );
 		var objectKey = html.find('#object-object_key');
 		objectKey.val('testtable');
 		var objectTable = html.find('#object-object_table');
@@ -96,8 +77,12 @@ describe('test objectDetails',function(){
 		objectPrimaryKey.val('hris_testtable_id');
 		var toggleButton = html.find('button.dropdown-toggle');
 		toggleButton.click();
-		var relationshipButton = html.find('#add-relationship-dropdown');
-		relationshipButton.click();
-		done();
+		setTimeout(function(){
+			var relationshipLink = objectHtml.find('li.add-relationship');
+			relationshipLink.click();
+			done();
+		},5000);
 	});
+	
+	
 });

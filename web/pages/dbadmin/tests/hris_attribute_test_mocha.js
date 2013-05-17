@@ -23,7 +23,7 @@
 					 var obj = {
 					 	object_key: 'object_test',
             			object_pkey: 'test_id',
-            			object_table: 'hris2_object_test'
+            			object_table: 'hris_object_test'
 					 };
 					 hris.Object.create(obj, function(object) {
 					 	var attrSet = {
@@ -49,7 +49,44 @@
 		  	});
 		  	
         });
-            
+        
+		after(function(done) {
+                
+            console.log('after called...');
+            hris.Object.findAll({},function(list){
+
+                var listDFD = [];
+                for (var i=0; i<list.length; i++) {
+                    listDFD.push(list[i].destroy());
+                }
+                
+                $.when.apply($, listDFD).then(function() {
+                     console.log('done called...');
+					 hris.Attributeset.findAll({},function(list){
+						var listattrSetDFD = [];
+                		for (var i=0; i<list.length; i++) {
+                    		listattrSetDFD.push(list[i].destroy());
+                		}
+                
+                		$.when.apply($, listattrSetDFD).then(function() {
+                     		console.log('done called...');
+							hris.Attribute.findAll({},function(list){
+								var listAttrDFD = [];
+                				for (var i=0; i<list.length; i++) {
+                    				listAttrDFD.push(list[i].destroy());
+                				}
+                
+                				$.when.apply($, listAttrDFD).then(function() {
+                     				console.log('done called...');
+		    	     				done();
+		    					});
+		  					});
+		    			});
+		  			});
+		    	});
+		  	});
+		  	
+        });
             
 		 it('Attribute Table is Empty', function(done){
 		    

@@ -9,7 +9,7 @@ describe('hris object', function(){
         object = new hris.Object({
             object_key: 'object_test',
             object_pkey: 'test_id',
-            object_table: 'hris2_object_test'
+            object_table: 'hris_object_test'
         });
         object.save(function(){
             objectId = object.getID();
@@ -28,7 +28,7 @@ describe('hris object', function(){
     // created correctly.
     it('created related DB tables', function(done) {
         AD.Model.Datastore.listTables(AD.Defaults.dbName, function(tableList) {
-            chai.assert.include(tableList, 'hris2_object_test', "table was not created");
+            chai.assert.include(tableList, 'hris_object_test', "table was not created");
             done();
         });
         
@@ -42,7 +42,7 @@ describe('hris object', function(){
             chai.expect(findOneId).to.equal(objectId);
             chai.expect(data.attr('object_key')).to.equal('object_test');
             chai.expect(data.attr('object_pkey')).to.equal('test_id');
-            chai.expect(data.attr('object_table')).to.equal('hris2_object_test');
+            chai.expect(data.attr('object_table')).to.equal('hris_object_test');
             done();
         });
     });

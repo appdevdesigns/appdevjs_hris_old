@@ -34,20 +34,15 @@ describe('test listSideBar',function(){
 	};
 	
 	before(function(done){
-		html = $('<div class="dbAdmin-container"><div class="row-fluid">'+
-	   			'<div id="list-sidebar" class="span3 well"></div>'+
-        		'<div class="span9 well"><div id="object-details"></div>'+
-				'<div id="attribute-set-details"></div>'+
-            	'<div id="attribute-details"></div>'+
-        		'</div>'+
-    			'</div></div>').list_sidebar();
+		html = $('<div></div>').list_sidebar();
 		objectList = html.find('#object-list');
 		attributeList = html.find('#attribute-list');
 		attributeSetList = html.find('#attribute-set-list');
+		$(document).append(html);
 		object = new hris.Object({
             object_key: 'object_test',
             object_pkey: 'test_id',
-            object_table: 'hris2_object_test'
+            object_table: 'hris_object_test'
         });
         object.save(function(){
             objectId = object.getID();
@@ -73,6 +68,12 @@ describe('test listSideBar',function(){
 		done();
 	});
 				
+	it('initializes object in the DOM', function(done){
+		var widget = html.find('div.dbadmin_list_widget');
+		chai.assert.lengthOf(widget,3,"inner div does not contain lists");
+		done();	
+	});
+	
 	it('add new object',function(done){
 		var model = {};
 		var testResult = true;
