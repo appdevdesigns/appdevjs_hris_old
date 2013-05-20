@@ -5,11 +5,13 @@ describe('test objectDetails',function(){
 	var attributeset;
 	var objectId = -1;
 	var objectList;
+	var controller;
 
 	
 	before(function(done){
 		html = $('<div></div>').object_details();
-		objectHtml = $(document).append(html);
+		$(document).append(html);
+		controller = html.controller();
 		object = new hris.Object({
             object_key: 'object_test',
             object_pkey: 'test_id',

@@ -4,6 +4,7 @@ describe('test attributeSetDetails',function(){
 	var attributeset;
 	var objectId = -1;
 	var objectList;
+	var controller;
 	var hiddenButtons = function(buttons){
 		var testResult = true;
 		if (buttons.attr('style') !== 'display: none;'){
@@ -40,6 +41,7 @@ describe('test attributeSetDetails',function(){
 		$sideBarhtml.list_sidebar();
 		$html.attribute_set_details();
 		$objectDetails.object_details();
+		controller = $html.controller();
 		objectList = $html.find('#object-list').dbadmin_list_widget();
 		attributeList = $html.find('#attribute-list').dbadmin_list_widget();
 		attributeSetList = $html.find('#attribute-set-list').dbadmin_list_widget();
@@ -71,18 +73,25 @@ describe('test attributeSetDetails',function(){
 		object.destroy();
 		attributeset.destroy();
 	});
+	
+	it('initialize object in DOM',function(done){
+		//verify that DOM has controller created
+		form = controller.element.find('form.form-horizontal');
+		chai.assert.lengthOf(form,1,"object not initialized in DOM");
+		done();
+	});
 				
 	it('submit form',function(done){
 		AD.Comm.Notification.publish('dbadmin.object.item.selected',object);
-		setTimeout(function(){
-			AD.Comm.Notification.publish('dbadmin.attributeset.item.add-new',{});
+		//setTimeout(function(){
+			//AD.Comm.Notification.publish('dbadmin.attributeset.item.add-new',{});
 			var testResult = true;
 			var button = $html.find('button.submit');
 			var attributeSetPKey = $html.find("input[data-bind='attributeset_pkey']");
 			//attributeSetPKey.value('testtable_pkey');
 			var attributeSetTable = $html.find("input[data-bind='attributeset_table']");
 			//attributeSetTable.value('testtable');
-			var attributeSetLabel = $html.find("inpRrut[data-bind='attributeset_label']");
+			var attributeSetLabel = $html.find("input[data-bind='attributeset_label']");
 			attributeSetLabel.val('testtable_label');
 			var attributeSetKey = $html.find("input[data-bind='attributeset_key']");
 			attributeSetKey.val('testtable_key');
@@ -101,21 +110,96 @@ describe('test attributeSetDetails',function(){
 				}
 				done();
 			});
-		},2000);
+		//},2000);
 	});
 	
-	it('dbadmin attributeSetDetails hide/not show',function(done){
+	it('attributeset add-new',function(done){
+		done();
+	});
+	
+	it('isValid',function(done){
+		value = controller.isValid();
+		
+		//verify isValid() returns true
+		chai.assert.isTrue(value,'isValid() did not return true');
+		done();
+	});
+	
+	it('dbadmin attributeSetDetails hide/objectDetails show',function(done){ 
 		AD.Comm.Notification.publish('dbadmin.object.item.selected',object);
+		
+		//verify that attributeSetDetails is hidden
 		var showing = $html.attr('style');
 		chai.assert.equal(showing,"display: none;");
 		done();
 	});
 	
+	it('dbadmin attributeSetDetails hide/attributeDetails show',function(done){ 
+		AD.Comm.Notification.publish('dbadmin.attribute.item.selected',object);
 		
-	it('dbadmin attributeSetDetails selected/show',function(done){
+		//verify that attributeSetDetails is hidden
+		var showing = $html.attr('style');
+		chai.assert.equal(showing,"display: none;");
+		done();
+	});
+	
+	it('dbadmin attributeSetDetails hide/object add new',function(done){ 
+		AD.Comm.Notification.publish('dbadmin.object.item.add-new',object);
+		
+		//verify that attributeSetDetails is hidden
+		var showing = $html.attr('style');
+		chai.assert.equal(showing,"display: none;");
+		done();
+	});
+	
+	it('dbadmin attributeSetDetails hide/attribute add new',function(done){ 
+		AD.Comm.Notification.publish('dbadmin.attribute.item.add-new',object);
+		
+		//verify that attributeSetDetails is hidden
+		var showing = $html.attr('style');
+		chai.assert.equal(showing,"display: none;");
+		done();
+	});
+	
+	it('dbadmin attributeSetDetails hide/attributeSet deleted',function(done){ 
+		AD.Comm.Notification.publish('dbadmin.attributeset.item.deleted',object);
+		
+		//verify that attributeSetDetails is hidden
+		var showing = $html.attr('style');
+		chai.assert.equal(showing,"display: none;");
+		done();
+	});
+		
+	it('dbadmin attributeSetDetails selected',function(done){
 		AD.Comm.Notification.publish('dbadmin.attributeset.item.selected',attributeset);
+		
+		//check to see that attributeSetDetails page is visible
 		var showing = $html.attr('style');
 		chai.assert.equal(showing, "display: block;");
+		
+		//check to see that the submit button is disabled
+		button = controller.element.find('button.submit');
+		disabled = button.prop('disabled');
+		chai.assert.isTrue(disabled,'submit button is not disabled');
+		
+		//verify that selectedModel equals attributeset model
+		selectedModel = controller.selectedModel;
+		chai.assert.equal(selectedModel,attributeset);
+		
+		//verify the title of the page
+		legend = controller.element.find('legend');
+		legendText = 'Attribute Set Details';
+		chai.assert.equal(legend.text(),legendText);
+		done();
+	});
+	
+	it('input change',function(done){
+		controller.element.find('select').change();
+		
+		//check to see if submit button is disabled
+		button = controller.element.find('button.submit');
+		disabled = button.prop('disabled');
+		chai.assert.isTrue(disabled,'submit button is not disabled');
 		done();
 	});
 });

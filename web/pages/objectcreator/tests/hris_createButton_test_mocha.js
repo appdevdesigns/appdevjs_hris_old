@@ -33,12 +33,16 @@ describe('createButton test',function(){
 	
 	it('initializes object in the DOM',function(done){
 		var button = $html.find('a.btn');
+		
+		//verify that the DOM contains the controller
 		chai.assert.lengthOf(button,1,"button does not exist");
 		done();
 	});
 	
 	it('button created',function(done){
 		AD.Comm.Notification.publish('objectcreator.object.selected',model);
+		
+		//verify that button was create with the right text
 		var text = $html.text();
 		chai.assert.equal(text, '\nCreate object_test',"button text is wrong");
 		done();
@@ -47,6 +51,8 @@ describe('createButton test',function(){
 	it('button clicked',function(done){
 		var button = $html.find('.btn');
 		$(button).click();
+		
+		//verify that when the button is clicked that the form shows up
 		var style = $formHtml.attr('style');
 		chai.assert.equal($formHtml.attr('style'),"display: block;");
 		done();
