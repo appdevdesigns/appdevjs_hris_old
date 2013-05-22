@@ -48,6 +48,13 @@ describe('attributeList test',function(){
 		});
 	});
 	
+	it('initialize controller in DOM',function(done){
+		listAttributes = controller.listAttributes;
+		list = [];
+		chai.assert.deepEqual(listAttributes,list);
+		done();
+	});
+	
 	it('objectcreator object selected',function(done){
 		AD.Comm.Notification.publish('objectcreator.object.selected',model);
 		var text = $html.text();
@@ -59,9 +66,5 @@ describe('attributeList test',function(){
 			done();
 		},5000);
 	});
-	
-	it('getRelatedObjects',function(done){
-		controller.getRelatedObject();
-		done();
-	});
+
 });

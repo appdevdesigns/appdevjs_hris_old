@@ -151,7 +151,7 @@
 
             // Enable the "Save" button when something changes
             ':input change': function(el, ev) {
-                $('button.submit').prop('disabled', false);
+                this.element.find('button.submit').prop('disabled', false);
             }
 
         });

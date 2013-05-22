@@ -165,7 +165,7 @@
                 } );
                 var newRow = $(html);
 
-                $('#object-relationships tbody').append(newRow);
+                this.element.find('#object-relationships tbody').append(newRow);
 //                var newRow = this.element.find('#object-relationships tr:last');
 
                 // Set data from the related objects
@@ -182,11 +182,11 @@
 
             '#object-object_key change': function(el, ev) {
                 var value = el.val();
-                if ($('#object-object_table').val() == '') {
-                    $('#object-object_table').val('hris_' + value);
+                if (this.element.find('#object-object_table').val() == '') {
+                    this.element.find('#object-object_table').val('hris_' + value);
                 }
-                if ($('#object-object_pkey').val() == '') {
-                    $('#object-object_pkey').val(value + '_id');
+                if (this.element.find('#object-object_pkey').val() == '') {
+                    this.element.find('#object-object_pkey').val(value + '_id');
                 }
             },
 

@@ -23,6 +23,7 @@ describe('test objectGrid',function(){
 			object_pkey: 'passport_id',
 			object_table: 'hris_passport'
 		};
+		AD.Comm.Notification.publish('objectcreator.attributeList.refresh',model);
 		AD.Comm.Notification.publish('objectcreator.object.selected',model);
 		setTimeout(function(){
 			done();
