@@ -1,0 +1,24 @@
+<!-- Beginning UserfileTest view definition -->
+<%
+var $ = AD.jQuery;
+
+// This is SERVER side, so let's make displaying labels easier:
+// use:  < %- L('[labelKey]') % >
+var L = function(key) { return data.labels.getLabel(key); };
+var pL = function(prependText, key) {
+    // prepend the given text to the result of the label
+    var label = $(L(key)).prepend(prependText);
+    return $('<div>').append(label).html();
+};
+%>
+
+<form class="form-horizontal">
+
+    <div class="control-group">
+        <label class="control-label" for="upload-widget-container">
+            File Upload Widget
+        </label>
+        <div style="max-width:500px; margin: 1em auto;" id="upload-widget-container"></div>
+    </div>
+
+</form>
