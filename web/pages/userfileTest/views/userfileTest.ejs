@@ -12,13 +12,36 @@ var pL = function(prependText, key) {
 };
 %>
 
-<form class="form-horizontal">
+<style type="text/css">
+    .userfile-test .control-group > div {
+        max-width: 500px;
+        margin: 1em auto;
+    }
+    
+    #upload-reset {
+        margin: 3em auto;
+        width: 5em;
+        display: block;
+    }
+</style>
+
+<form class="userfile-test form-horizontal">
 
     <div class="control-group">
         <label class="control-label" for="upload-widget-container">
             File Upload Widget
         </label>
-        <div style="max-width:500px; margin: 1em auto;" id="upload-widget-container"></div>
+        <div id="upload-widget-container"></div>
     </div>
+
+    <div class="control-group">
+        <label class="control-label" for="upload-details">
+            Details
+        </label>
+        <div id="upload-details"></div>
+    </div>
+
+    <button type="button" class="btn" id="upload-reset">Reset</button>
+
 
 </form>

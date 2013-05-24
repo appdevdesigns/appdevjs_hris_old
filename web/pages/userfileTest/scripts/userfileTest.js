@@ -29,6 +29,23 @@ var hrisUserfileTestSetup = function (topic, data) {
     $widgetDiv.appdev_file_upload({
         urlUpload: "/hris/userfile/upload?attribute_id=0"
     });
+    $widgetDiv.on('submit', function(event, data) {
+        $('#upload-reset').hide();
+    });
+    $widgetDiv.on('uploaded', function(event, data) {
+        $('#upload-details').empty();
+        for (var key in data) {
+            $('#upload-details').append('<dt>' + key + '</dt><dd>' + data[key] + '</dd>');
+        }
+        $('#upload-reset').show();
+    });
+    
+    $('#upload-reset').hide();
+    $('#upload-reset').on('click', function() {
+        $('#upload-details').empty();
+        $('#upload-reset').hide();
+        $widgetDiv.controller().reset();
+    });
 	
 	// unsubscribe me so this doesn't get called again ... 
 	AD.Comm.Notification.unsubscribe(userfileTestSubID);
