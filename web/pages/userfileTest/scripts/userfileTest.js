@@ -19,10 +19,51 @@
 
 (function() {
 
+// Takes a Javascript object and returns a DD/DT html markup
+// of the object's keys and values.
+var markupObject = function(data)
+{
+    var html = '<dl class="well">';
+    for (var key in data) {
+        // Specia case. Add related links if we have the userfile_id.
+        if (key == 'userfile_id') {
+            var userfileID = data[key];
+            html += markupObject({
+                info: '/hris/userfile/info/' + userfileID,
+                browse: '/hris/userfile/download/' + userfileID,
+                save: '/hris/userfile/download/' + userfileID + '?save=1'
+            });
+            continue;
+        }
+
+        // term
+        html += '<dt>' + key + '</dt>';
+        // description
+        html += '<dd>';
+        if (typeof data[key] == 'object') {
+            // nested object
+            html += markupObject(data[key]);
+        }
+        else if (data[key][0] == '/' || 
+                 data[key].match &&
+                 data[key].match(/^(https?|mailto|ftps?)/i)) {
+            // put links inside an <a> tag
+            html += '<a href="' + data[key] + '">' + data[key] + '</a>';
+        } 
+        else {
+            // plain text
+            html += data[key];
+        }
+        html += '</dd>';
+    }
+    html += '</dl>';
+    return html;
+}
+
 
 ////[appRad] --  setup object definitions here:
-var hrisUserfileTestSetup = function (topic, data) {
-
+var hrisUserfileTestSetup = function(topic, data) 
+{
 
     //// Setup Your Page Data/ Operation Here
     var $widgetDiv = $('#upload-widget-container');
@@ -33,10 +74,9 @@ var hrisUserfileTestSetup = function (topic, data) {
         $('#upload-reset').hide();
     });
     $widgetDiv.on('uploaded', function(event, data) {
+        console.log(markupObject(data));
         $('#upload-details').empty();
-        for (var key in data) {
-            $('#upload-details').append('<dt>' + key + '</dt><dd>' + data[key] + '</dd>');
-        }
+        $('#upload-details').html(markupObject(data));
         $('#upload-reset').show();
     });
     
