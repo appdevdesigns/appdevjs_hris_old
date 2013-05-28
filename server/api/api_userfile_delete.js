@@ -13,6 +13,7 @@
 var log = AD.Util.Log;
 var logDump = AD.Util.LogDump;
 var $ = AD.jQuery;
+var userfilesDir = __appdevPath + '/modules/hris/userfiles';
 
 var ErrorMSG = null;
 
@@ -82,7 +83,7 @@ var findFile = function (req, res, next) {
         if (model) {
             
             req.hrisUserfile.model = model;
-            req.hrisUserfile.path = model.userfile_path;
+            req.hrisUserfile.path = userfilesDir + '/' + model.userfile_path;
             next();
             
         } else {
