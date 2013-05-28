@@ -41,6 +41,7 @@
 
                 this.selectedModel = null;
                 this.addForm = null;
+				this.parent = null;
 
                 // insert our DOM elements
                 this.insertDOM();
@@ -116,9 +117,9 @@
             'dbadmin.attribute.item.add-new subscribe': function( msg, model ) {
                 // Set up the new instance based on its parent
                 var newModel = new hris.APIAttribute();
-                var parent = $('#attribute-set-list').controller().selectedModel;
-                newModel.attr('attributeset_id', parent.attributeset_id);
-                newModel.attr('attribute_column', parent.attributeset_key + '_');
+                //var parent = $('#attribute-set-list').controller().selectedModel;
+                newModel.attr('attributeset_id', this.parent.attributeset_id);
+                newModel.attr('attribute_column', this.parent.attributeset_key + '_');
 
                 // Display it
                 this.refreshData( newModel );
@@ -131,6 +132,7 @@
             },
 
             'dbadmin.attributeset.item.selected subscribe': function(msg, model){
+				this.parent = model;
                 this.element.hide();
             },
 

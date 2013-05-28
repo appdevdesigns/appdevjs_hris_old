@@ -3,48 +3,13 @@ describe('test attributeSetDetails',function(){
 	var object;
 	var attributeset;
 	var objectId = -1;
-	var objectList;
 	var controller;
-	var hiddenButtons = function(buttons){
-		var testResult = true;
-		if (buttons.attr('style') !== 'display: none;'){
-		//if (!buttons.is(':visible')){
-			testResult = false;
-		}
-		return testResult;
-	};
-	var emptyList = function(listEntries){
-		var testResult = true;
-		if (listEntries.length !== 0){
-			testResult = false;
-		}
-		return testResult;
-	};
-	var deSelectedFields = function(listEntries){
-	    var testResult = true;
-		for(var i=0;i<listEntries.length;i++){
-			var objectItem = $(objectListEntries[i]);
-			if (objectItem.attr('class') == 'appdev-list-admin-entry active'){
-				testResult = false;
-			}
-		}
-		return testResult;
-	};
 	
 	before(function(done){
     	$html = $('<div></div>');
-		$sideBarhtml = $('<div></div>');
-		$objectDetails = $('<div></div');
-		$(document).append($html);
-		$(document).append($sideBarhtml);
-		$(document).append($objectDetails);
-		$sideBarhtml.list_sidebar();
 		$html.attribute_set_details();
-		$objectDetails.object_details();
+		$(document).append($html);
 		controller = $html.controller();
-		objectList = $html.find('#object-list').dbadmin_list_widget();
-		attributeList = $html.find('#attribute-list').dbadmin_list_widget();
-		attributeSetList = $html.find('#attribute-set-list').dbadmin_list_widget();
 		object = new hris.Object({
 			    	object_key: 'object_test',
             		object_pkey: 'test_id',
@@ -56,11 +21,11 @@ describe('test attributeSetDetails',function(){
             attributeset = new hris.Attributeset({
 					type_id: 1,
 					object_id: objectId,
-					attributeset_table: 'test_attributeset_table',
+					attributeset_table: 'hris_object_test',
 					attributeset_relation: 'many',
 					attributeset_uniqueKey: 0,
 					attributeset_key: 'test_attributeset_key',
-					attributeset_pkey: 'test_attributeset_pkey',
+					attributeset_pkey: 'test_id',
 					attributeset_label: 'test attributeset'
 			});
 			attributeset.save(function(){
@@ -81,39 +46,55 @@ describe('test attributeSetDetails',function(){
 		done();
 	});
 				
-	it.skip('submit form',function(done){
-		AD.Comm.Notification.publish('dbadmin.object.item.selected',object);
-		//setTimeout(function(){
-			//AD.Comm.Notification.publish('dbadmin.attributeset.item.add-new',{});
-			var testResult = true;
-			var button = $html.find('button.submit');
-			var attributeSetPKey = $html.find("input[data-bind='attributeset_pkey']");
-			//attributeSetPKey.value('testtable_pkey');
-			var attributeSetTable = $html.find("input[data-bind='attributeset_table']");
-			//attributeSetTable.value('testtable');
-			var attributeSetLabel = $html.find("input[data-bind='attributeset_label']");
-			attributeSetLabel.val('testtable_label');
-			var attributeSetKey = $html.find("input[data-bind='attributeset_key']");
-			attributeSetKey.val('testtable_key');
-			var attributeSetTypeId = $html.find("input[data-bind='type_id']");
-			attributeSetTypeId.val('testtable_type_id');
-			button.click();
-			hris.Object.findAll({},function(list){
-				for (var i=0;i<list.length;i++){
-					var objectKey = list[i].attr('object_key');
-					if (objectKey == 'testtable'){
-						object = list[i];
-						chai.assert.deepEqual('testtable',object.attr('object_key'));
-						chai.assert.deepEqual('hris_testtable',object.attr('object_table'));
-						chai.assert.deepEqual('hris_testtable_id',object.attr('object_pkey'));				
-					}
+	it('submit form',function(done){
+		controller.parent = object;
+		AD.Comm.Notification.publish('dbadmin.attributeset.item.add-new',{});
+		var button = controller.element.find('button.submit');
+		var attributeSetLabel = controller.element.find("input[data-bind='attributeset_label']");
+		attributeSetLabel.val('testtable_label');
+		var attributeSetKey = controller.element.find("input[data-bind='attributeset_key']");
+		attributeSetKey.val('test_attributeset_key');
+		var attributeSetTypeId = controller.element.find("input[data-bind='type_id']");
+		attributeSetTypeId.val(1);
+		$(button).click();
+		hris.Attributeset.findAll({},function(list){
+			for (var i=0;i<list.length;i++){
+				var attributeSet = list[i];
+				if (attributeSet.attr('attributeset_table') == 'hris_object_test'){
+					chai.assert.deepEqual('test_attributeset_key',attributeSet.attr('attributeset_key'));
+					chai.assert.deepEqual('test_id',attributeSet.attr('attributeset_pkey'));
+					chai.assert.deepEqual(1,attributeSet.attr('type_id'));
+					done();				
 				}
-				done();
-			});
-		//},2000);
+			}
+		});
 	});
 	
 	it('attributeset add-new',function(done){
+		controller.parent = object;
+		AD.Comm.Notification.publish('dbadmin.attributeset.item.add-new',{});
+		
+		//verify that attributeSetDetails is not hidden
+		var showing = $html.attr('style');
+		chai.assert.equal(showing,"display: block;");
+				
+		//check to see that the submit button is disabled
+		button = controller.element.find('button.submit');
+		disabled = button.prop('disabled');
+		chai.assert.isTrue(disabled,'submit button is not disabled');
+		
+		//verify that selectedModel equals attributeset model
+		var selectedModel = controller.selectedModel;
+		var newModel = new hris.Attributeset();
+		newModel.object_id = object.object_id;
+		newModel.attributeset_table = object.object_table;
+		newModel.attributeset_pkey = object.object_pkey;
+		chai.assert.deepEqual(selectedModel,newModel);
+		
+		//verify the title of the page
+		legend = controller.element.find('legend');
+		legendText = 'New Attribute Set';
+		chai.assert.equal(legend.text(),legendText);
 		done();
 	});
 	

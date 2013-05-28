@@ -21,8 +21,17 @@ describe('test objectDetails',function(){
 		done();
 	});
 	
-	after(function(){
-		object.destroy();
+	after(function(done){
+		hris.Object.findAll({},function(list){
+			var listDFD = [];
+            for (var i=0; i<list.length; i++) {
+                listDFD.push(list[i].destroy());
+            }
+                
+            $.when.apply($, listDFD).then(function() {
+		    	done();
+		    });
+		});
 	});
 	
 	it('initialize the DOM',function(done){
@@ -33,28 +42,27 @@ describe('test objectDetails',function(){
 	});
 				
 	it('submit form',function(done){
-		var testResult = true;
-		var object = new Object();
-		var button = html.find('button.submit');
-		var objectKey = html.find('#object-object_key');
+		var button = controller.element.find('button.submit');
+		var objectKey = controller.element.find('#object-object_key');
 		objectKey.val('testtable');
-		var objectTable = html.find('#object-object_table');
+		var objectTable = controller.element.find('#object-object_table');
 		objectTable.val('hris_testtable');
-		var objectPrimaryKey = html.find('#object-object_pkey');
+		var objectPrimaryKey = controller.element.find('#object-object_pkey');
 		objectPrimaryKey.val('hris_testtable_id');
-		button.click();
-		hris.Object.findAll({},function(list){
-			for (var i=0;i<list.length;i++){
-				var objectKey = list[i].attr('object_key');
-				if (objectKey == 'testtable'){
-					object = list[i];
-					chai.assert.deepEqual('testtable',object.attr('object_key'));
-					chai.assert.deepEqual('hris_testtable',object.attr('object_table'));
-					chai.assert.deepEqual('hris_testtable_id',object.attr('object_pkey'));
+		$(button).click();
+		setTimeout(function(){
+			hris.Object.findAll({},function(list){
+				for (var i=0;i<list.length;i++){
+					var object = list[i];
+					if (object.attr('object_table') == 'hris_testtable'){
+						chai.assert.deepEqual('testtable',object.attr('object_key'));
+						chai.assert.deepEqual('hris_testtable',object.attr('object_table'));
+						chai.assert.deepEqual('hris_testtable_id',object.attr('object_pkey'));
+						done();
+					}
 				}
-			}
-			done();
-		});
+			});
+		},2000);
 	});
 	
 	it('dbadmin object selected/show',function(done){
@@ -200,7 +208,24 @@ describe('test objectDetails',function(){
 		done();
 	});
 	
-	it('rel-objB-key click',function(done){
+	it('#object-relationships select change',function(done){
+		var objectRelationships = controller.element.find('select[data-bind="relationship_type"]');
+		$(objectRelationships).val('has_many').change();
+		
+		//verify that rel-show-advanced is showing
+		relShowAdvanced = controller.element.find('.rel-show-advanced.icon-chevron-down');
+		chai.assert.lengthOf(relShowAdvanced,1, "advance options not available");
+		
+		$(objectRelationships).val('many_to_many').change();
+		
+		//verify that rel-show-advanced is not showing
+		relShow = controller.element.find('.rel-show-advanced');
+		var showing = relShow.attr('style');
+		chai.assert.equal(showing,"display: none;");
+		done();
+	});
+	
+	it.skip('rel-objB-key click',function(done){
 		var aLink = controller.element.find('a.rel-objB-key');
 		$(aLink).click();
 		done();

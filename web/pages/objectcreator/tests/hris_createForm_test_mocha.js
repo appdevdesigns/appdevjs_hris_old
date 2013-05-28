@@ -7,6 +7,7 @@ describe('createForm test',function(){
 		$html = $('<div></div>').create_form();
 		$(document).append($html);
 		controller = $html.controller();
+		done();
 	});
 	
 	it('initialize object in the DOM',function(done){
