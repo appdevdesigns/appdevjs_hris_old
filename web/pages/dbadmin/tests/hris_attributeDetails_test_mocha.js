@@ -44,6 +44,9 @@ describe('test attributeDetails',function(){
 		    	done();
 		    });
 		});
+		html.remove();
+		delete html;
+		delete controller;
 		done();
 	});
 	

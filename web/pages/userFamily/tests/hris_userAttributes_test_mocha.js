@@ -1,14 +1,16 @@
-describe('test objectGrid',function(){
+describe('userAttributes test',function(){
 	
 	var $html;
 	var controller;
+	var object;
 	var model;
+	var attributeSetID = -1;
+	var attrSet;
 	var attribute;
+	var person;
 	
 	before(function(done){
-		$html = $('<div></div>').object_grid();
-		$(document).append($html);
-		controller = $html.controller();
+		person = new hris.Person({});
 		model = new hris.Object({
 			object_key: 'person',
            	object_pkey: 'person_id',
@@ -16,6 +18,11 @@ describe('test objectGrid',function(){
 		});
 		model.save(function(object) {
 			model = object;
+			$html = $('<div></div>').data("ad-model", model);
+			$html.data("ad-person",person);
+			$html.user_attributes();
+			$(document).append($html);
+			controller = $html.controller();
 			attrSet = new hris.Attributeset({
 				type_id: 1,
 				object_id: object.object_id,
@@ -49,29 +56,28 @@ describe('test objectGrid',function(){
 		});
 	});
 	
-	after(function(){
-		$html.remove();
-		delete $html;
-		delete controller;
+	after(function(done){
 		model.destroy();
 		attrSet.destroy();
 		attribute.destroy();
-	});
-	
-	it('initialize object in DOM',function(done){
-		//verify that the controller was added to DOM
-		table = controller.element.find('table');
-		chai.assert.lengthOf(table,1,"object not initialized in DOM");
+		$html.remove();
+		delete $html;
+		delete controller;
 		done();
 	});
 	
-	it('objectcreator object selected',function(done){
-		AD.Comm.Notification.publish('objectcreator.attributeList.refresh',attribute);
-		AD.Comm.Notification.publish('objectcreator.object.selected',model);
-		setTimeout(function(){
-			var body = controller.element.find('tr.data');
-			chai.assert.lengthOf(body,1,"data was not inserted into table");
-			done();
-		},1000);
+	it('initialize controller in DOM',function(done){
+		var attributeSetDetail = controller.element.find('#attributeSetDetail');
+		chai.assert.lengthOf(attributeSetDetail,1,"controller is not initialized in the DOM");
+		var userAttributeRow = controller.element.find('div.userAttributeRow');
+		chai.assert.lengthOf(userAttributeRow,1,"userAttribute row is not initialized in the DOM");
+		done();
+	});
+	
+	it('userFamily.userDetails.saved',function(done){
+		AD.Comm.Notification.publish('userFamily.userDetails.saved',person);
+		var userAttributeRow = controller.element.find('div.userAttributeRow');
+		chai.assert.lengthOf(userAttributeRow,1,"userAttribute row is not initialized in the DOM");
+		done();
 	});
 });

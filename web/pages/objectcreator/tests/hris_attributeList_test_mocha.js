@@ -7,27 +7,30 @@ describe('attributeList test',function(){
 	var attributeSetID = -1;
 	var attrSet;
 	var attribute;
+	var $objectGrid;
 	
 	before(function(done){
 		$html = $('<div></div>').attribute_list();
+		$objectGrid = $('<div></div>').object_grid();
 		$(document).append($html);
+		$(document).append($objectGrid);
 		controller = $html.controller();
 		model = new hris.Object({
-			object_key: 'object_test',
-           	object_pkey: 'test_id',
-            object_table: 'hris_object_test'
+			object_key: 'person',
+           	object_pkey: 'person_id',
+            object_table: 'hris_person'
 		});
 		model.save(function(object) {
 			model = object;
 			attrSet = new hris.Attributeset({
 				type_id: 1,
 				object_id: object.object_id,
-				attributeset_table: 'test_attributeset_table',
+				attributeset_table: 'hris_person',
 				attributeset_relation: 'many',
 				attributeset_uniqueKey: 0,
-				attributeset_key: 'test_attributeset_key',
-				attributeset_pkey: 'test_attributeset_pkey',
-				attributeset_label: 'test attributeset'
+				attributeset_key: 'passport',
+				attributeset_pkey: 'person_id',
+				attributeset_label: 'passport information'
 			});
 			attrSet.save(function(attributeset){
 				if ($.isArray(attributeset)) {
@@ -37,9 +40,11 @@ describe('attributeList test',function(){
                 }
 				attribute = new hris.Attribute({
 					attributeset_id: attributeSetID,
-					attribute_column:'testkey_code' ,
+					attribute_column:'passport_number' ,
 					attribute_datatype: 'Text',
-					meta: 'meta data',
+					attribute_label: 'Passport Number',
+					meta: '',
+					attribute_question: '',
 					attribute_permission: 'Read',
 					attribute_uniqueKey: 0
 				});
@@ -54,6 +59,9 @@ describe('attributeList test',function(){
 		model.destroy();
 		attrSet.destroy();
 		attribute.destroy();
+		$html.remove();
+		delete $html;
+		delete controller;
 		done();
 	});
 	
@@ -64,16 +72,16 @@ describe('attributeList test',function(){
 		done();
 	});
 	
-	it.skip('objectcreator object selected',function(done){
+	it('objectcreator object selected',function(done){
 		AD.Comm.Notification.publish('objectcreator.object.selected',model);
-		var text = $html.text();
-		var otherText = $html.html();
-		var entries = $html.find('li.appdev-list-admin-entry');
+		var text = controller.element.text();
+		var otherText = controller.element.html();
+		var entries = controller.element.find('li.appdev-list-admin-entry');
 		setTimeout(function(){
 			var listAttrs = controller.listAttributes;
 			chai.assert.lengthOf(entries,1,'list item count is wrong');
 			done();
-		},5000);
+		},2000);
 	});
 
 });

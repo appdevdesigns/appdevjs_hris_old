@@ -10,6 +10,12 @@ describe('createForm test',function(){
 		done();
 	});
 	
+	after(function(){
+		$html.remove();
+		delete $html;
+		delete controller;
+	});
+	
 	it('initialize object in the DOM',function(done){
 		form = $html.find('form.form-horizontal');
 		

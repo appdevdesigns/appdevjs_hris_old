@@ -65,6 +65,8 @@ describe('test listSideBar',function(){
 	after(function(done){
 		attributeset.destroy();
 		object.destroy();
+		html.remove();
+		delete html;
 		done();
 	});
 				

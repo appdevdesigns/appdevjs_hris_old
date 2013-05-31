@@ -37,7 +37,8 @@
                 
                 
                 this.options = options;
-                
+                this.model = this.element.data('ad-model');
+				this.person = this.element.data('ad-person');
                 
                 // insert our DOM elements
                 this.insertDOM();
@@ -57,7 +58,7 @@
             
             insertDOM: function() {
                 
-                this.element.html(this.view('/hris/userFamily/view/userAttributeItem.ejs', {}));
+                this.element.html(this.view('/hris/userFamily/view/userAttributeItem.ejs', {model: this.model, person: this.person}));
                 
             }
             

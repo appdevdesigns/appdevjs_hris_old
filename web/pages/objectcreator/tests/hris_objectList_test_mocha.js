@@ -10,6 +10,12 @@ describe('test objectList',function(){
 		done();
 	});
 	
+	after(function(){
+		$html.remove();
+		delete $html;
+		delete controller;
+	});
+	
 	it('initialize object in DOM',function(done){
 		//verify that the controller was added to the DOM
 		list = controller.element.find('#object-list');

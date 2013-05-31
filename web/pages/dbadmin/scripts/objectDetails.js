@@ -254,7 +254,8 @@
             // Show Details for Object B
             '.rel-objB-key click': function(el, ev) {
                 var model = el.model(); //el.data('ad-model');
-                $('#object-list').controller().listController.select(model);
+                AD.Comm.Notification.publish('dbadmin.object.item.selected',model);
+                //$('#object-list').controller().listController.select(model);
                 ev.preventDefault();
             },
 

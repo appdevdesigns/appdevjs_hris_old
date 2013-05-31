@@ -20,6 +20,9 @@ describe('createButton test',function(){
 	});
 	
 	after(function(done){
+		$html.remove();
+		delete $html;
+		delete controller;
       	hris.APIObject.findAll({},function(list){
            var listDFD = [];
            for (var i=0; i<list.length; i++) {

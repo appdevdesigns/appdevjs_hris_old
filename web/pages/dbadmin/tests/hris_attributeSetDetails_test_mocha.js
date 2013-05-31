@@ -37,6 +37,9 @@ describe('test attributeSetDetails',function(){
 	after(function(){
 		object.destroy();
 		attributeset.destroy();
+		$html.remove();
+		delete $html;
+		delete controller;
 	});
 	
 	it('initialize object in DOM',function(done){

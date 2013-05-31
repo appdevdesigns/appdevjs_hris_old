@@ -13,9 +13,9 @@ describe('test objectDetails',function(){
 		$(document).append(html);
 		controller = html.controller();
 		object = new hris.Object({
-            object_key: 'object_test',
-            object_pkey: 'test_id',
-            object_table: 'hris_object_test'
+            object_key: 'person',
+            object_pkey: 'person_id',
+            object_table: 'hris_person'
         });
         object.save();
 		done();
@@ -32,6 +32,10 @@ describe('test objectDetails',function(){
 		    	done();
 		    });
 		});
+		html.remove();
+		delete html;
+		delete controller;
+		done();
 	});
 	
 	it('initialize the DOM',function(done){
@@ -141,7 +145,7 @@ describe('test objectDetails',function(){
 		disabled = button.prop('disabled');
 		chai.assert.isTrue(disabled,'submit button is not disabled');
 		
-		//verify that selectedModel equals attributeset model
+		//verify that selectedModel equals object model
 		selectedModel = controller.selectedModel;
 		chai.assert.deepEqual(selectedModel,new hris.APIObject());
 		
@@ -188,9 +192,11 @@ describe('test objectDetails',function(){
 		AD.Comm.Notification.publish('dbadmin.object.item.selected',object);
 		var aLink = controller.element.find('a.add-relationship');
 		$(aLink[0]).click();
-		var tr = controller.element.find('tr.api_relationship');
-		chai.assert.lengthOf(tr,1,"tr row not added for relationship");
-		done();
+		setTimeout(function(){
+			var tr = controller.element.find('tr.api_relationship');
+			chai.assert.lengthOf(tr,1,"tr row not added for relationship");
+			done();
+		},2000);
 	});
 	
 	it('rel-delete-btn click',function(done){
@@ -225,18 +231,39 @@ describe('test objectDetails',function(){
 		done();
 	});
 	
-	it.skip('rel-objB-key click',function(done){
-		var aLink = controller.element.find('a.rel-objB-key');
-		$(aLink).click();
-		done();
-	});
-	
 	it('rel-show-advanced click',function(done){
 		var showAdvanced = controller.element.find('i.rel-show-advanced');
 		$(showAdvanced).click();
-		columnName = controller.element.find('div.rel-column-name');
-		chai.assert.lengthOf(columnName,1,"div row for advanced features not showing");
-		done();
+		setTimeout(function(){
+			columnName = controller.element.find('div.rel-column-name');
+			chai.assert.lengthOf(columnName,1,"div row for advanced features not showing");
+			done();
+		},2000);
 	});
 	
+	it('rel-objB-key click',function(done){
+		var aLink = controller.element.find('a.rel-objB-key');
+		$(aLink).click();
+		
+		//check to see that objectDetails page is visible
+		var showing = html.attr('style');
+		chai.assert.equal(showing, "display: block;");
+		
+		//check to see that the submit button is disabled
+		button = controller.element.find('button.submit');
+		disabled = button.prop('disabled');
+		chai.assert.isTrue(disabled,'submit button is not disabled');
+		
+		//verify that selectedModel equals object model
+		selectedModel = controller.selectedModel;
+		chai.assert.deepEqual(selectedModel.object_key,"person");
+		chai.assert.deepEqual(selectedModel.object_pkey,"person_id");
+		chai.assert.deepEqual(selectedModel.object_table,"hris_person");
+		
+		//verify the title of the page
+		legend = controller.element.find('legend');
+		legendText = 'Object Details';
+		chai.assert.equal(legend.text(),legendText);
+		done();
+	});
 });
