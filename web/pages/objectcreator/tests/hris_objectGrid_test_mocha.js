@@ -66,12 +66,14 @@ describe('test objectGrid',function(){
 	});
 	
 	it('objectcreator object selected',function(done){
-		AD.Comm.Notification.publish('objectcreator.attributeList.refresh',attribute);
+		var attributeList = [];
+		attributeList.push(attribute);
+		AD.Comm.Notification.publish('objectcreator.attributeList.refresh',attributeList);
 		AD.Comm.Notification.publish('objectcreator.object.selected',model);
 		setTimeout(function(){
 			var body = controller.element.find('tr.data');
 			chai.assert.lengthOf(body,1,"data was not inserted into table");
 			done();
-		},1000);
+		},5000);
 	});
 });
