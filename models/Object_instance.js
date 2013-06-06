@@ -26,10 +26,16 @@ if (typeof process == 'undefined') {
                         // labelKey: null, // <-- ??
                         id: pkey
                     };
-                    AD.Service.extend("hris." + modelName,
-                        attr,
-                        {}
-                    );
+                    
+                    // Determine the labelKey
+                    obj.getLabelField().then(function(fieldname) {
+                        attr.labelKey = fieldname;
+                        // Then register this object's service links
+                        AD.Service.extend("hris." + modelName,
+                            attr,
+                            {}
+                        );
+                    });
                 }
                 else {
                     console.log('hris.' + modelName + ' already defined');
