@@ -108,6 +108,24 @@ Object.create = function (req, res, next) {
       });
 }
 
+// make sure given parameters are valid before doing create
+Object.beforeCreate = function (req, res, next) {
+
+    var params = req.aRAD.params;
+
+    //// any provided values can't be ''!
+    if (params.object_pkey) params.object_pkey = params.object_pkey.trim();
+    if (params.object_table) params.object_table = params.object_table.trim();
+
+
+    // assign pkey and table values if not already provided:
+    params.object_pkey  = params.object_pkey || params.object_key+'_id';
+    params.object_table = params.object_table || 'hris_'+params.object_key;
+    req.aRAD.params = params;
+
+    Object.createNext(req, res, next);
+
+}
 
 
 

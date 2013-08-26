@@ -22,7 +22,7 @@
 
                 // make sure defaults are taken care of
                 var defaults = {
-                      uid: this.eventKey + '_list_widget',
+                      uid: this.eventKey + '_list_widget'
                 };
                 var options = $.extend(defaults, options);
                 this._super(el, options);
