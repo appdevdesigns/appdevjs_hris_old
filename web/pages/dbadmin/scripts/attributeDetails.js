@@ -23,7 +23,7 @@
 
                 // make sure defaults are taken care of
                 var defaults = {
-                      uid:'attributeDetails_uuid_notGiven',
+                      uid:'attributeDetails_uuid_notGiven'
 /*
                       dataManager:null, // the ListIterator of the data to display
                       template:null,	// view(): the default view template
@@ -163,7 +163,7 @@
                 } else {
                     this.element.find('.attribute-meta-div').hide();
                 }
-            } 
+            }
 
         });
 

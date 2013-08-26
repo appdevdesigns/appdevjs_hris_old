@@ -23,7 +23,7 @@
 
                 // make sure defaults are taken care of
                 var defaults = {
-                      uid:'objectDetails_uuid_notGiven',
+                      uid:'objectDetails_uuid_notGiven'
 /*
                       dataManager:null, // the ListIterator of the data to display
                       template:null,	// view(): the default view template

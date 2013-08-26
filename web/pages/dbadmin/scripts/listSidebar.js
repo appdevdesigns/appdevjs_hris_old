@@ -23,7 +23,7 @@
 
                 // make sure defaults are taken care of
                 var defaults = {
-                      uid:'listSidebar_uuid_notGiven',
+                      uid:'listSidebar_uuid_notGiven'
 /*
                       dataManager:null, // the ListIterator of the data to display
                       template:null,	// view(): the default view template
@@ -157,7 +157,7 @@
                 this.attributeList.refresh().then( function() {
                     self.attributeList.listController.select(model);
                 });
-            },
+            }
 
 
 //// To setup default functionality
