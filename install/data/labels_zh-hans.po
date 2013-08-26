@@ -191,3 +191,29 @@ msgstr "[zh-hans]:Label"
 msgid "Type"
 msgstr "[zh-hans]:Type"
 
+#. path: /page/hris/userFamily 
+#. code: zh-hans 
+#. key: [hris.userFamily.firstName] 
+msgid "First Name" 
+msgstr "[zh-hans]: First Name" 
+ 
+#. path: /page/hris/userFamily 
+#. code: zh-hans 
+#. key: [hris.userFamily.cancel] 
+msgid "Cancel" 
+msgstr "[zh-hans]:Cancel" 
+ 
+#. path: /page/hris/userFamily 
+#. code: zh-hans 
+#. key: [hris.userFamily.lastName] 
+msgid "Last Name" 
+msgstr "[zh-hans]:Last Name:" 
+ 
+#. path: /page/hris/userFamily 
+#. code: zh-hans 
+#. key: [hris.userFamily.submit] 
+msgid "Submit" 
+msgstr "[zh-hans]:Submit" 
+ 
+
+ 

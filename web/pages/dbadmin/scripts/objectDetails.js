@@ -165,7 +165,7 @@
                 } );
                 var newRow = $(html);
 
-                $('#object-relationships tbody').append(newRow);
+                this.element.find('#object-relationships tbody').append(newRow);
 //                var newRow = this.element.find('#object-relationships tr:last');
 
                 // Set data from the related objects
@@ -182,11 +182,11 @@
 
             '#object-object_key change': function(el, ev) {
                 var value = el.val();
-                if ($('#object-object_table').val() == '') {
-                    $('#object-object_table').val('hris_' + value);
+                if (this.element.find('#object-object_table').val() == '') {
+                    this.element.find('#object-object_table').val('hris_' + value);
                 }
-                if ($('#object-object_pkey').val() == '') {
-                    $('#object-object_pkey').val(value + '_id');
+                if (this.element.find('#object-object_pkey').val() == '') {
+                    this.element.find('#object-object_pkey').val(value + '_id');
                 }
             },
 
@@ -254,7 +254,8 @@
             // Show Details for Object B
             '.rel-objB-key click': function(el, ev) {
                 var model = el.model(); //el.data('ad-model');
-                $('#object-list').controller().listController.select(model);
+                AD.Comm.Notification.publish('dbadmin.object.item.selected',model);
+                //$('#object-list').controller().listController.select(model);
                 ev.preventDefault();
             },
 

@@ -41,6 +41,7 @@
 
                 this.selectedModel = null;
                 this.addForm = null;
+				this.parent = null;
 
                 // insert our DOM elements
                 this.insertDOM();
@@ -116,12 +117,12 @@
             'dbadmin.attributeset.item.add-new subscribe': function( msg, model ) {
                 // Set up the new instance based on its parent
                 var newModel = new hris.APIAttributeset();
-                var parent = $('#object-list').controller().selectedModel;
-                newModel.attr('object_id', parent.object_id);
+                //var parent = $('#object-list').controller().selectedModel;
+                newModel.attr('object_id', this.parent.object_id);
 
                 //XXX: Why would these ever need to be set in the Attributeset model?
-                newModel.attributeset_table = parent.object_table;
-                newModel.attributeset_pkey = parent.object_pkey;
+                newModel.attributeset_table = this.parent.object_table;
+                newModel.attributeset_pkey = this.parent.object_pkey;
 
                 // Display it
                 this.refreshData( newModel );
@@ -130,6 +131,7 @@
             },
 
             'dbadmin.object.item.selected subscribe': function(msg, model){
+			  this.parent = model;
               this.element.hide();
             },
 
@@ -151,7 +153,7 @@
 
             // Enable the "Save" button when something changes
             ':input change': function(el, ev) {
-                $('button.submit').prop('disabled', false);
+                this.element.find('button.submit').prop('disabled', false);
             }
 
         });

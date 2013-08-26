@@ -7,7 +7,7 @@
 (function () {
     // Pull AppDev from the global scope on NodeJS and browser and load the AppDev CommonJS module on Titanium
     var AD = (typeof AppDev === "undefined" ? (typeof global === "undefined" ? require('AppDev') : global.AD) : AppDev);
-    var $ = AD.jQuery;
+    var $ = AD.jQuery || jQuery;
 
     // On Titanium and NodeJS, the full model definition is needed
     var extendedDefinition = typeof Titanium !== 'undefined' || typeof process !== 'undefined';
@@ -35,6 +35,10 @@
           }
     };
 
+    var instanceMethods = {
+        // define instance methods here.
+    };
+
     if (extendedDefinition) {
         // Extended model attributes
         AD.jQuery.extend(attr, {
@@ -51,13 +55,41 @@
             primaryKey:'object_id'
         });
     }
+    else {
+        //// Client side only stuff
+        
+        // Static function that identifies the label field of an
+        // "object" type from the server.
+        attr.getLabelField = function(id, successFn, failFn) {
+            var dfd = $.Deferred();
+            dfd.then(successFn).fail(failFn);
+        
+            $.ajax({
+                url: '/hris/object/label_field/' + (id || 0),
+                type: 'GET',
+                dataType: 'json',
+            })
+            .done(function(res) {
+                if (res.success) {
+                    dfd.resolve(res.data);
+                } else {
+                    dfd.reject(new Error(res.errorMSG));
+                }
+            })
+            .fail(function(err) {
+                dfd.reject(err);
+            });
+            
+            return dfd;
+        };
+        
+        // Instance method
+        instanceMethods.getLabelField = function(successFn, failFn) {
+            return this.Class.getLabelField(this.object_id, successFn, failFn);
+        };
+    }
 
-
-    var Model = AD.Model.extend("hris.Object",
-    attr,
-    {
-        // define instance methods here.
-    });
+    var Model = AD.Model.extend("hris.Object", attr, instanceMethods);
 
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
         // This is a CommonJS module, so return the model

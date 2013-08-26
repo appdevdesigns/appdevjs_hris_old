@@ -1,0 +1,46 @@
+<%
+///// NOTE:  on the server, EJS uses < %- to return unescaped strings
+/////        on the client  EJS uses < %== 
+// This is CLIENT SIDE, so let's make displaying labels easier:
+// use: < %==  L('[labelKey]') % >   // note there is no ';' at the end!
+var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
+
+//// Alternativly you can add these attributes:
+//   appdTitleKey="[label.key]"  for elements that have a title and you want 
+//                               the contents to be multilingual
+//   appLabelKey="[label.key]"   for elements whose contents (el.html()) 
+//                               should be the multilingual info
+%>
+
+<table width="500" class="person-summary">
+	<tr>
+	
+		<td style="width:125px; height:125px">
+	
+	            	<div id="icon-img-container">
+	                    <img src="/theme/default/images/icon.jpg" width="125" height="125" border="0" alt="" id="icon-img">
+	                </div>
+		</td>
+		<td style="height:125px;" class="person-summary-info">
+		                <div>
+		                	<h3 id="person-name"></h3>
+		                </div>
+		               <div>
+		                	<span id="person-chinesename"></span>
+		                </div>
+		                 <div>
+		                	<span id="person-dob"></span>
+		                </div>
+		                 <div>
+		                	<span id="person-married"></span>
+		                </div>
+		                <div>
+		                	<span id="person-gender"></span>
+		                </div>
+		                <div>
+		                	<span id="person-workstatus"></span>
+		                </div>
+		                	
+		</td>
+	</tr>
+</table>

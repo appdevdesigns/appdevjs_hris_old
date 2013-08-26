@@ -1,0 +1,24 @@
+<!-- Beginning userAttributeItem view definition -->
+<%
+///// NOTE:  on the server, EJS uses < %- to return unescaped strings
+/////        on the client  EJS uses < %== 
+// This is CLIENT SIDE, so let's make displaying labels easier:
+// use: < %==  L('[labelKey]') % >   // note there is no ';' at the end!
+var L = function(key) { return AD.Lang.Labels.getLabelHTML(key); };
+
+//// Alternativly you can add these attributes:
+//   appdTitleKey="[label.key]"  for elements that have a title and you want 
+//                               the contents to be multilingual
+//   appLabelKey="[label.key]"   for elements whose contents (el.html()) 
+//                               should be the multilingual info
+%>
+
+<div class='userAttributeRow control-group'>
+<label class="userAttribute control-label" for="<%= 'tb_' + model.attribute_id %>"><%= model.attribute_label %></label>
+<div class="controls">
+    <div>
+      <input type="text" data-bind="<%=  model.attribute_column %>" id="<%= 'tb_' + model.attribute_id %>" class="userAttributeValue showEdit" placeholder='<%= model.attribute_question %>' />
+      <label type="text"  class="userAttributeValue hideEdit"><%= person.attr( model.attribute_column) %></label>
+</div>
+
+

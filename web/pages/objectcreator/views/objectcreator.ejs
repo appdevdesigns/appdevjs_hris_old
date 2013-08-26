@@ -1,0 +1,22 @@
+<%
+var $ = AD.jQuery;
+
+// This is SERVER side, so let's make displaying labels easier:
+// use:  < %- L('[labelKey]') % >
+var L = function(key) { return data.labels.getLabel(key); };
+var pL = function(prependText, key) {
+    // prepend the given text to the result of the label
+    var label = $(L(key)).prepend(prependText);
+    return $('<div>').append(label).html();
+};
+%>
+<div class="objectcreator-container">
+    <div class="row-fluid">
+        <div id="list-sidebar" class="span3 well"></div>
+        <div class="span9 well">
+            <div id="create-button"></div>
+            <div id="create-form"></div>
+            <div id="list-view"></div>
+        </div>
+    </div>
+</div>

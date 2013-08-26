@@ -9,21 +9,28 @@
                 
             console.log('beforeEach called...');
             hris.APIAttributeset.findAll({},function(list){
-
+                //console.log(list);
                 var listDFD = [];
                 for (var i=0; i<list.length; i++) {
+                    console.log('destroying Attributeset ' + i);
                     listDFD.push(list[i].destroy());
                 }
                 
-                $.when.apply($, listDFD).then(function() {
-                     console.log('done called...');
+                $.when.apply($, listDFD)
+                .then(function() {
+                     console.log('destroy successful');
 		    	     done();
+		    	})
+		    	.fail(function(err) {
+		             console.log('destroy failed');
+		             console.log(err);
+		             done();
 		    	});
 		  	});
 		  	
         });
             
-            
+
 		 it('Attributeset Table is Empty', function(done){
 		    
 		    hris.APIAttributeset.findAll({},function(list){

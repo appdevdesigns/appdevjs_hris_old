@@ -117,6 +117,7 @@ console.log(' ... final when:  foundOne['+foundOne+']');
 var notPkeyFormat = function(params) {
     // prevent any
     var dfd = $.Deferred();
+	console.log(params);
 
     if (params._forced) {
 
@@ -143,6 +144,7 @@ Attribute.create = function (req, res, next) {
 
     // if we have an entry with the same params as this,
     // skip creation and reuse that one...
+	console.log(req.aRAD.params);
     var existing = existingEntry(params);
     var columnCheck = noColumnConflicts(params);
     var pkeyCheck = notPkeyFormat(params);
@@ -358,7 +360,7 @@ var getAllAttributesetFromAttribute = function(attribute) {
     var objectFound = getObjectFromAttribute(attribute);
     $.when(objectFound).then(function(object){
 
-        var setsFound = AttributeSet.findAll({object_id:object.object_id});
+        var setsFound = AttributeSet.findAll({id:object.object_id});
         $.when(setsFound).then(function(listAttributesets){
            dfd.resolve( listAttributesets);
         });
